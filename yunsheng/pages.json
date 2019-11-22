@@ -1,0 +1,72 @@
+{
+	"pages": [
+		{
+			"path": "pages/home/home",
+			"style": {
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+            "path" : "pages/healthy_diet/healthy_diet",
+            "style" : {
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+        },
+		{
+            "path" : "pages/health_science/health_science",
+            "style" : {
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+        },
+		{
+		    "path" : "pages/me/me",
+		    "style" : {
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		}
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "yunsheng",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#4CD964",
+		"selectedColor":"#007AFF",
+		"list": [
+			{
+				"pagePath":"pages/home/home",
+				"text":"Home",
+				"iconPath":"static/logo/home_48px.ico",
+				"selectedIconPath":"static/logo/home_48px.ico"
+			},
+			{
+				"pagePath":"pages/healthy_diet/healthy_diet",
+				"text":"Healthy",
+				"iconPath":"static/logo/food_48px.ico",
+				"selectedIconPath":"static/logo/food_48px.ico"
+			},
+			{
+				"pagePath":"pages/health_science/health_science",
+				"text":"Science",
+				"iconPath":"static/logo/home_48px.ico",
+				"selectedIconPath":"static/logo/home_48px.ico"
+			},
+			{
+				"pagePath":"pages/me/me",
+				"text":"Me",
+				"iconPath":"static/logo/food_48px.ico",
+				"selectedIconPath":"static/logo/food_48px.ico"
+			}
+		]
+	}
+}
