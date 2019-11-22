@@ -1,7 +1,8 @@
 {
 	"pages": [
+		// main pages
 		{
-			"path": "pages/home/home",
+			"path": "pages/home/index/index",
 			"style": {
 				"app-plus": {
 					"titleNView": false
@@ -9,7 +10,7 @@
 			}
 		},
 		{
-            "path" : "pages/healthy_diet/healthy_diet",
+            "path" : "pages/healthy_diet/index/index",
             "style" : {
 				"app-plus": {
 					"titleNView": false
@@ -17,7 +18,7 @@
 			}
         },
 		{
-            "path" : "pages/health_science/health_science",
+            "path" : "pages/health_science/index/index",
             "style" : {
 				"app-plus": {
 					"titleNView": false
@@ -25,47 +26,51 @@
 			}
         },
 		{
-		    "path" : "pages/me/me",
+		    "path" : "pages/me/index/index",
 		    "style" : {
 				"app-plus": {
 					"titleNView": false
 				}
 			}
-		}
+		},
+		
+		// home sub pages
+        {
+            "path" : "pages/home/sub_page/data_input/data_input",
+            "style" : {}
+        }
     ],
+	
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "yunsheng",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
+	
 	"tabBar": {
 		"color": "#4CD964",
 		"selectedColor":"#007AFF",
 		"list": [
 			{
-				"pagePath":"pages/home/home",
+				"pagePath":"pages/home/index/index",
 				"text":"Home",
-				"iconPath":"static/logo/home_48px.ico",
-				"selectedIconPath":"static/logo/home_48px.ico"
+				"iconPath":"static/logo/home_48px.ico"
 			},
 			{
-				"pagePath":"pages/healthy_diet/healthy_diet",
+				"pagePath":"pages/healthy_diet/index/index",
 				"text":"Healthy",
-				"iconPath":"static/logo/food_48px.ico",
-				"selectedIconPath":"static/logo/food_48px.ico"
+				"iconPath":"static/logo/food_48px.ico"
 			},
 			{
-				"pagePath":"pages/health_science/health_science",
+				"pagePath":"pages/health_science/index/index",
 				"text":"Science",
-				"iconPath":"static/logo/home_48px.ico",
-				"selectedIconPath":"static/logo/home_48px.ico"
+				"iconPath":"static/logo/home_48px.ico"
 			},
 			{
-				"pagePath":"pages/me/me",
+				"pagePath":"pages/me/index/index",
 				"text":"Me",
-				"iconPath":"static/logo/food_48px.ico",
-				"selectedIconPath":"static/logo/food_48px.ico"
+				"iconPath":"static/logo/food_48px.ico"
 			}
 		]
 	}
