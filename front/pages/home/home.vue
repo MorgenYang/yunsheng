@@ -8,7 +8,7 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello aaa test'
+				title: 'home'
 			}
 		},
 		onLoad() {
