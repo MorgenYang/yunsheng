@@ -4,13 +4,95 @@
 			"path": "pages/home/home",
 			"style": {
 				// "navigationBarTitleText": "uni-app"
+				"app-plus" : {
+					"titleNView" : false
+				}
+				// "enablePullDownRefresh" : true
+			}
+		},
+		{
+			"path": "pages/education/education",
+			"style": {
+				// "navigationBarTitleText": "uni-app"
+				"app-plus" : {
+					"titleNView" : false
+				}
+				// "enablePullDownRefresh" : true
+			}
+		},
+		{
+			"path": "pages/me/me",
+			"style": {
+				// "navigationBarTitleText": "uni-app"
+				"app-plus" : {
+					"titleNView" : false
+				}
+				// "enablePullDownRefresh" : true
+			}
+		},
+		{
+			"path": "pages/medical/medical",
+			"style": {
+				// "navigationBarTitleText": "uni-app"
+				"app-plus" : {
+					"titleNView" : false
+				}
+				// "enablePullDownRefresh" : true
+			}
+		},
+		{
+			"path": "pages/scheme/scheme",
+			"style": {
+				// "navigationBarTitleText": "uni-app"
+				"app-plus" : {
+					"titleNView" : false
+				}
+				// "enablePullDownRefresh" : true
 			}
 		}
 	],
-	"globalStyle": {
+	// "globalStyle": {
 		// "navigationBarTextStyle": "black",
 		// "navigationBarTitleText": "uni-app",
 		// "navigationBarBackgroundColor": "#F8F8F8",
 		// "backgroundColor": "#F8F8F8"
-	}
+	// },
+	"tabBar" : {
+	        "color" : "#bfbfbf",
+	        "selectedColor" : "#515151",
+	        "borderStyle" : "black",
+	        "backgroundColor" : "#ffffff",
+	        "list" : [
+	            {
+	                "pagePath" : "pages/home/home",
+	                "text" : "首页",
+	                "iconPath" : "",
+	                "selectedIconPath" : ""
+	            },
+				{
+				    "pagePath" : "pages/education/education",
+				    "text" : "健康教育",
+				    "iconPath" : "",
+				    "selectedIconPath" : ""
+				},
+				{
+				    "pagePath" : "pages/scheme/scheme",
+				    "text" : "健康管理",
+				    "iconPath" : "",
+				    "selectedIconPath" : ""
+				},
+				{
+	                "pagePath" : "pages/medical/medical",
+	                "text" : "医学新知",
+	                "iconPath" : "",
+	                "selectedIconPath" : ""
+	            },
+				{
+				    "pagePath" : "pages/me/me",
+				    "text" : "我的",
+				    "iconPath" : "",
+				    "selectedIconPath" : ""
+				}
+	        ]
+	    }
 }
