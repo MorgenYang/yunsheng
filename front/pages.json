@@ -1,5 +1,5 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
 		{
 			"path": "pages/home/home",
 			"style": {
@@ -51,47 +51,41 @@
 			}
 		}
 	],
-	// "globalStyle": {
-		// "navigationBarTextStyle": "black",
-		// "navigationBarTitleText": "uni-app",
-		// "navigationBarBackgroundColor": "#F8F8F8",
-		// "backgroundColor": "#F8F8F8"
-	// },
 	"tabBar" : {
 	        "color" : "#bfbfbf",
-	        "selectedColor" : "#515151",
+	        "selectedColor" : "#7bbfea",
 	        "borderStyle" : "black",
 	        "backgroundColor" : "#ffffff",
 	        "list" : [
 	            {
 	                "pagePath" : "pages/home/home",
 	                "text" : "首页",
-	                "iconPath" : "",
-	                "selectedIconPath" : ""
+	                "iconPath" : "static/icon/tabbar/tabbar/home.png",
+	                "selectedIconPath" : "static/icon/tabbar/tabbar-sel/home-sel.png"
 	            },
 				{
 				    "pagePath" : "pages/education/education",
 				    "text" : "健康教育",
-				    "iconPath" : "",
-				    "selectedIconPath" : ""
+				    "iconPath" : "static/icon/tabbar/tabbar/education.png",
+				    "selectedIconPath" : "static/icon/tabbar/tabbar-sel/education-sel.png"
 				},
 				{
 				    "pagePath" : "pages/scheme/scheme",
 				    "text" : "健康管理",
-				    "iconPath" : "",
-				    "selectedIconPath" : ""
+				    "iconPath" : "static/icon/tabbar/tabbar/scheme.png",
+				    "selectedIconPath" : "static/icon/tabbar/tabbar-sel/scheme-sel.png"
 				},
 				{
 	                "pagePath" : "pages/medical/medical",
 	                "text" : "医学新知",
-	                "iconPath" : "",
-	                "selectedIconPath" : ""
+	                "iconPath" : "static/icon/tabbar/tabbar/medical.png",
+	                "selectedIconPath" : "static/icon/tabbar/tabbar-sel/medical-sel.png"
 	            },
 				{
 				    "pagePath" : "pages/me/me",
 				    "text" : "我的",
-				    "iconPath" : "",
-				    "selectedIconPath" : ""
+				    "iconPath" : "static/icon/tabbar/tabbar/me.png",
+				    "selectedIconPath" : "static/icon/tabbar/tabbar-sel/me-sel.png"
 				}
 	        ]
 	    }

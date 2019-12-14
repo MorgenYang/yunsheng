@@ -1,0 +1,35 @@
+.header {
+	color: #FFFFFF;
+	background-color: #007AFF;
+	width: 100%;
+	height: 200upx;
+}
+
+.scroll-view-x {
+	width: 100%;
+	height: 400upx;
+	white-space: nowrap;
+}
+
+.scroll-view-item-x {
+	width:40%;
+	height: 400upx;
+	display: inline-block;
+}
+
+.red {
+	background-color: red;
+}
+
+.green {
+	background-color: green;
+}
+
+.blue {
+	background-color: blue;
+}
+
+.personal-settings {
+	width: 50upx;
+	height: 50upx;
+}
