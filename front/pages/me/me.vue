@@ -18,7 +18,8 @@
 		</view>
 		
 		<view class="setting-body">
-			<view v-for="(item,index) in setting" v-bind:key="index.id">
+			<view  v-for="(item,index) in setting"  hover-class="setting-click" v-bind:key="item.id" 
+				 @tap="itemClick" v-bind:id="'id_'+item.id">
 				<view class="setting-line" >
 					<image class="setting-img" :src="item.imageSrc"></image>
 					<text class="setting-text">{{item.title}}</text>
@@ -44,36 +45,52 @@
 				},
 				setting:[
 					{
+						id:0,
 						title:"健康档案",
-						imageSrc:"../../static/icon/settings/health-record.png"
+						imageSrc:"../../static/icon/settings/health-record.png",
+						linkUrl:""
 					},
 					{
+						id:1,
 						title:"健康商城",
-						imageSrc:"../../static/icon/settings/store.png"
+						imageSrc:"../../static/icon/settings/store.png",
+						linkUrl:""
 					},
 					{
+						id:2,
 						title:"私人医生",
-						imageSrc:"../../static/icon/settings/doctor.png"
+						imageSrc:"../../static/icon/settings/doctor.png",
+						linkUrl:""
 					},
 					{
+						id:3,
 						title:"个人设置",
-						imageSrc:"../../static/icon/settings/feedback.png"
+						imageSrc:"../../static/icon/settings/feedback.png",
+						linkUrl:"./setting/setting"
 					},
 					{
+						id:4,
 						title:"意见反馈",
-						imageSrc:"../../static/icon/settings/health-record.png"
+						imageSrc:"../../static/icon/settings/health-record.png",
+						linkUrl:""
 					},
 					{
+						id:5,
 						title:"检查更新",
-						imageSrc:"../../static/icon/settings/update.png"
+						imageSrc:"../../static/icon/settings/update.png",
+						linkUrl:""
 					},
 					{
+						id:6,
 						title:"关于我们",
-						imageSrc:"../../static/icon/settings/us.png"
+						imageSrc:"../../static/icon/settings/us.png",
+						linkUrl:""
 					},
 					{
+						id:7,
 						title:"联系我们",
-						imageSrc:"../../static/icon/settings/connection.png"
+						imageSrc:"../../static/icon/settings/connection.png",
+						linkUrl:""
 					}					
 				]	
 			}
@@ -82,7 +99,19 @@
 
 		},
 		methods: {
-			
+			itemClick(e){
+				let id = e.currentTarget.id.toString().substr(3);
+				uni.showToast({
+				    title: this.setting[id].title,
+					icon:"none",
+				    duration: 300
+				});
+				if(this.setting[id].linkUrl !=""){
+					uni.navigateTo({
+					    url: this.setting[id].linkUrl
+					});
+				}
+			}
 		}
 	}
 </script>
