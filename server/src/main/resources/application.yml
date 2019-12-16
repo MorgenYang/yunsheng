@@ -18,7 +18,7 @@ fuce:
   #邮箱发送端口
   email_port: 465
   #发送邮箱登录账号
-  email_account: 1@sina.com
+  email_account: youfan1989@sina.com
   #发送邮箱登录密码
   email_password: 1
 #tomcat config
@@ -35,9 +35,8 @@ server :
     max-connections: 200000
     max-http-post-size: 9000000
 spring :
-  # 环境 dev|test|prod
   profiles :
-    active : dev
+    active : prod
   servlet:
     multipart:
       max-request-size: 100MB

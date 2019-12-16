@@ -1,18 +1,19 @@
 package com.yf.controller.admin;
 
-import java.io.IOException;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import com.yf.common.base.BaseController;
 import com.yf.model.auto.TsysDatas;
 import com.yf.model.custom.PublicMsg;
 import com.yf.model.custom.Ueditor;
 import com.yf.service.UeditorService;
 import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @Controller
 @Api(value = "百度编辑器")
@@ -20,8 +21,6 @@ import io.swagger.annotations.Api;
 public class UeditorController  extends BaseController{
 	@Autowired
 	private UeditorService ueditorService;
-	
-	
 	@RequestMapping("ueditor")
     @ResponseBody
     public Object ueditor(HttpServletRequest request,String action,MultipartFile upfile) {
@@ -29,7 +28,6 @@ public class UeditorController  extends BaseController{
 			  return PublicMsg.UEDITOR_CONFIG;
 		}
 		if ("uploadimage".equals(action)) {//图片上传
-			
 			try {
 				//添加文件到本地
 				TsysDatas	tsysDatas = ueditorService.fileDataByinsert(upfile);
@@ -41,10 +39,8 @@ public class UeditorController  extends BaseController{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
 			return null;
 		}if ("uploadfile".equals(action)) {//文件上传
-
 
 		}
 		return PublicMsg.UeditorMsg.ERROR.get();
