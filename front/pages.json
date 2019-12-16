@@ -50,7 +50,37 @@
 				// "enablePullDownRefresh" : true
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/me/setting/setting",
+			 "navigationBarTextStyle":"black",
+			 "style": {
+				"navigationBarTitleText": "个人设置",
+			 	 "app-plus" : {
+			 		"titleNView" : {
+						"titleText":"个人设置",
+						"titleColor":"white"
+					}
+			 	},
+				"navigationBarBackgroundColor":"#A2DEFA"
+			 	// "enablePullDownRefresh" : true
+			 }
+        }
+        ,{
+            "path" : "pages/me/changepwd/changepwd",
+			"navigationBarTextStyle":"black",
+            "style" : {
+				"navigationBarTitleText": "修改密码",
+				 "app-plus" : {
+					"titleNView" : {
+						"titleText":"修改密码",
+						"titleColor":"white"
+					}
+				},
+				"navigationBarBackgroundColor":"#A2DEFA"
+				// "enablePullDownRefresh" : true
+			}
+        }
+    ],
 	"tabBar" : {
 	        "color" : "#bfbfbf",
 	        "selectedColor" : "#7bbfea",
