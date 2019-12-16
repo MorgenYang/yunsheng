@@ -1,18 +1,6 @@
 package com.yf.controller.admin;
 
-import java.util.List;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.github.pagehelper.PageInfo;
 import com.yf.common.base.BaseController;
 import com.yf.common.domain.AjaxResult;
 import com.yf.common.log.Log;
@@ -22,9 +10,14 @@ import com.yf.model.custom.RoleVo;
 import com.yf.model.custom.TableSplitResult;
 import com.yf.model.custom.Tablepar;
 import com.yf.model.custom.TitleVo;
-import com.github.pagehelper.PageInfo;
-
 import io.swagger.annotations.Api;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("UserController")
@@ -32,19 +25,14 @@ import io.swagger.annotations.Api;
 public class UserController extends BaseController{
 	
 	private String prefix = "admin/user";
-	
-	
 	@GetMapping("view")
 	@RequiresPermissions("system:user:view")
-    public String view(ModelMap model)
-    {	
+    public String view(ModelMap model){
 		String str="用户";
 		setTitle(model, new TitleVo("列表", str+"管理", true,"欢迎进入"+str+"页面", true, false));
         return prefix + "/list";
     }
-	
-	
-	
+
 	@PostMapping("list")
 	@RequiresPermissions("system:user:list")
 	@ResponseBody
@@ -58,8 +46,7 @@ public class UserController extends BaseController{
      * 新增用户
      */
     @GetMapping("/add")
-    public String add(ModelMap modelMap)
-    {
+    public String add(ModelMap modelMap){
     	//添加角色列表
 		List<TsysRole> tsysRoleList=sysRoleService.queryList();
 		modelMap.put("tsysRoleList",tsysRoleList);
@@ -111,8 +98,6 @@ public class UserController extends BaseController{
 			return 0;
 		}
 	}
-	
-	
 	/**
 	 * 修改用户
 	 * @param id
@@ -120,13 +105,11 @@ public class UserController extends BaseController{
 	 * @return
 	 */
 	@GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") String id, ModelMap mmap)
-    {
+    public String edit(@PathVariable("id") String id, ModelMap mmap){
 		//查询所有角色
 		List<RoleVo> roleVos=sysUserService.getUserIsRole(id);
 		mmap.put("roleVos",roleVos);
         mmap.put("TsysUser", sysUserService.selectByPrimaryKey(id));
-
         return prefix + "/edit";
     }
 	
@@ -136,13 +119,10 @@ public class UserController extends BaseController{
     @RequiresPermissions("system:user:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(TsysUser tsysUser,@RequestParam(value="roles", required = false)List<String> roles)
-    {
+    public AjaxResult editSave(TsysUser tsysUser,@RequestParam(value="roles", required = false)List<String> roles){
         return toAjax(sysUserService.updateUserRoles(tsysUser,roles));
     }
 
-    
-    
     /**
 	 * 修改用户密码
 	 * @param id
@@ -150,8 +130,7 @@ public class UserController extends BaseController{
 	 * @return
 	 */
 	@GetMapping("/editPwd/{id}")
-    public String editPwd(@PathVariable("id") String id, ModelMap mmap)
-    {
+    public String editPwd(@PathVariable("id") String id, ModelMap mmap){
         mmap.put("TsysUser", sysUserService.selectByPrimaryKey(id));
         return prefix + "/editPwd";
     }
@@ -161,10 +140,7 @@ public class UserController extends BaseController{
     @RequiresPermissions("system:user:editPwd")
     @PostMapping("/editPwd")
     @ResponseBody
-    public AjaxResult editPwdSave(TsysUser tsysUser)
-    {
+    public AjaxResult editPwdSave(TsysUser tsysUser){
         return toAjax(sysUserService.updateUserPassword(tsysUser));
     }
-
-	
 }

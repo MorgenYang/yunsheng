@@ -143,5 +143,22 @@ public class TsysPermission implements Serializable {
 	public void setVisible(Integer visible) {
 		this.visible = visible;
 	}
-	
+
+    @Override
+    public String toString() {
+        return "TsysPermission{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", descripion='" + descripion + '\'' +
+                ", url='" + url + '\'' +
+                ", isBlank=" + isBlank +
+                ", pid='" + pid + '\'' +
+                ", perms='" + perms + '\'' +
+                ", type=" + type +
+                ", icon='" + icon + '\'' +
+                ", orderNum=" + orderNum +
+                ", visible=" + visible +
+                ", childCount=" + childCount +
+                '}';
+    }
 }

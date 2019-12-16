@@ -10,8 +10,10 @@ import com.yf.model.custom.TitleVo;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -27,8 +29,7 @@ public class PremissionController  extends BaseController{
 	
 	@GetMapping("view")
 	@RequiresPermissions("system:premission:view")
-    public String view(ModelMap model)
-    {	
+    public String view(ModelMap model){
 		String str="权限";
 		setTitle(model, new TitleVo("列表", str+"管理", true,"欢迎进入"+str+"页面", true, false));
         return prefix + "/list";
@@ -163,14 +164,24 @@ public class PremissionController  extends BaseController{
 	 * @return
 	 */
 	@GetMapping("/edit/{roleId}")
-    public String edit(@PathVariable("roleId") String id, ModelMap mmap)
-    {	
+    public String edit(@PathVariable("roleId") String id, Model mmap){
 		//获取自己的权限信息
+		System.out.println(id);
+		System.out.println(mmap);
 		TsysPermission mytsysPermission = sysPermissionService.selectByPrimaryKey(id);
 		//获取父权限信息
 		TsysPermission pattsysPermission = sysPermissionService.selectByPrimaryKey(mytsysPermission.getPid());
-        mmap.put("TsysPremission", mytsysPermission);
-        mmap.put("pattsysPremission", pattsysPermission);
+        mmap.addAttribute("id", mytsysPermission.getId());
+        mmap.addAttribute("type", mytsysPermission.getType());
+        mmap.addAttribute("name", mytsysPermission.getName());
+        mmap.addAttribute("pid", mytsysPermission.getPid());
+        mmap.addAttribute("pidName", pattsysPermission.getName());
+        mmap.addAttribute("url", mytsysPermission.getUrl());
+        mmap.addAttribute("isBlank", mytsysPermission.getIsBlank());
+        mmap.addAttribute("perms", mytsysPermission.getPerms());
+        mmap.addAttribute("orderNum", mytsysPermission.getOrderNum());
+        mmap.addAttribute("icon", mytsysPermission.getIcon());
+        mmap.addAttribute("descripion", mytsysPermission.getDescripion());
         return prefix + "/edit";
     }
 	
@@ -180,8 +191,7 @@ public class PremissionController  extends BaseController{
     @RequiresPermissions("system:premission:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(TsysPermission TsysPermission)
-    {
+    public AjaxResult editSave(TsysPermission TsysPermission){
         return toAjax(sysPermissionService.updateByPrimaryKey(TsysPermission));
     }
     
