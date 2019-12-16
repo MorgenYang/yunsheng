@@ -38,10 +38,4 @@ public class PermissionTreeModelVo {
 	public PermissionTreeModelVo() {
 		super();
 	}
-	
-
-	
-
-	
-	
 }

@@ -23,8 +23,6 @@ import java.io.IOException;
 
 /**
  * 文件上传controller
- * @author yf 
- * @date: 2018年9月16日 下午4:23:50
  */
 @Controller
 @Api(value = "文件上传")

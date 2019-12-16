@@ -10,9 +10,6 @@ import java.util.Date;
 /**
  * 日期处理
  * @ClassName: DateUtils
- * @author yf
- * @date 2019-06-23 00:53
- * @version V1.0
  */
 public class DateUtils  extends org.apache.commons.lang3.time.DateUtils{
 	/** 时间格式(yyyy-MM-dd) */

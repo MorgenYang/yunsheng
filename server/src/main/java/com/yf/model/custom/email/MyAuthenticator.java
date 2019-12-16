@@ -4,9 +4,7 @@ import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 
 /**
- * 发送邮件需要使用的基本信息 
- * @ClassName: MyAuthenticator
- * @author yf
+ * 发送邮件需要使用的基本信息
  */
 public class MyAuthenticator extends Authenticator{   
     String userName=null;   
@@ -18,7 +16,8 @@ public class MyAuthenticator extends Authenticator{
         this.userName = username;    
         this.password = password;    
     }    
-    protected PasswordAuthentication getPasswordAuthentication(){   
+    @Override
+    protected PasswordAuthentication getPasswordAuthentication(){
         return new PasswordAuthentication(userName, password);   
     }   
 }   

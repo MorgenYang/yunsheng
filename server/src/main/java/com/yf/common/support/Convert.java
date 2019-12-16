@@ -1,5 +1,7 @@
 package com.yf.common.support;
 
+import com.yf.util.StringUtils;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -9,13 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import com.yf.util.StringUtils;
-
 /**
  * 类型转换器
- * 
- * @author fc
- * 
  */
 public class Convert
 {

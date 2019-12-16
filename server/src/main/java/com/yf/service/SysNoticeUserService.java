@@ -16,11 +16,6 @@ import java.util.List;
 
 /**
  * 公告_用户外键 SysNoticeUserService
- * @Title: SysNoticeUserService.java 
- * @Package com.fc.test.service 
- * @author yf_自动生成
- * @email 115889198@qq.com
- * @date 2019-09-08 02:12:54  
  **/
 @Service
 public class SysNoticeUserService implements BaseService<SysNoticeUser, SysNoticeUserExample>{

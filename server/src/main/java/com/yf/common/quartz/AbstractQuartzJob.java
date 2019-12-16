@@ -18,9 +18,6 @@ import java.util.Date;
 
 /**
  * @CLASSNAME AbstractQuartzJob
- * @Description
- * @Auther Jan  橙寂
- * @DATE 2019/9/5 0005 15:05
  */
 
 public abstract class AbstractQuartzJob implements Job {

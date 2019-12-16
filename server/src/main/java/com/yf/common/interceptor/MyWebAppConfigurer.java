@@ -13,8 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 /**
  * 拦截器
 * @ClassName: MyWebAppConfigurer
-* @author yf
-* @date 2018年6月3日
 *
  */
 @Configuration
@@ -56,19 +54,15 @@ public class MyWebAppConfigurer  extends  WebMvcConfigurationSupport  {
 	/** 静态资源处理 **/
 	@Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-		
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
 
     }
 	/** 默认静态资源处理器 **/
 	
+	@Override
 	protected void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		//super.configureDefaultServletHandling(configurer);
 		//configurer.enable("stati");
 		configurer.enable();
 	}
-	
-	
-	
-	
 }

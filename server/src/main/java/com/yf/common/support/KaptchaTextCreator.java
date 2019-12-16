@@ -1,13 +1,12 @@
 package com.yf.common.support;
 
+import com.google.code.kaptcha.text.impl.DefaultTextCreator;
+
 import java.security.SecureRandom;
 import java.util.Random;
-import com.google.code.kaptcha.text.impl.DefaultTextCreator;
 
 /**
  * 验证码文本生成器
- * 
- * @author cs
  */
 public class KaptchaTextCreator extends DefaultTextCreator
 {

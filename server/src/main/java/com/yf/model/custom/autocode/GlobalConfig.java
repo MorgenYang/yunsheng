@@ -7,8 +7,6 @@ import com.yf.util.StringUtils;
 /**
  * 自动生成配置文件
 * @ClassName: GlobalConfig
-* @author yf
-* @date 2019-08-13 02:03
 *
  */
 public class GlobalConfig {

@@ -3,9 +3,7 @@ package com.yf.common.exception.file;
 import org.apache.commons.fileupload.FileUploadException;
 
 /**
- * 文件名超长 误异常类
- * 
- * @author ruoyi
+ * 误异常类
  */
 public class FileNameLengthLimitExceededException extends FileUploadException
 {

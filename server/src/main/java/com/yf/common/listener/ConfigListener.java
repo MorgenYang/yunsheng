@@ -7,12 +7,6 @@ import javax.servlet.annotation.WebListener;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @Auther: Jan 橙寂
- * @Date: 2019-7-1 11:06
- * @Description:
- * @Version: 1.0
- */
 @WebListener
 public class ConfigListener implements ServletContextListener {
 
@@ -30,13 +24,9 @@ public class ConfigListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent evt) {
         ServletContext sc = evt.getServletContext();
-
         //项目发布,当前运行环境的绝对路径
         conf.put("realPath", sc.getRealPath("/").replaceFirst("/", ""));
-
         //servletContextPath,默认""
         conf.put("contextPath", sc.getContextPath());
-
     }
-
 }

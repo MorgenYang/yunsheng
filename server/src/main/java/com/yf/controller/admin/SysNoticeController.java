@@ -54,8 +54,7 @@ public class SysNoticeController extends BaseController{
 	
 	
 	@GetMapping("viewUser")
-    public String viewUser(ModelMap model)
-    {	
+    public String viewUser(ModelMap model){
 		String str="公告";
 		setTitle(model, new TitleVo("列表", str+"管理", true,"欢迎进入"+str+"页面", true, false));
         return prefix + "/list_view";
@@ -69,9 +68,7 @@ public class SysNoticeController extends BaseController{
 	 */
 	@PostMapping("viewUserlist")
 	@ResponseBody
-    public Object viewUserlist(Tablepar tablepar,String searchTxt)
-    {
-        
+    public Object viewUserlist(Tablepar tablepar,String searchTxt){
 		PageInfo<SysNotice> page=sysNoticeService.list(ShiroUtils.getUser(), tablepar, searchTxt);
 		TableSplitResult<SysNotice> result=new TableSplitResult<SysNotice>(page.getPageNum(), page.getTotal(), page.getList()); 
 		return  result;
@@ -82,8 +79,7 @@ public class SysNoticeController extends BaseController{
      */
 
     @GetMapping("/add")
-    public String add(ModelMap modelMap)
-    {
+    public String add(ModelMap modelMap){
         return prefix + "/add";
     }
 	
@@ -141,9 +137,7 @@ public class SysNoticeController extends BaseController{
 	 * @return
 	 */
 	@GetMapping("/viewinfo/{id}")
-    public String viewinfo(@PathVariable("id") String id,ModelMap mmap)
-    {
-        
+    public String viewinfo(@PathVariable("id") String id,ModelMap mmap){
 		String str="公告";
 		setTitle(mmap, new TitleVo("详情", str+"列表", true,"欢迎进入"+str+"详情页面", true, false));
 		SysNotice notice= sysNoticeService.selectByPrimaryKey(id);
@@ -161,10 +155,8 @@ public class SysNoticeController extends BaseController{
 	 * @return
 	 */
 	@GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") String id, ModelMap mmap)
-    {
+    public String edit(@PathVariable("id") String id, ModelMap mmap){
         mmap.put("SysNotice", sysNoticeService.selectByPrimaryKey(id));
-
         return prefix + "/edit";
     }
 	
@@ -175,13 +167,7 @@ public class SysNoticeController extends BaseController{
     @RequiresPermissions("gen:sysNotice:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(SysNotice record)
-    {
+    public AjaxResult editSave(SysNotice record){
         return toAjax(sysNoticeService.updateByPrimaryKeySelective(record));
     }
-
-    
-    
-
-	
 }

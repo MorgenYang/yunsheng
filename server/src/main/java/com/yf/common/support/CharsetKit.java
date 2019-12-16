@@ -1,15 +1,12 @@
 package com.yf.common.support;
 
+import com.yf.util.StringUtils;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import com.yf.util.StringUtils;
-
 /**
  * 字符集工具类
- * 
- * @author fc
- *
  */
 public class CharsetKit
 {

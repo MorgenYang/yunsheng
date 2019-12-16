@@ -17,7 +17,6 @@ import cn.hutool.system.UserInfo;
 
 /**
  * 服务器信息类
- * @ClassName: Service
  */
 public class Service {
 	/**

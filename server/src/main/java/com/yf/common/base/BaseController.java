@@ -1,18 +1,8 @@
 package com.yf.common.base;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.yf.common.domain.AjaxResult;
 import com.yf.model.custom.TitleVo;
-import com.yf.service.SysDatasService;
-import com.yf.service.SysFileDatasService;
-import com.yf.service.SysFileService;
-import com.yf.service.SysNoticeService;
-import com.yf.service.SysOperLogService;
-import com.yf.service.SysPermissionService;
-import com.yf.service.SysRoleService;
-import com.yf.service.SysUserService;
+import com.yf.service.*;
 import com.yf.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -21,16 +11,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * web层通用数据处理
-* @ClassName: BaseController
-* @author yf
-* @date 2018年8月18日
 *
  */
 @Controller
-public class BaseController
-{
+public class BaseController{
 	//系统用户
 	@Autowired
 	public SysUserService sysUserService;
@@ -65,8 +54,7 @@ public class BaseController
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型
      */
     @InitBinder
-    public void initBinder(WebDataBinder binder)
-    {
+    public void initBinder(WebDataBinder binder){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
@@ -144,7 +132,8 @@ public class BaseController
     
     /**
      * 设置标题通用方法
-     * @param model
+     * @param map
+     * @param titleVo
      */
     public void setTitle(ModelMap map,TitleVo titleVo){
     	//标题
@@ -158,6 +147,4 @@ public class BaseController
     	map.put("isControl",titleVo.isControl());
 		map.put("isribbon", titleVo.isIsribbon());
     }
-
-   
 }

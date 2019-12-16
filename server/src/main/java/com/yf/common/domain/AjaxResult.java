@@ -4,9 +4,6 @@ import java.util.HashMap;
 
 /**
 * @ClassName: AjaxResult
-* @Description: TODO(ajax操作消息提醒)
-* @author yf
-* @date 2018年8月18日
 *
  */
 public class AjaxResult extends HashMap<String, Object>

@@ -5,7 +5,6 @@ import java.util.Map;
 
 /**
  * 前台bootstrap需要的树
- * @author yf
  */
 public class BootstrapTree {
 	private String text;//文字

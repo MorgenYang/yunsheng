@@ -1,10 +1,12 @@
 package com.yf.common.log;
 
-import java.lang.reflect.Method;
-import java.util.Date;
-import java.util.Map;
-
+import com.google.gson.Gson;
+import com.yf.model.auto.TsysOperLog;
+import com.yf.model.auto.TsysUser;
 import com.yf.service.SysOperLogService;
+import com.yf.shiro.util.ShiroUtils;
+import com.yf.util.ServletUtils;
+import com.yf.util.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -18,23 +20,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
-import com.yf.model.auto.TsysOperLog;
-import com.yf.model.auto.TsysUser;
-import com.yf.shiro.util.ShiroUtils;
-import com.yf.util.ServletUtils;
-import com.yf.util.StringUtils;
-import com.google.gson.Gson;
+
+import java.lang.reflect.Method;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * 操作日志记录处理
- * @author yf 
- * @date: 2018年9月30日 下午1:40:33
  */
 @Aspect
 @Component
 @EnableAsync
-public class LogAspect
-{
+public class LogAspect{
     private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
 
     @Autowired

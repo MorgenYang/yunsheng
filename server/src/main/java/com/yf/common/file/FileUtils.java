@@ -1,18 +1,11 @@
 package com.yf.common.file;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 
 /**
  * 文件处理工具类
- * @author yf 
- * @date: 2018年9月22日 下午10:33:31
  */
 public class FileUtils
 {
@@ -20,7 +13,8 @@ public class FileUtils
     /**
      * 输出指定文件的byte数组
      * 
-     * @param filename 文件
+     * @param filePath 文件
+     * @param os 文件
      * @return
      */
     public static void writeBytes(String filePath, OutputStream os) throws IOException

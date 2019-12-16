@@ -1,7 +1,5 @@
 package com.yf.common.exception;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -10,10 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * 全局异常处理
- * @author yf 
- * @date: 2018年9月9日 下午10:52:55
  */
 public class GlobalExceptionResolver  implements HandlerExceptionResolver{
 	private static Logger logger = LoggerFactory.getLogger(GlobalExceptionResolver.class);

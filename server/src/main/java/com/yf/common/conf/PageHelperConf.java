@@ -1,18 +1,14 @@
 package com.yf.common.conf;
 
-import java.util.Properties;
-
+import com.github.pagehelper.PageHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.github.pagehelper.PageHelper;
+import java.util.Properties;
 
 /**
 * 分页插件配置类
 * @ClassName: PageHelperConf
-* @Description: TODO(这里用一句话描述这个类的作用)
-* @author yf
-* @date 2018年6月3日
 *
  */
 @Configuration

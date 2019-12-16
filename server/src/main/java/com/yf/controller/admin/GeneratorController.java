@@ -20,7 +20,6 @@ import java.io.IOException;
 
 /**
  * 自动生成Controller
-* @Title: GeneratorController.java 
  */
 @Controller
 @RequestMapping("generatorController")

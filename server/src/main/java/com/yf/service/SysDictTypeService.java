@@ -22,7 +22,6 @@ import java.util.List;
 
 /**
  * 字典类型表Service
-* @author yf
  */
 @Service
 public class SysDictTypeService implements BaseService<TSysDictType, TSysDictTypeExample>{

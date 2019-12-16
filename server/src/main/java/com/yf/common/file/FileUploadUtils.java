@@ -1,19 +1,17 @@
 package com.yf.common.file;
 
-import java.io.File;
-import java.io.IOException;
-
+import com.yf.common.conf.V2Config;
 import com.yf.common.exception.file.FileNameLengthLimitExceededException;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase.FileSizeLimitExceededException;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.multipart.MultipartFile;
-import com.yf.common.conf.V2Config;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * 文件上传工具类
- * @author yf 
- * @date: 2018年9月22日 下午10:33:23
  */
 public class FileUploadUtils
 {

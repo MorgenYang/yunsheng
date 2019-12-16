@@ -1,13 +1,11 @@
 package com.yf.common.base;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 /**
  * 抽象类BaseService
-* @ClassName: BaseService
 * @Description: TODO(Service实现这个)
-* @author yf
-* @date 2018年6月3日
 *
  */
 public interface BaseService<T,T2> {

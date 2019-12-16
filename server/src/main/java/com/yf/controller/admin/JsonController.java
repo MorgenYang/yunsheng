@@ -8,12 +8,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-/**
- * jsonController
-* @ClassName: JsonController
-*
- */
 @Controller
 @Api(value = "Json格式化")
 @RequestMapping("Json")

@@ -2,8 +2,6 @@ package com.yf.common.quartz;
 
 /**
  * 任务调度通用常量
- * 
- * @author jan 橙寂
  */
 public interface ScheduleConstants
 {

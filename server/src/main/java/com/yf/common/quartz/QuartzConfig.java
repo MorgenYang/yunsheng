@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @CLASSNAME QuartzConfig
  * @Description  Quartz配置类
- * @Auther Jan  橙寂
- * @DATE 2019/9/2 0002 15:21
  */
 @Configuration
 public class QuartzConfig {

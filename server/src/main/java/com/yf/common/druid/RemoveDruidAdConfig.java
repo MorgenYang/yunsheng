@@ -17,10 +17,6 @@ import java.io.IOException;
 /**
  * 类名称:RemoveDruidAdConfig
  * 类描述: 去除druid底部的广告配置类
- *
- * @author: taohongchao
- * 创建时间:2019/2/15 13:14
- * Version 1.0
  */
 
 @Configuration

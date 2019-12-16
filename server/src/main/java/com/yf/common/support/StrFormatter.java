@@ -4,8 +4,6 @@ import com.yf.util.StringUtils;
 
 /**
  * 字符串格式化
- * 
- * @author fc
  */
 public class StrFormatter
 {

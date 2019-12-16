@@ -8,8 +8,6 @@ import java.util.Properties;
 /**
  * 发送邮件需要使用的基本信息
  * 邮件model
- * @ClassName: MailSenderInfo
- * @author yf
  */
 public class MailSenderInfo {
 	// 发送邮件的服务器的IP和端口

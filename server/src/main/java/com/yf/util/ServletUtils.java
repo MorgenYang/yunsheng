@@ -12,8 +12,6 @@ import java.io.IOException;
 
 /**
  * 客户端工具类
- * @author yf 
- * @date: 2018年9月30日 下午2:10:48
  */
 public class ServletUtils{
     /**

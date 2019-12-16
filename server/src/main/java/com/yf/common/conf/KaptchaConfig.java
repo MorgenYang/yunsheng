@@ -1,16 +1,14 @@
 package com.yf.common.conf;
 
-import java.util.Properties;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.Properties;
 
 /**
  * 谷歌验证码配置文件
- * @author yf 
- * @date: 2018年9月12日 上午11:02:13
  */
 @Configuration
 public class KaptchaConfig {

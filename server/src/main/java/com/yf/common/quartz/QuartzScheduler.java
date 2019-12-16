@@ -1,25 +1,22 @@
 package com.yf.common.quartz;
 
+import com.yf.model.auto.SysQuartzJob;
+import com.yf.model.auto.SysQuartzJobExample;
 import com.yf.service.SysQuartzJobService;
+import com.yf.util.StringUtils;
 import org.quartz.*;
 import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import com.yf.model.auto.SysQuartzJob;
-import com.yf.model.auto.SysQuartzJobExample;
-import com.yf.util.StringUtils;
-
-import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @CLASSNAME QuartzConfig
  * @Description  Quartz配置类
- * @Auther Jan  橙寂
- * @DATE 2019/9/2 0002 15:21
  */
 @Configuration
 public class QuartzScheduler {
