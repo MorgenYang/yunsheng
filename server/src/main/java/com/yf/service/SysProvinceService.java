@@ -1,9 +1,5 @@
 package com.yf.service;
 
-import java.util.Arrays;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yf.common.support.Convert;
@@ -11,29 +7,29 @@ import com.yf.mapper.auto.SysProvinceMapper;
 import com.yf.model.auto.SysProvince;
 import com.yf.model.auto.SysProvinceExample;
 import com.yf.model.custom.Tablepar;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 省份表 SysProvinceService
- * @Title: SysProvinceService.java 
- * @Package com.fc.test.service 
- * @author yf_自动生成
- * @email 115889198@qq.com
- * @date 2019-10-04 19:56:15  
  **/
 @Service
 public class SysProvinceService{
 	@Autowired
 	private SysProvinceMapper sysProvinceMapper;
-	
-      	   	      	      	      	      	      	      	      	      	      	      	      	
+
+
 	/**
 	 * 分页查询
-	 * @param pageNum
-	 * @param pageSize
+	 * @param tablepar
+	 * @param name
 	 * @return
 	 */
 	 public PageInfo<SysProvince> list(Tablepar tablepar,String name){
-	        SysProvinceExample testExample=new SysProvinceExample();
+		 SysProvinceExample testExample=new SysProvinceExample();
 	        testExample.setOrderByClause("id ASC");
 	        if(name!=null&&!"".equals(name)){
 	        	testExample.createCriteria().andProvinceNameLike("%"+name+"%");
@@ -57,7 +53,6 @@ public class SysProvinceService{
 	
 	
 	public SysProvince selectByPrimaryKey(Integer id) {
-		
 		return sysProvinceMapper.selectByPrimaryKey(id);
 	}
 
@@ -79,34 +74,29 @@ public class SysProvinceService{
 	
 	
 	public int updateByExampleSelective(SysProvince record, SysProvinceExample example) {
-		
 		return sysProvinceMapper.updateByExampleSelective(record, example);
 	}
 
 	
 	
 	public int updateByExample(SysProvince record, SysProvinceExample example) {
-		
 		return sysProvinceMapper.updateByExample(record, example);
 	}
 
 	
 	public List<SysProvince> selectByExample(SysProvinceExample example) {
-		
 		return sysProvinceMapper.selectByExample(example);
 	}
 
 	
 	
 	public long countByExample(SysProvinceExample example) {
-		
 		return sysProvinceMapper.countByExample(example);
 	}
 
 	
 	
 	public int deleteByExample(SysProvinceExample example) {
-		
 		return sysProvinceMapper.deleteByExample(example);
 	}
 	
@@ -121,6 +111,4 @@ public class SysProvinceService{
 		List<SysProvince> list=sysProvinceMapper.selectByExample(example);
 		return list.size();
 	}
-
-
 }

@@ -1,36 +1,25 @@
 package com.yf.service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yf.common.base.BaseService;
 import com.yf.common.support.Convert;
 import com.yf.mapper.auto.SysNoticeMapper;
 import com.yf.mapper.auto.SysNoticeUserMapper;
-import com.yf.model.auto.SysNotice;
-import com.yf.model.auto.SysNoticeExample;
-import com.yf.model.auto.SysNoticeUser;
-import com.yf.model.auto.SysNoticeUserExample;
+import com.yf.model.auto.*;
 import com.yf.model.auto.SysNoticeUserExample.Criteria;
-import com.yf.model.auto.TsysUser;
-import com.yf.model.auto.TsysUserExample;
 import com.yf.model.custom.Tablepar;
 import com.yf.shiro.util.ShiroUtils;
 import com.yf.util.SnowflakeIdWorker;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 公告 SysNoticeService
- * @Title: SysNoticeService.java 
- * @Package com.fc.test.service 
- * @author yf_自动生成
- * @email 115889198@qq.com
- * @date 2019-09-08 01:38:44  
  **/
 @Service
 public class SysNoticeService implements BaseService<SysNotice, SysNoticeExample>{
@@ -44,8 +33,8 @@ public class SysNoticeService implements BaseService<SysNotice, SysNoticeExample
 	private SysNoticeUserMapper sysNoticeUserMapper;
 	/**
 	 * 分页查询
-	 * @param pageNum
-	 * @param pageSize
+	 * @param tablepar
+	 * @param name
 	 * @return
 	 */
 	 public PageInfo<SysNotice> list(Tablepar tablepar,String name){
@@ -54,54 +43,46 @@ public class SysNoticeService implements BaseService<SysNotice, SysNoticeExample
 	        if(name!=null&&!"".equals(name)){
 	        	testExample.createCriteria().andTitleLike("%"+name+"%");
 	        }
-
 	        PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());
 	        List<SysNotice> list= sysNoticeMapper.selectByExample(testExample);
 	        PageInfo<SysNotice> pageInfo = new PageInfo<SysNotice>(list);
 	        return  pageInfo;
 	 }
-	 
-	 
-	 
- 	/**
+
+
+	/**
 	 * 对应用户的所有公告信息
-	 * @param pageNum
-	 * @param pageSize
+	 * @param tsysUser
+	 * @param tablepar
+	 * @param name
 	 * @return
 	 */
-	 public PageInfo<SysNotice> list(TsysUser tsysUser,Tablepar tablepar,String name){
-	        //查询未阅读的公告用户外键
-			SysNoticeUserExample sysNoticeUserExample=new SysNoticeUserExample();
-			Criteria criteria= sysNoticeUserExample.createCriteria();
-			criteria.andUserIdEqualTo(tsysUser.getId());
-			List<SysNoticeUser> noticeUsers= sysNoticeUserMapper.selectByExample(sysNoticeUserExample);
-			if(noticeUsers!=null&&noticeUsers.size()>0) {
-				//查询对应的公告列表
-				List<String> ids=new ArrayList<String>();
-				for (SysNoticeUser sysNoticeUser : noticeUsers) {
-					ids.add(sysNoticeUser.getNoticeId());
-				}
-				
-				//分页查询对应用户的所有公告信息
-				SysNoticeExample testExample=new SysNoticeExample();
-		        testExample.setOrderByClause("id desc");
-		        SysNoticeExample.Criteria criteria1= testExample.createCriteria();
-		        if(name!=null&&!"".equals(name)){
-		        	criteria1.andTitleLike("%"+name+"%");
-		        }
-			     
-		        criteria1.andIdIn(ids);
-		        PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());
-		        List<SysNotice> list= sysNoticeMapper.selectByExample(testExample);
-		       
-		        PageInfo<SysNotice> pageInfo = new PageInfo<SysNotice>(list);
-				
-				 return  pageInfo;
+	public PageInfo<SysNotice> list(TsysUser tsysUser,Tablepar tablepar,String name){
+		//查询未阅读的公告用户外键
+		SysNoticeUserExample sysNoticeUserExample=new SysNoticeUserExample();
+		Criteria criteria= sysNoticeUserExample.createCriteria();
+		criteria.andUserIdEqualTo(tsysUser.getId());
+		List<SysNoticeUser> noticeUsers= sysNoticeUserMapper.selectByExample(sysNoticeUserExample);
+		if(noticeUsers!=null&&noticeUsers.size()>0) {
+			//查询对应的公告列表
+			List<String> ids=new ArrayList<String>();
+			for (SysNoticeUser sysNoticeUser : noticeUsers) {
+				ids.add(sysNoticeUser.getNoticeId());
 			}
-			
-			return new PageInfo<SysNotice>();
-	      
-	      
+			//分页查询对应用户的所有公告信息
+			SysNoticeExample testExample=new SysNoticeExample();
+			testExample.setOrderByClause("id desc");
+			SysNoticeExample.Criteria criteria1= testExample.createCriteria();
+			if(name!=null&&!"".equals(name)){
+				criteria1.andTitleLike("%"+name+"%");
+			}
+			criteria1.andIdIn(ids);
+			PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());
+			List<SysNotice> list= sysNoticeMapper.selectByExample(testExample);
+			PageInfo<SysNotice> pageInfo = new PageInfo<SysNotice>(list);
+			 return  pageInfo;
+		}
+		return new PageInfo<SysNotice>();
 	 }
 	 
 	 
@@ -116,7 +97,6 @@ public class SysNoticeService implements BaseService<SysNotice, SysNoticeExample
 	
 	@Override
 	public SysNotice selectByPrimaryKey(String id) {
-		
 		return sysNoticeMapper.selectByPrimaryKey(id);
 	}
 
@@ -153,34 +133,29 @@ public class SysNoticeService implements BaseService<SysNotice, SysNoticeExample
 	
 	@Override
 	public int updateByExampleSelective(SysNotice record, SysNoticeExample example) {
-		
 		return sysNoticeMapper.updateByExampleSelective(record, example);
 	}
 
 	
 	@Override
 	public int updateByExample(SysNotice record, SysNoticeExample example) {
-		
 		return sysNoticeMapper.updateByExample(record, example);
 	}
 
 	@Override
 	public List<SysNotice> selectByExample(SysNoticeExample example) {
-		
 		return sysNoticeMapper.selectByExample(example);
 	}
 
 	
 	@Override
 	public long countByExample(SysNoticeExample example) {
-		
 		return sysNoticeMapper.countByExample(example);
 	}
 
 	
 	@Override
 	public int deleteByExample(SysNoticeExample example) {
-		
 		return sysNoticeMapper.deleteByExample(example);
 	}
 	
@@ -244,5 +219,4 @@ public class SysNoticeService implements BaseService<SysNotice, SysNoticeExample
 			sysNoticeUserMapper.updateByPrimaryKey(sysNoticeUser);
 		}
 	}
-
 }

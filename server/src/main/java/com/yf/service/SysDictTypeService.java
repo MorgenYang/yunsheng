@@ -61,7 +61,6 @@ public class SysDictTypeService implements BaseService<TSysDictType, TSysDictTyp
 		//在删除type下面得data数据
 		List<String> datatypes=new ArrayList<String>();
 		for (TSysDictType tSysDictType : dictTypes) {
-			
 			datatypes.add(tSysDictType.getDictType());
 		}
 		TSysDictDataExample  dictDataExample=new TSysDictDataExample();
@@ -75,7 +74,6 @@ public class SysDictTypeService implements BaseService<TSysDictType, TSysDictTyp
 	
 	@Override
 	public TSysDictType selectByPrimaryKey(String id) {
-		
 		return tSysDictTypeMapper.selectByPrimaryKey(id);
 	}
 
@@ -97,47 +95,39 @@ public class SysDictTypeService implements BaseService<TSysDictType, TSysDictTyp
 		record.setCreateTime(new Date());
 		record.setUpdateTime(new Date());
 		record.setCreateBy(ShiroUtils.getUser().getUsername());
-
 		return tSysDictTypeMapper.insertSelective(record);
 	}
 
-	
 	@Override
 	public int updateByExampleSelective(TSysDictType record, TSysDictTypeExample example) {
-		
 		return tSysDictTypeMapper.updateByExampleSelective(record, example);
 	}
 
-	
 	@Override
 	public int updateByExample(TSysDictType record, TSysDictTypeExample example) {
-		
 		return tSysDictTypeMapper.updateByExample(record, example);
 	}
 
 	@Override
 	public List<TSysDictType> selectByExample(TSysDictTypeExample example) {
-		
 		return tSysDictTypeMapper.selectByExample(example);
 	}
 
 	
 	@Override
 	public long countByExample(TSysDictTypeExample example) {
-		
 		return tSysDictTypeMapper.countByExample(example);
 	}
 
 	
 	@Override
 	public int deleteByExample(TSysDictTypeExample example) {
-		
 		return tSysDictTypeMapper.deleteByExample(example);
 	}
 
 	/**
 	 * 检查name
-	 * @param TSysDictType
+	 * @param tSysDictType
 	 * @return
 	 */
 	public int checkNameUnique(TSysDictType tSysDictType){

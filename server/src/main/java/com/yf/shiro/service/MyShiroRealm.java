@@ -24,9 +24,6 @@ import java.util.List;
 
 /**
  * 身份校验核心类
- * 
- * @ClassName: MyShiroRealm
- * @author yf
  *
  */
 @Service

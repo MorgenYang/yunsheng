@@ -4,9 +4,6 @@ import com.yf.model.custom.SQLAdapter;
 
 /**
  * 通用dao
-* @ClassName: SysUtilDao
-* @author yf
-* @date 2019-08-31 18:11
 *
  */
 public interface SysUtilDao {

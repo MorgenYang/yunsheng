@@ -1,8 +1,5 @@
 package com.yf.service;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yf.common.base.BaseService;
@@ -12,6 +9,10 @@ import com.yf.model.auto.SysNoticeUser;
 import com.yf.model.auto.SysNoticeUserExample;
 import com.yf.model.custom.Tablepar;
 import com.yf.util.SnowflakeIdWorker;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 公告_用户外键 SysNoticeUserService
@@ -25,14 +26,14 @@ import com.yf.util.SnowflakeIdWorker;
 public class SysNoticeUserService implements BaseService<SysNoticeUser, SysNoticeUserExample>{
 	@Autowired
 	private SysNoticeUserMapper sysNoticeUserMapper;
-	   	   	      	      	      	      	
+
 	/**
 	 * 分页查询
-	 * @param pageNum
-	 * @param pageSize
+	 * @param tablepar
+	 * @param name
 	 * @return
 	 */
-	 public PageInfo<SysNoticeUser> list(Tablepar tablepar,String name){
+	public PageInfo<SysNoticeUser> list(Tablepar tablepar,String name){
 	        SysNoticeUserExample testExample=new SysNoticeUserExample();
 	        testExample.setOrderByClause("id ASC");
 	        if(name!=null&&!"".equals(name)){

@@ -6,8 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 公告 SysNotice 
- * @author yf_自动生成
+ * 公告 SysNotice
  */
 public class SysNotice implements Serializable {
 
@@ -106,7 +105,6 @@ public class SysNotice implements Serializable {
     
 																																					
 	public SysNotice(String id,String title,String content,Integer type,String createId,String createUsername,Date createTime) {
-	
 		this.id = id;
 		this.title = title;
 		this.content = content;

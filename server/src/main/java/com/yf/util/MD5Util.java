@@ -8,8 +8,6 @@ import java.security.MessageDigest;
 *
 */
 public class MD5Util {
-
-	 
 	//工具类不允许被实例化
 	private MD5Util() throws Exception {
 		throw new Exception("异常");
@@ -23,11 +21,9 @@ public class MD5Util {
 		}
 		char[] charArray = str.toCharArray();
 		byte[] byteArray = new byte[charArray.length];
- 
 		for (int i = 0; i < charArray.length; i++){
 			byteArray[i] = (byte) charArray[i];
 		}
-			
 		byte[] md5Bytes = md5.digest(byteArray);
 		StringBuffer hexValue = new StringBuffer();
 		for (int i = 0; i < md5Bytes.length; i++) {
@@ -35,11 +31,8 @@ public class MD5Util {
 			if (val < 16) {
 				hexValue.append("0");
 			}
- 
 			hexValue.append(Integer.toHexString(val));
 		}
 		return hexValue.toString();
 	}
- 
-
 }

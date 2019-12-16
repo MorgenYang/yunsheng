@@ -90,7 +90,7 @@ public class SysProvinceController extends BaseController{
 	
 	/**
 	 * 检查用户
-	 * @param tsysUser
+	 * @param sysProvince
 	 * @return
 	 */
 	@PostMapping("checkNameUnique")

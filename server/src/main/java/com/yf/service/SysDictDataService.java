@@ -137,8 +137,6 @@ public class SysDictDataService implements BaseService<TSysDictData, TSysDictDat
 	/**
 	 * 批量删除
 	 * @param dictIds
-	 * @author yf
-	 * @Date 2019年9月9日 上午12:40:52
 	 */
 	public void deleteByPrimaryDictIds(List<String> dictIds) {
 		TSysDictDataExample example=new TSysDictDataExample();

@@ -60,10 +60,11 @@ public class SysNoticeController extends BaseController{
 		setTitle(model, new TitleVo("列表", str+"管理", true,"欢迎进入"+str+"页面", true, false));
         return prefix + "/list_view";
     }
+
 	/**
 	 * 根据公告id查询跳转到公告详情页面
-	 * @param id
-	 * @param mmap
+	 * @param tablepar
+	 * @param searchTxt
 	 * @return
 	 */
 	@PostMapping("viewUserlist")
@@ -119,7 +120,7 @@ public class SysNoticeController extends BaseController{
 	
 	/**
 	 * 检查用户
-	 * @param tsysUser
+	 * @param sysNotice
 	 * @return
 	 */
 	@PostMapping("checkNameUnique")

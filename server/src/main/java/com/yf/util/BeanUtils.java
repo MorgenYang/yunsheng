@@ -10,8 +10,7 @@ import java.util.regex.Pattern;
  * Bean 工具类
  * @author yf
  */
-public class BeanUtils
-{
+public class BeanUtils{
     /** Bean方法名中属性名开始的下标 */
     private static final int BEAN_METHOD_PROP_INDEX = 3;
 
@@ -27,26 +26,19 @@ public class BeanUtils
      * @param dest 目标对象
      * @param src 源对象
      */
-    public static void copyBeanProp(Object dest, Object src)
-    {
+    public static void copyBeanProp(Object dest, Object src){
         List<Method> destSetters = getSetterMethods(dest);
         List<Method> srcGetters = getGetterMethods(src);
-        try
-        {
-            for (Method setter : destSetters)
-            {
-                for (Method getter : srcGetters)
-                {
+        try{
+            for (Method setter : destSetters){
+                for (Method getter : srcGetters){
                     if (isMethodPropEquals(setter.getName(), getter.getName())
-                            && setter.getParameterTypes()[0].equals(getter.getReturnType()))
-                    {
+                            && setter.getParameterTypes()[0].equals(getter.getReturnType())){
                         setter.invoke(dest, getter.invoke(src));
                     }
                 }
             }
-        }
-        catch (Exception e)
-        {
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
@@ -57,21 +49,15 @@ public class BeanUtils
      * @param obj 对象
      * @return 对象的setter方法列表
      */
-    public static List<Method> getSetterMethods(Object obj)
-    {
+    public static List<Method> getSetterMethods(Object obj){
         // setter方法列表
         List<Method> setterMethods = new ArrayList<Method>();
-
         // 获取所有方法
         Method[] methods = obj.getClass().getMethods();
-
         // 查找setter方法
-
-        for (Method method : methods)
-        {
+        for (Method method : methods){
             Matcher m = SET_PATTERN.matcher(method.getName());
-            if (m.matches() && (method.getParameterTypes().length == 1))
-            {
+            if (m.matches() && (method.getParameterTypes().length == 1)){
                 setterMethods.add(method);
             }
         }

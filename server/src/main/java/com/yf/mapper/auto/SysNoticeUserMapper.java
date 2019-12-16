@@ -2,14 +2,12 @@ package com.yf.mapper.auto;
 
 import com.yf.model.auto.SysNoticeUser;
 import com.yf.model.auto.SysNoticeUserExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 公告_用户外键 SysNoticeUserMapper
- * @author yf_自动生成
- * @email 115889198@qq.com
- * @date 2019-09-08 02:12:54
  */
 public interface SysNoticeUserMapper {
       	      	   	      	   	      	   	      

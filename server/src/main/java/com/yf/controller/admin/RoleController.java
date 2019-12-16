@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 角色Controller
- * @author yf
  */
 @Controller
 @Api(value = "用户角色")
@@ -31,8 +30,7 @@ public class RoleController extends BaseController{
 	
 	@GetMapping("view")
 	@RequiresPermissions("system:role:view")
-    public String view(ModelMap model)
-    {	
+    public String view(ModelMap model){
 		String str="角色";
 		setTitle(model, new TitleVo("列表", str+"管理", true,"欢迎进入"+str+"页面", true, false));
         return prefix + "/list";
@@ -57,8 +55,7 @@ public class RoleController extends BaseController{
      * 新增角色
      */
     @GetMapping("/add")
-    public String add()
-    {
+    public String add(){
         return prefix + "/add";
     }
 	
@@ -99,7 +96,7 @@ public class RoleController extends BaseController{
 	
 	/**
 	 * 检查角色
-	 * @param TsysRole
+	 * @param tsysRole
 	 * @return
 	 */
 	@PostMapping("checkNameUnique")
@@ -121,8 +118,7 @@ public class RoleController extends BaseController{
 	 * @return
 	 */
 	@GetMapping("/edit/{roleId}")
-    public String edit(@PathVariable("roleId") String id, ModelMap mmap)
-    {
+    public String edit(@PathVariable("roleId") String id, ModelMap mmap){
         mmap.put("TsysRole", sysRoleService.selectByPrimaryKey(id));
         return prefix + "/edit";
     }
@@ -133,8 +129,7 @@ public class RoleController extends BaseController{
     @RequiresPermissions("system:user:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(TsysRole tsysRole,String prem,HttpServletRequest request)
-    {
+    public AjaxResult editSave(TsysRole tsysRole,String prem,HttpServletRequest request){
     	int i=sysRoleService.updateRoleAndPrem(tsysRole,prem);
     	if(i>0) {
     		//大于0刷新权限
@@ -143,7 +138,6 @@ public class RoleController extends BaseController{
         	BootstrapTree bootstrapTree= sysPermissionService.getbooBootstrapTreePerm(ShiroUtils.getUserId());
         	request.getSession().setAttribute("bootstrapTree", bootstrapTree);
     	}
-		
         return toAjax(i);
     }
 }

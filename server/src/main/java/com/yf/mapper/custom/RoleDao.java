@@ -1,15 +1,12 @@
 
 package com.yf.mapper.custom;
 
-import java.util.List;
-
 import com.yf.model.auto.TsysRole;
+
+import java.util.List;
 
 /**
  * 角色Dao
- * @ClassName: RoleDao
- * @author yf
- * @date 2018年8月25日
  *
  */
 public interface RoleDao {

@@ -35,8 +35,7 @@ public class GeneratorService {
 	 public PageInfo<TsysTables> list(Tablepar tablepar,String searchTxt){
 		 	PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());
 		 	List<TsysTables> list=  generatorMapper.queryList(searchTxt);
-		    PageInfo<TsysTables> pageInfo = new PageInfo<TsysTables>(list);  
-		    
+		    PageInfo<TsysTables> pageInfo = new PageInfo<TsysTables>(list);
 		    return pageInfo;
 	 }
 	 
@@ -49,8 +48,7 @@ public class GeneratorService {
 	 public List<TsysTables> queryList(String tableName){
 		return generatorMapper.queryList(tableName);
 	 }
-	 
-	 
+
 	 /**
 	  * 代码
 	  * @param tableNames
@@ -59,7 +57,6 @@ public class GeneratorService {
 	public byte[] generatorCode(String[] tableNames,GenVo genVo){
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		ZipOutputStream zip = new ZipOutputStream(outputStream);
-
 		for(String tableName : tableNames){
 			//查询表信息
 			TsysTables table = generatorMapper.queryTable(tableName);

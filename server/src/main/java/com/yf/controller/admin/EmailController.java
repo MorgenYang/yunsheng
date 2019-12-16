@@ -25,8 +25,6 @@ import io.swagger.annotations.Api;
 
 /**
  * 邮件发送Controller
- * @ClassName: EmailController
- * @author yf
  */
 @Controller
 @Api(value = "邮件发送Controller")

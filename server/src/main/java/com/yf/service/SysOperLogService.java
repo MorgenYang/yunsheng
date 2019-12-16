@@ -1,8 +1,7 @@
 package com.yf.service;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yf.common.base.BaseService;
 import com.yf.common.support.Convert;
 import com.yf.mapper.auto.TsysOperLogMapper;
@@ -10,8 +9,10 @@ import com.yf.model.auto.TsysOperLog;
 import com.yf.model.auto.TsysOperLogExample;
 import com.yf.model.custom.Tablepar;
 import com.yf.util.SnowflakeIdWorker;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SysOperLogService implements BaseService<TsysOperLog, TsysOperLogExample>{
@@ -19,11 +20,11 @@ public class SysOperLogService implements BaseService<TsysOperLog, TsysOperLogEx
 	//文件mapper
 	@Autowired
 	private TsysOperLogMapper tsysOperLogMapper;
-	
+
 	/**
 	 * 分页查询
-	 * @param pageNum
-	 * @param pageSize
+	 * @param tablepar
+	 * @param searchTxt
 	 * @return
 	 */
 	 public PageInfo<TsysOperLog> list(Tablepar tablepar,String searchTxt){
@@ -32,7 +33,6 @@ public class SysOperLogService implements BaseService<TsysOperLog, TsysOperLogEx
 	        if(searchTxt!=null&&!"".equals(searchTxt)){
 	        	testExample.createCriteria().andTitleLike("%"+searchTxt+"%");
 	        }
-
 	        PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());
 	        List<TsysOperLog> list= tsysOperLogMapper.selectByExample(testExample);
 	        PageInfo<TsysOperLog> pageInfo = new PageInfo<TsysOperLog>(list);
@@ -48,14 +48,8 @@ public class SysOperLogService implements BaseService<TsysOperLog, TsysOperLogEx
 		return tsysOperLogMapper.deleteByExample(example);
 	}
 
-
-	
-	
-
-
 	@Override
 	public TsysOperLog selectByPrimaryKey(String id) {
-		
 		return tsysOperLogMapper.selectByPrimaryKey(id);
 	}
 
@@ -70,34 +64,29 @@ public class SysOperLogService implements BaseService<TsysOperLog, TsysOperLogEx
 	
 	@Override
 	public int updateByExampleSelective(TsysOperLog record, TsysOperLogExample example) {
-		
 		return tsysOperLogMapper.updateByExampleSelective(record, example);
 	}
 
 	
 	@Override
 	public int updateByExample(TsysOperLog record, TsysOperLogExample example) {
-		
 		return tsysOperLogMapper.updateByExample(record, example);
 	}
 
 	@Override
 	public List<TsysOperLog> selectByExample(TsysOperLogExample example) {
-		
 		return tsysOperLogMapper.selectByExample(example);
 	}
 
 	
 	@Override
 	public long countByExample(TsysOperLogExample example) {
-		
 		return tsysOperLogMapper.countByExample(example);
 	}
 
 	
 	@Override
 	public int deleteByExample(TsysOperLogExample example) {
-		
 		return tsysOperLogMapper.deleteByExample(example);
 	}
 

@@ -1,16 +1,13 @@
 package com.yf.shiro.service;
 
-import java.io.IOException;
+import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
+import java.io.IOException;
 
 /**
  * 通过角色验证权限
- * @ClassName: ExtendRolesAuthorizationFilter
- * @author yf
- * @date 2018年8月26日
  *
  */
 public class ExtendRolesAuthorizationFilter  extends RolesAuthorizationFilter{

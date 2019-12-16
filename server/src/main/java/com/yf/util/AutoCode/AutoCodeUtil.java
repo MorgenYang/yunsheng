@@ -1,28 +1,18 @@
 package com.yf.util.AutoCode;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
+import cn.hutool.core.date.DateTime;
 import com.yf.model.custom.TsysTables;
 import com.yf.model.custom.autocode.AutoCodeConfig;
 import com.yf.model.custom.autocode.BeanColumn;
 import com.yf.model.custom.autocode.GlobalConfig;
 import com.yf.service.SysUtilService;
+import com.yf.util.SnowflakeIdWorker;
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-import com.yf.util.SnowflakeIdWorker;
-import cn.hutool.core.date.DateTime;
+import java.io.*;
+import java.util.*;
 
 /*
  * 自动生成
@@ -56,18 +46,14 @@ public class AutoCodeUtil {
 //	        templates.add("auto_code/说明.txt.vm");
 	        return templates;
 	    }
-
 	/**
 	 * 创建单表
-	 * @author yf
-	 * @Date 2019年8月24日 下午11:44:54
 	 */
 	public static void autoCodeOneModel(SysUtilService sysUtilService, TsysTables tables, List<BeanColumn> beanColumns, String conditionQueryField, String pid, int sqlcheck){
 		 //设置velocity资源加载器
         Properties prop = new Properties();
         prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader" );
         Velocity.init(prop);
-		
 		GlobalConfig globalConfig= AutoCodeConfig.getGlobalConfig();
 		Map<String, Object> map = new HashMap<>();
         //数据库表数据
@@ -85,7 +71,6 @@ public class AutoCodeUtil {
         //需要导入的java类
         map.put("JavaClassPackages", getJavaClassPackage(beanColumns));
         VelocityContext context = new VelocityContext(map);
-        
       //获取模板列表
         List<String> templates = getTemplates();
         for (String template : templates) {
@@ -103,15 +88,16 @@ public class AutoCodeUtil {
             			tpl.merge(context, sw);
             			System.out.println(sw);
         			}
-        			
         		}else {
         			String filepath=getCoverFileName(template,tables.getTableModel_a() ,tables.getTableModel(),globalConfig.getParentPack() , "model","gen");
     		        Template tpl = Velocity.getTemplate(template, "UTF-8" );
     				File file = new File(filepath);
-    				if (!file.getParentFile().exists())
-    		            file.getParentFile().mkdirs();
-    		        if (!file.exists())
+    				if (!file.getParentFile().exists()) {
+						file.getParentFile().mkdirs();
+					}
+    		        if (!file.exists()){
     		            file.createNewFile();
+    		        }
     		        FileOutputStream outStream = new FileOutputStream(file);
     		        OutputStreamWriter writer = new OutputStreamWriter(outStream,"UTF-8");
     		        BufferedWriter sw = new BufferedWriter(writer);
@@ -121,7 +107,6 @@ public class AutoCodeUtil {
     		        outStream.close();
     		        System.out.println("成功生成Java文件:"+filepath);
         		}
-	        	
         	} catch (IOException e) {
                 try {
 					throw new Exception("渲染模板失败，表名：" +tables.getTableName()+"\n"+e.getMessage());
@@ -132,8 +117,7 @@ public class AutoCodeUtil {
         }
 	}
 	
-	
-	
+
 	/**
      * 获取覆盖路径
      */
@@ -143,21 +127,18 @@ public class AutoCodeUtil {
         if (StringUtils.isNotBlank(packageName)) {
             packagePath += packageName.replace(".", File.separator) + File.separator;
         }
-
         if (template.contains("Entity.java.vm")) {//model
             return packagePath+moduleName +File.separator+ "auto" + File.separator + className + ".java";
         }
         if(template.contains("EntityExample.java.vm")) {//modelExample
         	return packagePath+moduleName +File.separator+ "auto" + File.separator + className + "Example.java";
         }
-        
         if (template.contains("EntityMapper.java.vm")) {//dao or  mapper
             return packagePath + "mapper" + File.separator + "auto" + File.separator + className + "Mapper.java";
         }
         if (template.contains("EntityMapper.xml.vm")) {//dao or  mapper
             return resourcesPath+"mybatis" + File.separator+"auto"+ File.separator + className + "Mapper.xml";
         }
-        
         if (template.contains("EntityService.java.vm")) {
             return packagePath + "service" + File.separator + className + "Service.java";
         }
@@ -174,7 +155,6 @@ public class AutoCodeUtil {
         if(template.contains("edit.html.vm")) {
        	 	return  resourcesPath+"templates"+File.separator + controller+File.separator + classname+File.separator +"edit.html";
         }
-        
         return null;
     }
 	
@@ -188,7 +168,6 @@ public class AutoCodeUtil {
      */
     public static void executeSQL(SysUtilService sysUtilService,String sql) {
     	int list= sysUtilService.executeSQL(sql);
-    	System.out.println(list);
     }
     
     /**
@@ -212,10 +191,8 @@ public class AutoCodeUtil {
     				time=true;
     				buffer.append("import com.fasterxml.jackson.annotation.JsonFormat;\n");
     			}
-    			
 			}
     	}
     	return buffer.toString();
     }
-	
 }

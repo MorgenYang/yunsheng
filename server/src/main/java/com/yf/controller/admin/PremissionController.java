@@ -12,20 +12,16 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 /**
  * 权限Controller
- * @author yf
  */
 @Controller
 @Api(value = "权限")
 @RequestMapping("PremissionController")
 public class PremissionController  extends BaseController{
-	
 
-	
 	//跳转页面参数
 	private String prefix = "admin/premission";
 	
@@ -130,7 +126,7 @@ public class PremissionController  extends BaseController{
 	
 	/**
 	 * 检查权限URL
-	 * @param tsysUser
+	 * @param tsysPermission
 	 * @return
 	 */
 	@PostMapping("checkURLUnique")
@@ -146,7 +142,7 @@ public class PremissionController  extends BaseController{
 	
 	/**
 	 * 检查权限perms字段
-	 * @param tsysUser
+	 * @param tsysPermission
 	 * @return
 	 */
 	@PostMapping("checkPermsUnique")
@@ -199,8 +195,7 @@ public class PremissionController  extends BaseController{
     	
     	return retobject(200, sysPermissionService.getbooBootstrapTreePerm(null));
     }
-    
-    
+
     /**
      * 根据角色id获取bootstarp 所有打勾权限
      * @param roleId 角色id集合
@@ -212,8 +207,7 @@ public class PremissionController  extends BaseController{
     	
     	return retobject(200, sysPermissionService.getCheckPrem(roleId));
     }
-    
-    
+
     /**
      * 跳转到菜单树页面
      * @return
@@ -233,6 +227,4 @@ public class PremissionController  extends BaseController{
     public AjaxResult Tree(@PathVariable("pid") String pid){
     	return retobject(200, sysPermissionService.getbooBootstrapTreePerm(null));
     }
-    
-    
 }

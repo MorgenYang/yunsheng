@@ -24,7 +24,6 @@ import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 /**
  * 权限配置文件
  * @ClassName: ShiroConfiguration
- * @author yf
  *
  */
 @Configuration

@@ -4,8 +4,7 @@ import java.io.Serializable;
 import java.lang.Integer;
 
 /**
- * 定时任务调度表 SysQuartzJob 
- * @author yf_自动生成
+ * 定时任务调度表 SysQuartzJob
  */
 public class SysQuartzJob implements Serializable {
 

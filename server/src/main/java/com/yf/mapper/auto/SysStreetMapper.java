@@ -2,14 +2,12 @@ package com.yf.mapper.auto;
 
 import com.yf.model.auto.SysStreet;
 import com.yf.model.auto.SysStreetExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 街道设置 SysStreetMapper
- * @author yf_自动生成
- * @email 115889198@qq.com
- * @date 2019-10-05 01:02:28
  */
 public interface SysStreetMapper {
       	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      

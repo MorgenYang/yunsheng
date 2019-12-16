@@ -1,25 +1,12 @@
-/**
-* @Title: URLPermissionsFilter.java
-* @Package com.fc.test.shiro.service
-* @author Administrator
-* @date 2018年8月26日
-* @version V1.0
-*/
 package com.yf.shiro.service;
 
-import java.io.IOException;
-
+import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
+import java.io.IOException;
 
 /**
  * 通过字符串验证权限
- * @ClassName: URLPermissionsFilter
- * @author yf
- * @date 2018年8月26日
- *
  */
 public class URLPermissionsFilter  extends PermissionsAuthorizationFilter {
 	/**

@@ -53,7 +53,6 @@ public class SysAreaService {
 	
 	
 	public SysArea selectByPrimaryKey(Integer id) {
-		
 		return sysAreaMapper.selectByPrimaryKey(id);
 	}
 

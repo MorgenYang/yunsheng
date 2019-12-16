@@ -53,7 +53,6 @@ public class SysQuartzJobLogService implements BaseService<SysQuartzJobLog, SysQ
 	
 	@Override
 	public SysQuartzJobLog selectByPrimaryKey(String id) {
-		
 		return sysQuartzJobLogMapper.selectByPrimaryKey(id);
 	}
 
@@ -76,34 +75,29 @@ public class SysQuartzJobLogService implements BaseService<SysQuartzJobLog, SysQ
 	
 	@Override
 	public int updateByExampleSelective(SysQuartzJobLog record, SysQuartzJobLogExample example) {
-		
 		return sysQuartzJobLogMapper.updateByExampleSelective(record, example);
 	}
 
 	
 	@Override
 	public int updateByExample(SysQuartzJobLog record, SysQuartzJobLogExample example) {
-		
 		return sysQuartzJobLogMapper.updateByExample(record, example);
 	}
 
 	@Override
 	public List<SysQuartzJobLog> selectByExample(SysQuartzJobLogExample example) {
-		
 		return sysQuartzJobLogMapper.selectByExample(example);
 	}
 
 	
 	@Override
 	public long countByExample(SysQuartzJobLogExample example) {
-		
 		return sysQuartzJobLogMapper.countByExample(example);
 	}
 
 	
 	@Override
 	public int deleteByExample(SysQuartzJobLogExample example) {
-		
 		return sysQuartzJobLogMapper.deleteByExample(example);
 	}
 	
@@ -118,6 +112,4 @@ public class SysQuartzJobLogService implements BaseService<SysQuartzJobLog, SysQ
 		List<SysQuartzJobLog> list=sysQuartzJobLogMapper.selectByExample(example);
 		return list.size();
 	}
-
-
 }

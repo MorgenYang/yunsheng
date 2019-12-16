@@ -20,7 +20,6 @@ import com.github.pagehelper.PageInfo;
 
 /**
  * 日志记录controller
- * @author yf
  */
 @Controller
 @Api(value = "日志记录")
@@ -55,7 +54,6 @@ public class LogController extends BaseController{
 		return  result;
 	}
 
-	
 	/**
 	 * 删除日志
 	 * @param ids
@@ -72,9 +70,4 @@ public class LogController extends BaseController{
 			return error();
 		}
 	}
-	
-	
-
-    
-    
 }

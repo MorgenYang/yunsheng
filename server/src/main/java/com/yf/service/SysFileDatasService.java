@@ -1,11 +1,5 @@
 package com.yf.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.yf.common.base.BaseService;
 import com.yf.common.support.Convert;
 import com.yf.mapper.auto.TsysDatasMapper;
@@ -14,6 +8,11 @@ import com.yf.model.auto.TsysDatas;
 import com.yf.model.auto.TsysFileData;
 import com.yf.model.auto.TsysFileDataExample;
 import com.yf.util.SnowflakeIdWorker;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class SysFileDatasService implements BaseService<TsysFileData, TsysFileDataExample>{
@@ -96,5 +95,4 @@ public class SysFileDatasService implements BaseService<TsysFileData, TsysFileDa
 		}
 		return list;
 	}
-
 }

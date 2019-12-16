@@ -6,7 +6,6 @@ import java.util.List;
 
 /**
  * 街道设置 SysStreetExample
- * @author yf_自动生成
  */
 public class SysStreetExample {
 

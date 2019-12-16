@@ -4,11 +4,8 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 /**
- * 项目启动方法
- * @author yf
- *
+ * 项目启动
  */
 @SpringBootApplication
 @MapperScan(value = "com.yf.mapper")

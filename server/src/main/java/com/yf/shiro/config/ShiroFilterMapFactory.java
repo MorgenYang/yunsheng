@@ -3,13 +3,7 @@ package com.yf.shiro.config;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * @ClassName: ShiroFilterMapFactory
- * @author yf
- *
- */
 public class ShiroFilterMapFactory {
-	
 /**
 anon:例子/admins/**=anon 没有参数，表示可以匿名使用。
 
@@ -30,9 +24,7 @@ authcBasic：例如/admins/user/**=authcBasic没有参数表示httpBasic认证
 ssl:例子/admins/user/**=ssl没有参数，表示安全的url请求，协议为https
 
 user:例如/admins/user/**=user没有参数表示必须存在用户，当登入操作时不做检查
-
 */
-	
 	public static Map<String, String> shiroFilterMap() {
 //		设置路径映射，注意这里要用LinkedHashMap 保证有序
 		LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
@@ -47,10 +39,8 @@ user:例如/admins/user/**=user没有参数表示必须存在用户，当登入�
 		filterChainDefinitionMap.put("/druid/**", "anon");
 		//释放websocket请求
 		filterChainDefinitionMap.put("/websocket", "anon");
-
 		//任务调度暂时放开
 		filterChainDefinitionMap.put("/quartz/**", "anon");
-		
 		//
 		//对所有页面进行认证
 		filterChainDefinitionMap.put("/**","authc");

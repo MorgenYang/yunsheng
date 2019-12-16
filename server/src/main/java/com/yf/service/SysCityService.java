@@ -34,7 +34,6 @@ public class SysCityService {
 	        if(name!=null&&!"".equals(name)){
 	        	testExample.createCriteria().andCityNameLike("%"+name+"%");
 	        }
-
 	        PageHelper.startPage(tablepar.getPageNum(), tablepar.getPageSize());
 	        List<SysCity> list= sysCityMapper.selectByExample(testExample);
 	        PageInfo<SysCity> pageInfo = new PageInfo<SysCity>(list);
@@ -75,34 +74,29 @@ public class SysCityService {
 	
 	
 	public int updateByExampleSelective(SysCity record, SysCityExample example) {
-		
 		return sysCityMapper.updateByExampleSelective(record, example);
 	}
 
 	
 	
 	public int updateByExample(SysCity record, SysCityExample example) {
-		
 		return sysCityMapper.updateByExample(record, example);
 	}
 
 	
 	public List<SysCity> selectByExample(SysCityExample example) {
-		
 		return sysCityMapper.selectByExample(example);
 	}
 
 	
 	
 	public long countByExample(SysCityExample example) {
-		
 		return sysCityMapper.countByExample(example);
 	}
 
 	
 	
 	public int deleteByExample(SysCityExample example) {
-		
 		return sysCityMapper.deleteByExample(example);
 	}
 	
@@ -117,6 +111,4 @@ public class SysCityService {
 		List<SysCity> list=sysCityMapper.selectByExample(example);
 		return list.size();
 	}
-
-
 }

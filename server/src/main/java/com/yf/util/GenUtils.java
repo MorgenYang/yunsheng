@@ -27,10 +27,6 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * 代码生成器   工具类
- *
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2016年12月19日 下午11:40:24
  */
 public class GenUtils {
 	
@@ -38,19 +34,6 @@ public class GenUtils {
 
     public static List<String> getTemplates(){
         List<String> templates = new ArrayList<String>();
-        /*
-        templates.add("generator/template/Entity.java.vm");
-        templates.add("generator/template/Dao.java.vm");
-        templates.add("generator/template/Dao.xml.vm");
-        templates.add("generator/template/Service.java.vm");
-        templates.add("generator/template/ServiceImpl.java.vm");
-        templates.add("generator/template/Controller.java.vm");
-        templates.add("generator/template/menu.sql.vm");
-
-        templates.add("generator/template/index.vue.vm");
-        templates.add("generator/template/add-or-update.vue.vm");
-*/
-        
         templates.add("generator/template/model/Entity.java.vm");
         templates.add("generator/template/model/EntityExample.java.vm");
         templates.add("generator/template/mapperxml/EntityMapper.xml.vm");
@@ -157,8 +140,6 @@ public class GenUtils {
         //获取模板列表
         List<String> templates = getTemplates();
         for (String template : templates) {
-            
-
             try {
                 //添加到zip
             	if(com.yf.util.StringUtils.isNotNull(genVo.getIsdown())) {
@@ -166,10 +147,12 @@ public class GenUtils {
             		if(com.yf.util.StringUtils.isNotNull(filepath)) {
             			Template tpl = Velocity.getTemplate(template, "UTF-8" );
             			File file = new File(filepath);
-                		if (!file.getParentFile().exists())
+                		if (!file.getParentFile().exists()) {
                             file.getParentFile().mkdirs();
-                        if (!file.exists())
+                        }
+                        if (!file.exists()) {
                             file.createNewFile();
+                        }
                         FileOutputStream outStream = new FileOutputStream(file);
                         OutputStreamWriter writer = new OutputStreamWriter(outStream,"UTF-8");
                         BufferedWriter sw = new BufferedWriter(writer);
@@ -195,7 +178,6 @@ public class GenUtils {
                     StringWriter sw = new StringWriter();
                     Template tpl = Velocity.getTemplate(template, "UTF-8" );
                     tpl.merge(context, sw);
-            		
             		zip.putNextEntry(new ZipEntry(getFileName(template,tableEntity.getClassname() ,tableEntity.getClassName(), config.getString("package" ), config.getString("moduleName" ),config.getString("controller_permission_key"))));
                     IOUtils.write(sw.toString(), zip, "UTF-8" );
                     IOUtils.closeQuietly(sw);
@@ -251,7 +233,6 @@ public class GenUtils {
         if (StringUtils.isNotBlank(packageName)) {
             packagePath += packageName.replace(".", File.separator) + File.separator;
         }
-
         if (template.contains("Entity.java.vm")) {//model
             return packagePath+moduleName +File.separator+ "auto" + File.separator + className + ".java";
         }
@@ -299,7 +280,6 @@ public class GenUtils {
         if (StringUtils.isNotBlank(packageName)) {
             packagePath += packageName.replace(".", File.separator) + File.separator;
         }
-
         if (template.contains("Entity.java.vm")) {//model
             return packagePath+moduleName +File.separator+ "auto" + File.separator + className + ".java";
         }
@@ -331,5 +311,4 @@ public class GenUtils {
         }
         return null;
     }
-    
 }

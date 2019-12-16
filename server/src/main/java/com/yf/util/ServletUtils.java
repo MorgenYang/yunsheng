@@ -1,23 +1,21 @@
 package com.yf.util;
 
-import java.io.IOException;
+import cn.hutool.core.convert.Convert;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import cn.hutool.core.convert.Convert;
+import java.io.IOException;
 
 /**
  * 客户端工具类
  * @author yf 
  * @date: 2018年9月30日 下午2:10:48
  */
-public class ServletUtils
-{
+public class ServletUtils{
     /**
      * 获取String参数
      */
@@ -29,8 +27,7 @@ public class ServletUtils
     /**
      * 获取String参数
      */
-    public static String getParameter(String name, String defaultValue)
-    {
+    public static String getParameter(String name, String defaultValue){
         return Convert.toStr(getRequest().getParameter(name), defaultValue);
     }
 

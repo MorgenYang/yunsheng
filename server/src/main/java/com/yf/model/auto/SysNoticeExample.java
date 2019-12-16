@@ -6,7 +6,6 @@ import java.util.List;
 
 /**
  * 公告 SysNoticeExample
- * @author yf_自动生成
  */
 public class SysNoticeExample {
 

@@ -12,8 +12,6 @@ import io.swagger.annotations.Api;
 
 /**
  * 服务器信息Controller
- * @ClassName: ServiceController
- * @author yf
  */
 @Controller
 @Api(value = "服务器信息")
@@ -25,14 +23,10 @@ public class ServiceController extends BaseController{
 	
 	@GetMapping("view")
 	@RequiresPermissions("system:service:view")
-    public String view(ModelMap model)
-    {	
-		
+    public String view(ModelMap model){
 		String str="服务器";
 		setTitle(model, new TitleVo("列表", str+"管理", true,"欢迎进入"+str+"页面", true, false));
-		
 		model.addAttribute("service", new Service());
-		
         return prefix + "/list";
     }
 }

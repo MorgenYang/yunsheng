@@ -14,7 +14,6 @@ import com.yf.util.SnowflakeIdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -51,12 +50,6 @@ public class SysDatasService implements BaseService<TsysDatas, TsysDatasExample>
 		example.createCriteria().andIdIn(lista);
 		return tsysDatasMapper.deleteByExample(example);
 	}
-	
-	
-	
-	
-	
-	
 	/**
 	 * 文件上传文件存储到文件表
 	 * @param file
@@ -73,33 +66,25 @@ public class SysDatasService implements BaseService<TsysDatas, TsysDatasExample>
 		}else {
 			filesURL=V2Config.getProfile()+files;
 		}
-        
-        
 		TsysDatas record=new TsysDatas();
 		//添加雪花主键id
 		record.setId(SnowflakeIdWorker.getUUID());
 		record.setFilePath(filesURL);
-		if(tsysDatasMapper.insertSelective(record)>0)
-		{
+		if(tsysDatasMapper.insertSelective(record)>0){
 			return record.getId();
 		}
 		return null;
 	}
-	
 	@Override
 	public int insertSelective(TsysDatas record) {
 		//添加雪花主键id
 		record.setId(SnowflakeIdWorker.getUUID());
 		return tsysDatasMapper.insertSelective(record);
 	}
-
 	@Override
 	public TsysDatas selectByPrimaryKey(String id) {
-		
 		return tsysDatasMapper.selectByPrimaryKey(id);
 	}
-
-	
 	@Override
 	public int updateByPrimaryKeySelective(TsysDatas record) {
 		return tsysDatasMapper.updateByPrimaryKeySelective(record);
@@ -108,41 +93,27 @@ public class SysDatasService implements BaseService<TsysDatas, TsysDatasExample>
 	public int updateByPrimaryKey(TsysDatas record) {
 		return tsysDatasMapper.updateByPrimaryKey(record);
 	}
-
-	
 	@Override
 	public int updateByExampleSelective(TsysDatas record, TsysDatasExample example) {
-		
 		return tsysDatasMapper.updateByExampleSelective(record, example);
 	}
-
 	
 	@Override
 	public int updateByExample(TsysDatas record, TsysDatasExample example) {
-		
 		return tsysDatasMapper.updateByExample(record, example);
 	}
-
 	@Override
 	public List<TsysDatas> selectByExample(TsysDatasExample example) {
-		
 		return tsysDatasMapper.selectByExample(example);
 	}
-
 	
 	@Override
 	public long countByExample(TsysDatasExample example) {
-		
 		return tsysDatasMapper.countByExample(example);
 	}
-
 	
 	@Override
 	public int deleteByExample(TsysDatasExample example) {
-		
 		return tsysDatasMapper.deleteByExample(example);
 	}
-	
-
-	
 }

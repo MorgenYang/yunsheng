@@ -29,8 +29,6 @@ import java.util.List;
 
 /**
  *代码自动生成
-* @ClassName: AutoCodeController
-* @author yf
 *
  */
 @Controller

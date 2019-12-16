@@ -1,12 +1,8 @@
 package com.yf.service;
 
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ClassUtils;
+import cn.hutool.core.io.FileUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yf.common.base.BaseService;
 import com.yf.common.conf.V2Config;
 import com.yf.common.support.Convert;
@@ -14,19 +10,17 @@ import com.yf.mapper.auto.TsysDatasMapper;
 import com.yf.mapper.auto.TsysFileDataMapper;
 import com.yf.mapper.auto.TsysFileMapper;
 import com.yf.mapper.custom.TsysDatasDao;
-import com.yf.model.auto.TsysDatas;
-import com.yf.model.auto.TsysDatasExample;
-import com.yf.model.auto.TsysFile;
-import com.yf.model.auto.TsysFileData;
-import com.yf.model.auto.TsysFileDataExample;
-import com.yf.model.auto.TsysFileExample;
+import com.yf.model.auto.*;
 import com.yf.model.custom.Tablepar;
 import com.yf.shiro.util.ShiroUtils;
 import com.yf.util.SnowflakeIdWorker;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ClassUtils;
 
-import cn.hutool.core.io.FileUtil;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class SysFileService implements BaseService<TsysFile, TsysFileExample>{
@@ -47,8 +41,8 @@ public class SysFileService implements BaseService<TsysFile, TsysFileExample>{
 	
 	/**
 	 * 分页查询
-	 * @param pageNum
-	 * @param pageSize
+	 * @param tablepar
+	 * @param searchTxt
 	 * @return
 	 */
 	 public PageInfo<TsysFile> list(Tablepar tablepar,String searchTxt){
@@ -68,6 +62,7 @@ public class SysFileService implements BaseService<TsysFile, TsysFileExample>{
 	 * 删除文件信息全部
 	 * @param ids 文件集合 1,2,3
 	 */
+	@Override
 	@Transactional
 	public int deleteByPrimaryKey(String ids) {
 		List<String> lista=Convert.toListStrArray(ids);
@@ -118,13 +113,10 @@ public class SysFileService implements BaseService<TsysFile, TsysFileExample>{
 	public void deletefile(String filePath) {
 		if("Y".equals(V2Config.getIsstatic())) {
 			String url=ClassUtils.getDefaultClassLoader().getResource("").getPath()+filePath;
-			
 			FileUtil.del(url);
 		}else {
 			FileUtil.del(filePath);
 		}
-		
-		
 	}
 
 	
@@ -150,7 +142,6 @@ public class SysFileService implements BaseService<TsysFile, TsysFileExample>{
 
 	@Override
 	public TsysFile selectByPrimaryKey(String id) {
-		
 		return tsysFileMapper.selectByPrimaryKey(id);
 	}
 
@@ -169,20 +160,16 @@ public class SysFileService implements BaseService<TsysFile, TsysFileExample>{
 	public int updateByPrimaryKey(TsysFile record,String dataId) {
 		//获取旧数据
 		TsysFile old_data=tsysFileMapper.selectByPrimaryKey(record.getId());
-		
 		//删除绑定数据
 		TsysFileDataExample fileDataExample=new TsysFileDataExample();
 		fileDataExample.createCriteria().andFileIdEqualTo(record.getId());
 		tsysFileDataMapper.deleteByExample(fileDataExample);
-		
-		
 		//插入关联表
 		TsysFileData tsysFileData=new TsysFileData();
 		tsysFileData.setId(SnowflakeIdWorker.getUUID());
 		tsysFileData.setFileId(record.getId());
 		tsysFileData.setDataId(dataId);
 		tsysFileDataMapper.insert(tsysFileData);
-		
 		//修改旧数据
 		//插入修改人id
 		old_data.setUpdateUserId(ShiroUtils.getUserId());
@@ -190,48 +177,41 @@ public class SysFileService implements BaseService<TsysFile, TsysFileExample>{
 		old_data.setUpdateUserName(ShiroUtils.getLoginName());
 		//插入修改时间
 		old_data.setUpdateTime(new Date());
-		
-		
 		return tsysFileMapper.updateByPrimaryKey(old_data);
 	}
 
 	
 	@Override
 	public int updateByExampleSelective(TsysFile record, TsysFileExample example) {
-		
 		return tsysFileMapper.updateByExampleSelective(record, example);
 	}
 
 	
 	@Override
 	public int updateByExample(TsysFile record, TsysFileExample example) {
-		
 		return tsysFileMapper.updateByExample(record, example);
 	}
 
 	@Override
 	public List<TsysFile> selectByExample(TsysFileExample example) {
-		
 		return tsysFileMapper.selectByExample(example);
 	}
 
 	
 	@Override
 	public long countByExample(TsysFileExample example) {
-		
 		return tsysFileMapper.countByExample(example);
 	}
 
 	
 	@Override
 	public int deleteByExample(TsysFileExample example) {
-		
 		return tsysFileMapper.deleteByExample(example);
 	}
 	
 	/**
 	 * 检查文件名字
-	 * @param TsysFile
+	 * @param tsysFile
 	 * @return
 	 */
 	public int checkNameUnique(TsysFile tsysFile){
@@ -241,12 +221,9 @@ public class SysFileService implements BaseService<TsysFile, TsysFileExample>{
 		return list.size();
 	}
 
-	
 	//无用
 	@Override
 	public int insertSelective(TsysFile record) {
-		
 		return tsysFileMapper.insertSelective(record);
 	}
-	
 }

@@ -31,8 +31,7 @@ public class QuartzJobController extends BaseController{
 	
 	@GetMapping("view")
 	@RequiresPermissions("gen:sysQuartzJob:view")
-    public String view(ModelMap model)
-    {	
+    public String view(ModelMap model){
 		String str="定时任务调度表";
 		setTitle(model, new TitleVo("列表", str+"管理", true,"欢迎进入"+str+"页面", true, false));
         return prefix + "/list";
@@ -53,8 +52,7 @@ public class QuartzJobController extends BaseController{
      */
 
     @GetMapping("/add")
-    public String add(ModelMap modelMap)
-    {
+    public String add(ModelMap modelMap){
         return prefix + "/add";
     }
 	
@@ -113,10 +111,8 @@ public class QuartzJobController extends BaseController{
 	 * @return
 	 */
 	@GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") String id, ModelMap mmap)
-    {
+    public String edit(@PathVariable("id") String id, ModelMap mmap){
         mmap.put("SysQuartzJob", sysQuartzJobService.selectByPrimaryKey(id));
-
         return prefix + "/edit";
     }
 	
@@ -127,8 +123,7 @@ public class QuartzJobController extends BaseController{
     @RequiresPermissions("gen:sysQuartzJob:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(SysQuartzJob record)
-    {
+    public AjaxResult editSave(SysQuartzJob record){
         return toAjax(sysQuartzJobService.updateByPrimaryKeySelective(record));
     }
 
@@ -137,8 +132,7 @@ public class QuartzJobController extends BaseController{
      */
     @PostMapping("/changeStatus")
     @ResponseBody
-    public AjaxResult changeStatus(SysQuartzJob job) throws SchedulerException
-    {
+    public AjaxResult changeStatus(SysQuartzJob job) throws SchedulerException{
     	SysQuartzJob newJob = sysQuartzJobService.selectByPrimaryKey(job.getId());
         newJob.setStatus(job.getStatus());
         return toAjax(sysQuartzJobService.changeStatus(newJob));
@@ -149,8 +143,7 @@ public class QuartzJobController extends BaseController{
      */
     @PostMapping("/run")
     @ResponseBody
-    public AjaxResult run(SysQuartzJob job) throws SchedulerException
-    {
+    public AjaxResult run(SysQuartzJob job) throws SchedulerException{
     	SysQuartzJob newJob = sysQuartzJobService.selectByPrimaryKey(job.getId());
     	sysQuartzJobService.run(newJob);
         return success();

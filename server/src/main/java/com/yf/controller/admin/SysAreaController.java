@@ -90,7 +90,7 @@ public class SysAreaController extends BaseController{
 	
 	/**
 	 * 检查用户
-	 * @param tsysUser
+	 * @param sysArea
 	 * @return
 	 */
 	@PostMapping("checkNameUnique")

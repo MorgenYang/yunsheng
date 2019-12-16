@@ -2,15 +2,12 @@ package com.yf.mapper.auto;
 
 import com.yf.model.auto.TSysDictType;
 import com.yf.model.auto.TSysDictTypeExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 字典类型表
- * 
- * @author 一休
- * @email 438081243@qq.com
- * @date 2019-09-05 12:34:25
  */
 public interface TSysDictTypeMapper {
     long countByExample(TSysDictTypeExample example);

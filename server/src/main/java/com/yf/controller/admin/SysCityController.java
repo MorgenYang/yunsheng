@@ -90,7 +90,7 @@ public class SysCityController extends BaseController{
 	
 	/**
 	 * 检查用户
-	 * @param tsysUser
+	 * @param sysCity
 	 * @return
 	 */
 	@PostMapping("checkNameUnique")

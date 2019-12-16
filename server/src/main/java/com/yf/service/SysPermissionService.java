@@ -1,10 +1,7 @@
 package com.yf.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yf.common.base.BaseService;
 import com.yf.common.support.Convert;
 import com.yf.mapper.auto.TsysPermissionMapper;
@@ -18,10 +15,13 @@ import com.yf.model.custom.BootstrapTree;
 import com.yf.model.custom.Tablepar;
 import com.yf.util.SnowflakeIdWorker;
 import com.yf.util.StringUtils;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class SysPermissionService implements BaseService<TsysPermission, TsysPermissionExample>{
@@ -36,11 +36,11 @@ public class SysPermissionService implements BaseService<TsysPermission, TsysPer
 	//权限角色关联表
 	@Autowired
 	private TsysPermissionRoleMapper permissionRoleMapper;
-	
+
 	/**
 	 * 分页查询
-	 * @param pageNum
-	 * @param pageSize
+	 * @param tablepar
+	 * @param searchTxt
 	 * @return
 	 */
 	 public PageInfo<TsysPermission> list(Tablepar tablepar, String searchTxt){
@@ -71,8 +71,6 @@ public class SysPermissionService implements BaseService<TsysPermission, TsysPer
 	public int deleteByPrimaryKey(String ids) {
 		//转成集合
 		List<String> lista=Convert.toListStrArray(ids);
-		
-		
 		//判断角色是否删除去除
 		TsysPermissionRoleExample permissionRoleExample=new TsysPermissionRoleExample();
 		permissionRoleExample.createCriteria().andPermissionIdIn(lista);
@@ -80,7 +78,6 @@ public class SysPermissionService implements BaseService<TsysPermission, TsysPer
 		if(tsysPermissionRoles.size()>0) {//有角色外键
 			return -2;
 		}
-		
 		//判断是否有子集
 		TsysPermissionExample example=new TsysPermissionExample();
 		example.createCriteria().andIdIn(lista);
@@ -100,7 +97,6 @@ public class SysPermissionService implements BaseService<TsysPermission, TsysPer
 			}else {//删除失败
 				return 0;
 			}
-			
 		}
 	}
 
@@ -187,7 +183,7 @@ public class SysPermissionService implements BaseService<TsysPermission, TsysPer
 	
 	/**
 	 * 检查权限名字
-	 * @param tsysUser
+	 * @param tsysPermission
 	 * @return
 	 */
 	public int checkNameUnique(TsysPermission tsysPermission){
@@ -199,7 +195,7 @@ public class SysPermissionService implements BaseService<TsysPermission, TsysPer
 
 	/**
 	 * 检查权限URL
-	 * @param tsysUser
+	 * @param tsysPermission
 	 * @return
 	 */
 	public int checkURLUnique(TsysPermission tsysPermission){
@@ -211,7 +207,7 @@ public class SysPermissionService implements BaseService<TsysPermission, TsysPer
 
 	/**
 	 * 检查权限perms字段
-	 * @param tsysUser
+	 * @param tsysPermission
 	 * @return
 	 */
 	public int checkPermsUnique(TsysPermission tsysPermission){
@@ -351,8 +347,6 @@ public class SysPermissionService implements BaseService<TsysPermission, TsysPer
 	 * 根据权限字段查询是否存在
 	 * @param perms
 	 * @return
-	 * @author yf
-	 * @Date 2019年9月1日 上午2:06:31
 	 */
 	public Boolean queryLikePerms(String perms){
 		TsysPermissionExample example=new TsysPermissionExample();
@@ -360,6 +354,4 @@ public class SysPermissionService implements BaseService<TsysPermission, TsysPer
 		List<TsysPermission> list= tsysPermissionMapper.selectByExample(example);
         return list.size() > 0;
     }
-	
-	
 }

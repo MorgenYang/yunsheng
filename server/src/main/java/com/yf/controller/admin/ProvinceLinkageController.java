@@ -19,8 +19,6 @@ import java.util.List;
 
 /**
  * 省份联动controller
-* @ClassName: ProvinceLinkageController
-* @author yf
 *
  */
 @Controller

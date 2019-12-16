@@ -25,8 +25,7 @@ public class QuartzController extends BaseController{
 
 
 	@GetMapping("view")
-    public String view(ModelMap model)
-    {	
+    public String view(ModelMap model){
 		String str="定时器";
 		setTitle(model, new TitleVo("表达式生成", str+"管理", true,"欢迎进入"+str+"页面", true, false));
         return prefix + "/list";
@@ -40,10 +39,8 @@ public class QuartzController extends BaseController{
 	 */
 	@GetMapping("stop")
 	@ResponseBody
-	public Object stop(Model model, SysQuartzJob job)
-	{
-	return  scheduler.pauseJob(job);
-
+	public Object stop(Model model, SysQuartzJob job){
+		return  scheduler.pauseJob(job);
 	}
 
 
@@ -54,10 +51,8 @@ public class QuartzController extends BaseController{
 	 */
 	@GetMapping("resume")
 	@ResponseBody
-	public Object resume(Model model,SysQuartzJob job)
-	{
-	return  scheduler.resumeJob(job);
-
+	public Object resume(Model model,SysQuartzJob job){
+		return  scheduler.resumeJob(job);
 	}
 
 
@@ -68,11 +63,8 @@ public class QuartzController extends BaseController{
 	 */
 	@GetMapping("update")
 	@ResponseBody
-	public String update(Model model,SysQuartzJob job)
-	{
-
+	public String update(Model model,SysQuartzJob job){
 		scheduler.modifyJob(job);
-
 		return "success";
 	}
 
@@ -84,11 +76,8 @@ public class QuartzController extends BaseController{
 	 */
 	@GetMapping("delete")
 	@ResponseBody
-	public String delete(Model model,SysQuartzJob job)
-	{
-
+	public String delete(Model model,SysQuartzJob job){
 		scheduler.deleteJob(job);
-
 		return "success";
 	}
 }

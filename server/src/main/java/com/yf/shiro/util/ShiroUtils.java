@@ -7,19 +7,14 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
-
 import com.yf.model.auto.TsysUser;
 import com.yf.util.BeanUtils;
 import com.yf.util.StringUtils;
 
-
 /**
  * shiro 工具类
- *	
- * @author yf
  */
-public class ShiroUtils
-{
+public class ShiroUtils{
 
     public static Subject getSubjct()
     {

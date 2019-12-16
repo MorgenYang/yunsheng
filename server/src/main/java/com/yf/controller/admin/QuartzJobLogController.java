@@ -30,8 +30,7 @@ public class QuartzJobLogController extends BaseController{
 	
 	@GetMapping("view")
 	@RequiresPermissions("gen:sysQuartzJobLog:view")
-    public String view(ModelMap model)
-    {	
+    public String view(ModelMap model){
 		String str="定时任务调度日志表";
 		setTitle(model, new TitleVo("列表", str+"管理", true,"欢迎进入"+str+"页面", true, false));
         return prefix + "/list";
@@ -55,8 +54,7 @@ public class QuartzJobLogController extends BaseController{
 	 * @Date 2019年9月14日 下午11:50:42
 	 */
 	 @GetMapping("/detail/{id}")
-     public String detail(@PathVariable("id") String id,ModelMap modelMap)
-     {
+     public String detail(@PathVariable("id") String id,ModelMap modelMap){
 		SysQuartzJobLog log= sysQuartzJobLogService.selectByPrimaryKey(id);
 		modelMap.put("SysQuartzJobLog", log);
         return prefix + "/detail";

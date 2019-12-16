@@ -8,11 +8,6 @@ import java.util.Map;
 
 /**
  * 数据库接口
-* @Title: GeneratorMapper.java 
-* @Package com.fc.test.mapper.auto 
-* @author yf  
-* @date 2019年5月9日 上午12:31:13 
-* @version V1.0   
  */
 public interface GeneratorMapper {
 	/**

@@ -2,14 +2,12 @@ package com.yf.mapper.auto;
 
 import com.yf.model.auto.SysQuartzJob;
 import com.yf.model.auto.SysQuartzJobExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 定时任务调度表 SysQuartzJobMapper
- * @author yf_自动生成
- * @email 115889198@qq.com
- * @date 2019-09-13 00:03:35
  */
 public interface SysQuartzJobMapper {
       	      	   	      	   	      	   	      	   	      	   	      	   	      	   	      

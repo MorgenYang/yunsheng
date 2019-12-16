@@ -4,7 +4,6 @@ import com.yf.model.auto.TsysUser;
 
 /**
  * @ClassName: TsysUserDao
- * @author yf
  *
  */
 public interface TsysUserDao {

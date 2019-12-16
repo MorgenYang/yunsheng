@@ -90,7 +90,7 @@ public class SysStreetController extends BaseController{
 	
 	/**
 	 * 检查用户
-	 * @param tsysUser
+	 * @param sysStreet
 	 * @return
 	 */
 	@PostMapping("checkNameUnique")
