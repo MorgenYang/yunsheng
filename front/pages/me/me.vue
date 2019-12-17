@@ -84,7 +84,7 @@
 						id:6,
 						title:"关于我们",
 						imageSrc:"../../static/icon/settings/us.png",
-						linkUrl:""
+						linkUrl:"./about/about"
 					},
 					{
 						id:7,

@@ -95,6 +95,21 @@
            	// "enablePullDownRefresh" : true
            }
         }
+        ,{
+           "path" : "pages/me/about/about",
+           "navigationBarTextStyle":"black",
+           "style" : {
+           	"navigationBarTitleText": "关于我们",
+           	 "app-plus" : {
+           		"titleNView" : {
+           			"titleText":"关于我们",
+           			"titleColor":"white"
+           		}
+           	},
+           	"navigationBarBackgroundColor":"#A2DEFA"
+           	// "enablePullDownRefresh" : true
+           }
+        }
     ],
 	"tabBar" : {
 	        "color" : "#bfbfbf",
