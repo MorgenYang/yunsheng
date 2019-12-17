@@ -4,7 +4,7 @@
 			<image class="feedback-title-img"  src="../../../static/icon/settings/icon.png"></image>
 			<text class="feedback-title">反馈信息</text>
 		</view>
-		<textarea class="feedback-border textarea" placeholder="请留下您的反馈内容"  placeholder-style='color:#ccc'  maxlength="200" @input="limitNum" />
+		<textarea class="feedback-border textarea" placeholder="请留下您的反馈内容"  placeholder-style='color:#ccc;font-size:13px'  maxlength="200" @input="limitNum" />
 		<text class="text-num">{{inputLength}}/200字</text>
 		
 		<input class="feedback-border contact-input" placeholder="您的联系方式(手机号、微信号、邮箱......)" placeholder-class="hint-color" />

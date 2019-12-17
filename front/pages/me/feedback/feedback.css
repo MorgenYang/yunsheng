@@ -4,7 +4,7 @@
 	margin-right: 40upx;
 }
 .feedback-title{
-	font-size: 16px;
+	font-size: 15px;
 	color:#A2DEFA;
 }
 .feedback-title-img{
@@ -13,13 +13,15 @@
 	margin-right: 10upx;
 }
 .feedback-border{
-	border:0.5upx solid #A8A8A8;
+	border:1upx solid #E6E6E6;
 	border-radius:6upx;
 }
 .textarea{
 	margin-top:30upx;
 	height: 300upx;
 	padding: 30upx;
+	width: 610upx;
+	font-size:13px ;
 }
 .text-num{
 	padding-top: 10upx;
@@ -27,19 +29,23 @@
 	justify-content: flex-end;
 	color: #B4B4B4;
 	margin-bottom: 20upx;
+	font-size:13px ;
 }
 .contact-input{
 	padding: 20upx;
+	font-size:13px ;
+	border:1upx solid #E6E6E6;
 }
 .hint-color{
 	color: #B5B5B5;
+	font-size:13px;
 }
 .feedback-hint{
 	display: flex;
 	flex-flow: row;
 	justify-content: center;
-	color: #C1C1C1;
-	font-size:16px ;
+	color: #828282;
+	font-size:14px ;
 }
 .top{
 	padding-top: 40upx;

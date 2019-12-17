@@ -110,6 +110,21 @@
            	// "enablePullDownRefresh" : true
            }
         }
+        ,{
+            "path" : "pages/me/healthRecord/healthRecord",
+            "navigationBarTextStyle":"black",
+            "style" : {
+            	"navigationBarTitleText": "健康档案",
+            	 "app-plus" : {
+            		"titleNView" : {
+            			"titleText":"健康档案",
+            			"titleColor":"white"
+            		}
+            	},
+            	"navigationBarBackgroundColor":"#A2DEFA"
+            	// "enablePullDownRefresh" : true
+            }
+        }
     ],
 	"tabBar" : {
 	        "color" : "#bfbfbf",

@@ -48,7 +48,7 @@
 						id:0,
 						title:"健康档案",
 						imageSrc:"../../static/icon/settings/health-record.png",
-						linkUrl:""
+						linkUrl:"./healthRecord/healthRecord"
 					},
 					{
 						id:1,
