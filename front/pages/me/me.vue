@@ -65,14 +65,14 @@
 					{
 						id:3,
 						title:"个人设置",
-						imageSrc:"../../static/icon/settings/feedback.png",
+						imageSrc:"../../static/icon/settings/settings.png",
 						linkUrl:"./setting/setting"
 					},
 					{
 						id:4,
 						title:"意见反馈",
-						imageSrc:"../../static/icon/settings/health-record.png",
-						linkUrl:""
+						imageSrc:"../../static/icon/settings/feedback.png",
+						linkUrl:"./feedback/feedback"
 					},
 					{
 						id:5,

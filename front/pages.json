@@ -80,6 +80,21 @@
 				// "enablePullDownRefresh" : true
 			}
         }
+        ,{
+           "path" : "pages/me/feedback/feedback",
+           "navigationBarTextStyle":"black",
+           "style" : {
+           	"navigationBarTitleText": "意见反馈",
+           	 "app-plus" : {
+           		"titleNView" : {
+           			"titleText":"意见反馈",
+           			"titleColor":"white"
+           		}
+           	},
+           	"navigationBarBackgroundColor":"#A2DEFA"
+           	// "enablePullDownRefresh" : true
+           }
+        }
     ],
 	"tabBar" : {
 	        "color" : "#bfbfbf",
