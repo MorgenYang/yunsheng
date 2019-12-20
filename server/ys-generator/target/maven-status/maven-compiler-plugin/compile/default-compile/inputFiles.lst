@@ -1,0 +1,13 @@
+E:\manager\ys-generator\src\main\java\com\ys\generator\domain\GenTable.java
+E:\manager\ys-generator\src\main\java\com\ys\generator\config\GenConfig.java
+E:\manager\ys-generator\src\main\java\com\ys\generator\controller\GenController.java
+E:\manager\ys-generator\src\main\java\com\ys\generator\mapper\GenTableColumnMapper.java
+E:\manager\ys-generator\src\main\java\com\ys\generator\mapper\GenTableMapper.java
+E:\manager\ys-generator\src\main\java\com\ys\generator\service\IGenTableColumnService.java
+E:\manager\ys-generator\src\main\java\com\ys\generator\service\IGenTableService.java
+E:\manager\ys-generator\src\main\java\com\ys\generator\domain\GenTableColumn.java
+E:\manager\ys-generator\src\main\java\com\ys\generator\util\VelocityInitializer.java
+E:\manager\ys-generator\src\main\java\com\ys\generator\util\VelocityUtils.java
+E:\manager\ys-generator\src\main\java\com\ys\generator\util\GenUtils.java
+E:\manager\ys-generator\src\main\java\com\ys\generator\service\impl\GenTableColumnServiceImpl.java
+E:\manager\ys-generator\src\main\java\com\ys\generator\service\impl\GenTableServiceImpl.java
