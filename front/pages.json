@@ -80,6 +80,51 @@
 				// "enablePullDownRefresh" : true
 			}
         }
+        ,{
+           "path" : "pages/me/feedback/feedback",
+           "navigationBarTextStyle":"black",
+           "style" : {
+           	"navigationBarTitleText": "意见反馈",
+           	 "app-plus" : {
+           		"titleNView" : {
+           			"titleText":"意见反馈",
+           			"titleColor":"white"
+           		}
+           	},
+           	"navigationBarBackgroundColor":"#A2DEFA"
+           	// "enablePullDownRefresh" : true
+           }
+        }
+        ,{
+           "path" : "pages/me/about/about",
+           "navigationBarTextStyle":"black",
+           "style" : {
+           	"navigationBarTitleText": "关于我们",
+           	 "app-plus" : {
+           		"titleNView" : {
+           			"titleText":"关于我们",
+           			"titleColor":"white"
+           		}
+           	},
+           	"navigationBarBackgroundColor":"#A2DEFA"
+           	// "enablePullDownRefresh" : true
+           }
+        }
+        ,{
+            "path" : "pages/me/healthRecord/healthRecord",
+            "navigationBarTextStyle":"black",
+            "style" : {
+            	"navigationBarTitleText": "健康档案",
+            	 "app-plus" : {
+            		"titleNView" : {
+            			"titleText":"健康档案",
+            			"titleColor":"white"
+            		}
+            	},
+            	"navigationBarBackgroundColor":"#A2DEFA"
+            	// "enablePullDownRefresh" : true
+            }
+        }
     ],
 	"tabBar" : {
 	        "color" : "#bfbfbf",

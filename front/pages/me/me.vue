@@ -48,7 +48,7 @@
 						id:0,
 						title:"健康档案",
 						imageSrc:"../../static/icon/settings/health-record.png",
-						linkUrl:""
+						linkUrl:"./healthRecord/healthRecord"
 					},
 					{
 						id:1,
@@ -65,14 +65,14 @@
 					{
 						id:3,
 						title:"个人设置",
-						imageSrc:"../../static/icon/settings/feedback.png",
+						imageSrc:"../../static/icon/settings/settings.png",
 						linkUrl:"./setting/setting"
 					},
 					{
 						id:4,
 						title:"意见反馈",
-						imageSrc:"../../static/icon/settings/health-record.png",
-						linkUrl:""
+						imageSrc:"../../static/icon/settings/feedback.png",
+						linkUrl:"./feedback/feedback"
 					},
 					{
 						id:5,
@@ -84,7 +84,7 @@
 						id:6,
 						title:"关于我们",
 						imageSrc:"../../static/icon/settings/us.png",
-						linkUrl:""
+						linkUrl:"./about/about"
 					},
 					{
 						id:7,
