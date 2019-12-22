@@ -166,7 +166,6 @@ var mode = "history";
 var historyPath = storage.get("historyPath");
 // 排除非左侧菜单链接
 var excludesUrl = ["/system/user/profile"];
-
 // 本地主题优先，未设置取系统配置
 if($.common.isNotEmpty(skin)){
 	$("body").addClass(skin.split('|')[0]);
