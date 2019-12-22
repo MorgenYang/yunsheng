@@ -1,7 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="624cf150-d631-4dfd-9217-3e8c2fffb14a" name="Default Changelist" comment="" />
+    <list default="true" id="624cf150-d631-4dfd-9217-3e8c2fffb14a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/ys-admin/src/main/java/com/ys/web/controller/YsStudentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ys-admin/src/main/java/com/ys/web/domain/YsStudent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ys-admin/src/main/java/com/ys/web/mapper/YsStudentMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ys-admin/src/main/java/com/ys/web/service/IYsStudentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ys-admin/src/main/java/com/ys/web/service/impl/YsStudentServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ys-admin/src/main/resources/mapper/web/YsStudentMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ys-admin/src/main/resources/templates/web/student/add.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ys-admin/src/main/resources/templates/web/student/edit.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ys-admin/src/main/resources/templates/web/student/student.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/.mvn/wrapper/MavenWrapperDownloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/src/main/resources/application-druid.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/src/main/resources/application-druid.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/src/main/resources/static/css/login.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/src/main/resources/static/css/login.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/src/main/resources/static/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/src/main/resources/static/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/src/main/resources/static/img/login-background.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/src/main/resources/static/img/login-background.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/src/main/resources/static/ys.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/classes/application-druid.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/target/classes/application-druid.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/classes/static/css/login.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/target/classes/static/css/login.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/classes/static/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/target/classes/static/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/classes/static/img/login-background.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/target/classes/static/img/login-background.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/classes/static/ys.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/target/classes/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/target/classes/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/ys-admin.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/target/ys-admin.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/ys-admin.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/target/ys-admin.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-common/src/main/java/com/ys/common/utils/AddressUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/ys-common/src/main/java/com/ys/common/utils/AddressUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-common/target/classes/com/ys/common/utils/AddressUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/ys-common/target/classes/com/ys/common/utils/AddressUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-common/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ys-common/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-common/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ys-common/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-common/target/ys-common-4.1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ys-common/target/ys-common-4.1.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-framework/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ys-framework/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-framework/target/classes/application-druid.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-framework/target/classes/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-framework/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ys-framework/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-framework/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ys-framework/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-framework/target/ys-framework-4.1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ys-framework/target/ys-framework-4.1.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-generator/src/main/resources/generator.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ys-generator/src/main/resources/generator.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-generator/src/main/resources/vm/java/controller.java.vm" beforeDir="false" afterPath="$PROJECT_DIR$/ys-generator/src/main/resources/vm/java/controller.java.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-generator/src/main/resources/vm/sql/sql.vm" beforeDir="false" afterPath="$PROJECT_DIR$/ys-generator/src/main/resources/vm/sql/sql.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-generator/target/classes/generator.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ys-generator/target/classes/generator.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-generator/target/classes/vm/java/controller.java.vm" beforeDir="false" afterPath="$PROJECT_DIR$/ys-generator/target/classes/vm/java/controller.java.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-generator/target/classes/vm/sql/sql.vm" beforeDir="false" afterPath="$PROJECT_DIR$/ys-generator/target/classes/vm/sql/sql.vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-generator/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ys-generator/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-generator/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ys-generator/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-generator/target/ys-generator-4.1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ys-generator/target/ys-generator-4.1.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-quartz/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ys-quartz/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-quartz/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ys-quartz/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-quartz/target/ys-quartz-4.1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ys-quartz/target/ys-quartz-4.1.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-system/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ys-system/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-system/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ys-system/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-system/target/ys-system-4.1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ys-system/target/ys-system-4.1.0.jar" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -11,12 +71,19 @@
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="$PROJECT_DIR$/../apache-maven-3.6.1" />
+        <option name="mavenHome" value="E:/apache-maven-3.6.1" />
         <option name="userSettingsFile" value="E:\apache-maven-3.6.1\conf\settings.xml" />
       </MavenGeneralSettings>
     </option>
@@ -37,7 +104,6 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
@@ -45,7 +111,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ys-admin/src/main/resources/static" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -55,6 +121,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\ys\yunsheng\server\ys-admin\src\main\resources\static" />
+      <recent name="E:\ys\yunsheng\server\ys-admin\src\main\resources\static\img" />
+      <recent name="E:\ys\yunsheng\server\ys-admin\src\main" />
+      <recent name="E:\ys\yunsheng\server\ys-modedata\src\main" />
       <recent name="E:\ys\yunsheng\manager\ys-framework\src\main\resources" />
     </key>
   </component>
@@ -71,8 +141,8 @@
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.ys.YSApplication" />
       <option name="WORKING_DIRECTORY" value="file://$MODULE_WORKING_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateResources" />
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateResources" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -88,11 +158,6 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="Spring Boot" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="Spring Boot" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="Finished" type="7427dc5b:ServiceModel$ServiceGroupNode" />
               </path>
             </expand>
             <select />
@@ -119,7 +184,20 @@
       <workItem from="1576722007170" duration="3728000" />
       <workItem from="1576741563841" duration="608000" />
       <workItem from="1576829899306" duration="2408000" />
+      <workItem from="1576833254210" duration="2035000" />
+      <workItem from="1576893330899" duration="935000" />
+      <workItem from="1576894939057" duration="3897000" />
+      <workItem from="1576911328020" duration="4958000" />
+      <workItem from="1577018782689" duration="38000" />
     </task>
+    <task id="LOCAL-00001" summary="add">
+      <created>1576834515682</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1576834515682</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,16 +205,26 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="add" />
+    <option name="LAST_COMMIT_MESSAGE" value="add" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="552" y="187" key="#Inspections" timestamp="1576895305498">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="552" y="187" key="#Inspections/0.0.1920.1050@0.0.1920.1050" timestamp="1576895305498" />
+    <state x="552" y="187" width="816" height="724" key="#Intentions" timestamp="1576895321329">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="552" y="187" width="816" height="724" key="#Intentions/0.0.1920.1050@0.0.1920.1050" timestamp="1576895321329" />
     <state x="552" y="186" key="#Project_Structure" timestamp="1576634895162">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="552" y="186" key="#Project_Structure/0.0.1920.1050@0.0.1920.1050" timestamp="1576634895162" />
-    <state x="414" y="183" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576685023616">
+    <state x="414" y="183" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576911613136">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="414" y="183" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1576685023616" />
+    <state x="414" y="183" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1576911613136" />
     <state x="717" y="231" key="#com.intellij.ide.util.MemberChooser" timestamp="1576632687848">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -145,46 +233,50 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="582" y="206" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1576683444475" />
-    <state x="640" y="254" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1576631094101">
+    <state x="640" y="254" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1576894822311">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="640" y="254" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1576631094101" />
+    <state x="640" y="254" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1576894822311" />
+    <state x="222" y="59" width="1519" height="957" key="CommitChangelistDialog2" timestamp="1576834496665">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="222" y="59" width="1519" height="957" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1576834496665" />
     <state x="740" y="283" key="FileChooserDialogImpl" timestamp="1576729660059">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="740" y="283" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1576729660059" />
-    <state width="1677" height="764" key="GridCell.Tab.0.bottom" timestamp="1576833108336">
+    <state width="1677" height="635" key="GridCell.Tab.0.bottom" timestamp="1577019493907">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1677" height="764" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1576833108336" />
-    <state width="1677" height="764" key="GridCell.Tab.0.center" timestamp="1576833108335">
+    <state width="1677" height="635" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1577019493907" />
+    <state width="1677" height="635" key="GridCell.Tab.0.center" timestamp="1577019493907">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1677" height="764" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1576833108335" />
-    <state width="1677" height="764" key="GridCell.Tab.0.left" timestamp="1576833108335">
+    <state width="1677" height="635" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1577019493907" />
+    <state width="1677" height="635" key="GridCell.Tab.0.left" timestamp="1577019493907">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1677" height="764" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1576833108335" />
-    <state width="1677" height="764" key="GridCell.Tab.0.right" timestamp="1576833108336">
+    <state width="1677" height="635" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1577019493907" />
+    <state width="1677" height="635" key="GridCell.Tab.0.right" timestamp="1577019493907">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1677" height="764" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1576833108336" />
-    <state width="1677" height="764" key="GridCell.Tab.1.bottom" timestamp="1576833108336">
+    <state width="1677" height="635" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1577019493907" />
+    <state width="1677" height="635" key="GridCell.Tab.1.bottom" timestamp="1577019493907">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1677" height="764" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1576833108336" />
-    <state width="1677" height="764" key="GridCell.Tab.1.center" timestamp="1576833108336">
+    <state width="1677" height="635" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1577019493907" />
+    <state width="1677" height="635" key="GridCell.Tab.1.center" timestamp="1577019493907">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1677" height="764" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1576833108336" />
-    <state width="1677" height="764" key="GridCell.Tab.1.left" timestamp="1576833108336">
+    <state width="1677" height="635" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1577019493907" />
+    <state width="1677" height="635" key="GridCell.Tab.1.left" timestamp="1577019493907">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1677" height="764" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1576833108336" />
-    <state width="1677" height="764" key="GridCell.Tab.1.right" timestamp="1576833108336">
+    <state width="1677" height="635" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1577019493907" />
+    <state width="1677" height="635" key="GridCell.Tab.1.right" timestamp="1577019493907">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1677" height="764" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1576833108336" />
+    <state width="1677" height="635" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1577019493907" />
     <state x="540" y="378" key="MavenRunHelper.GoalEditor" timestamp="1576682578574">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -193,21 +285,25 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="623" y="296" key="NewModule_or_Project.wizard/0.0.1920.1050@0.0.1920.1050" timestamp="1576683593397" />
-    <state x="463" y="170" key="SettingsEditor" timestamp="1576830377242">
+    <state x="463" y="170" key="SettingsEditor" timestamp="1576901198369">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="463" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1576830377242" />
-    <state x="647" y="285" width="626" height="480" key="find.popup" timestamp="1576829912531">
+    <state x="463" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1576901198369" />
+    <state x="552" y="261" key="Vcs.Push.Dialog.v2" timestamp="1576834572123">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="647" y="285" width="626" height="480" key="find.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1576829912531" />
-    <state x="334" y="232" key="new project wizard" timestamp="1576723509237">
+    <state x="552" y="261" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1576834572123" />
+    <state x="647" y="285" width="626" height="490" key="find.popup" timestamp="1576913602031">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="334" y="232" key="new project wizard/0.0.1920.1050@0.0.1920.1050" timestamp="1576723509237" />
-    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1576634234254">
+    <state x="647" y="285" width="626" height="490" key="find.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1576913602031" />
+    <state x="334" y="232" key="new project wizard" timestamp="1576895392888">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1576634234254" />
+    <state x="334" y="232" key="new project wizard/0.0.1920.1050@0.0.1920.1050" timestamp="1576895392888" />
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1576913598043">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1576913598043" />
   </component>
 </project>
