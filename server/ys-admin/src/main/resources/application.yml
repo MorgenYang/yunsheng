@@ -9,14 +9,14 @@ ys:
   # 实例演示开关
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/ys/uploadPath，Linux配置 /home/ys/uploadPath）
-  profile: D:/ys/uploadPath
+  profile: D:/home/ys/uploadPath
   # 获取ip地址开关
   addressEnabled: true
 
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为80
-  port: 80
+  port: 8080
   servlet:
     # 应用的访问路径
     context-path: /
@@ -98,7 +98,7 @@ shiro:
     # 验证码开关
     captchaEnabled: true
     # 验证码类型 math 数组计算 char 字符
-    captchaType: math
+    captchaType: char
   cookie:
     # 设置Cookie的域名 默认空，即当前访问的域名
     domain:

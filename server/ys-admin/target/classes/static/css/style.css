@@ -3427,7 +3427,9 @@ nav.page-tabs .page-tabs-content {
 }
 
 .no-margins {
-    margin: 0 !important;
+    color: #1c84c6;
+    font-size: 20pt;
+    text-align: center;
 }
 
 .no-top-border {
