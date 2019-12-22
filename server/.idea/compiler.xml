@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ys-admin" />
+        <module name="ys-generator" />
+        <module name="ys-framework" />
+        <module name="ys-quartz" />
+        <module name="ys-system" />
+        <module name="ys-common" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="manager" target="1.8" />
+      <module name="ys" target="1.8" />
+      <module name="ys-admin" target="1.8" />
+      <module name="ys-common" target="1.8" />
+      <module name="ys-framework" target="1.8" />
+      <module name="ys-generator" target="1.8" />
+      <module name="ys-quartz" target="1.8" />
+      <module name="ys-system" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
