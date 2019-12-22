@@ -248,11 +248,11 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="640" y="254" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1576894822311" />
-    <state x="296" y="0" width="1519" height="957" key="CommitChangelistDialog2" timestamp="1577023795999">
+    <state x="296" y="0" width="1519" height="957" key="CommitChangelistDialog2" timestamp="1577023851372">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="222" y="59" width="1519" height="957" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1577021752085" />
-    <state x="296" y="0" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1577023795999" />
+    <state x="296" y="0" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1577023851372" />
     <state x="740" y="283" key="FileChooserDialogImpl" timestamp="1576729660059">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -302,10 +302,11 @@
     </state>
     <state x="463" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1577021732685" />
     <state x="617" y="227" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1577023518549" />
-    <state x="552" y="261" key="Vcs.Push.Dialog.v2" timestamp="1577021756100">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="736" y="348" key="Vcs.Push.Dialog.v2" timestamp="1577023856328">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="552" y="261" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1577021756100" />
+    <state x="736" y="348" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1577023856328" />
     <state x="647" y="285" width="626" height="490" key="find.popup" timestamp="1576913602031">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
