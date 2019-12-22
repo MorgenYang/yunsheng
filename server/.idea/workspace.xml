@@ -2,17 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="624cf150-d631-4dfd-9217-3e8c2fffb14a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ys-admin/target/classes/com/ys/web/controller/YsStudentController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ys-admin/target/classes/com/ys/web/domain/YsStudent.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ys-admin/target/classes/com/ys/web/mapper/YsStudentMapper.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ys-admin/target/classes/com/ys/web/service/IYsStudentService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ys-admin/target/classes/com/ys/web/service/impl/YsStudentServiceImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ys-admin/target/classes/mapper/web/YsStudentMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ys-admin/target/classes/templates/web/student/add.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ys-admin/target/classes/templates/web/student/edit.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ys-admin/target/classes/templates/web/student/student.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ys-admin/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ys-admin/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ys-admin/target/classes/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +68,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -153,7 +145,7 @@
       <workItem from="1576894939057" duration="3897000" />
       <workItem from="1576911328020" duration="4958000" />
       <workItem from="1577018782689" duration="38000" />
-      <workItem from="1577019394435" duration="998000" />
+      <workItem from="1577019394435" duration="2342000" />
     </task>
     <task id="LOCAL-00001" summary="add">
       <created>1576834515682</created>
@@ -169,7 +161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1577019712134</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="修改登录页">
+      <created>1577020408044</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1577020408044</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,6 +200,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="552" y="187" width="816" height="724" key="#Intentions/0.0.1920.1050@0.0.1920.1050" timestamp="1576895321329" />
+    <state x="552" y="187" key="#Notifications" timestamp="1577020442321">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="552" y="187" key="#Notifications/0.0.1920.1050@0.0.1920.1050" timestamp="1577020442321" />
     <state x="552" y="186" key="#Project_Structure" timestamp="1576634895162">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -221,10 +224,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="640" y="254" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1576894822311" />
-    <state x="222" y="59" width="1519" height="957" key="CommitChangelistDialog2" timestamp="1577019704771">
+    <state x="222" y="59" width="1519" height="957" key="CommitChangelistDialog2" timestamp="1577020406518">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="222" y="59" width="1519" height="957" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1577019704771" />
+    <state x="222" y="59" width="1519" height="957" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1577020406518" />
     <state x="740" y="283" key="FileChooserDialogImpl" timestamp="1576729660059">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -269,14 +272,14 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="623" y="296" key="NewModule_or_Project.wizard/0.0.1920.1050@0.0.1920.1050" timestamp="1576683593397" />
-    <state x="463" y="170" key="SettingsEditor" timestamp="1576901198369">
+    <state x="463" y="170" key="SettingsEditor" timestamp="1577021732685">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="463" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1576901198369" />
-    <state x="552" y="261" key="Vcs.Push.Dialog.v2" timestamp="1576834572123">
+    <state x="463" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1577021732685" />
+    <state x="552" y="261" key="Vcs.Push.Dialog.v2" timestamp="1577020417818">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="552" y="261" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1576834572123" />
+    <state x="552" y="261" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1577020417818" />
     <state x="647" y="285" width="626" height="490" key="find.popup" timestamp="1576913602031">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
