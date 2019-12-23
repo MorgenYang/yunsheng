@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<image class="img" src="https://img.ivsky.com/img/tupian/pre/201808/14/hyundai_jianzhu-003.jpg"></image>
+		<image class="img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1577015160967&di=e05e5db70f325d30f7567e43058e80f6&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn%2Fw1000h1000%2F20180202%2F2ee3-fyrcsrx0017170.jpg"></image>
 		<view class="all-intro">
 			<image class="feedback-title-img"  src="../../../static/icon/settings/icon.png"></image>
 			<text class="feedback-title">云生健康管理(深圳)有限公司</text>

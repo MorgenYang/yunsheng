@@ -60,7 +60,7 @@
 						id:2,
 						title:"私人医生",
 						imageSrc:"../../static/icon/settings/doctor.png",
-						linkUrl:""
+						linkUrl:"./doctor/doctor"
 					},
 					{
 						id:3,
@@ -90,7 +90,7 @@
 						id:7,
 						title:"联系我们",
 						imageSrc:"../../static/icon/settings/connection.png",
-						linkUrl:""
+						linkUrl:"./contact/contact"
 					}					
 				]	
 			}

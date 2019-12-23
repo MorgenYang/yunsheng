@@ -125,6 +125,36 @@
             	// "enablePullDownRefresh" : true
             }
         }
+        ,{
+            "path" : "pages/me/contact/contact",
+            "navigationBarTextStyle":"black",
+            "style" : {
+            	"navigationBarTitleText": "联系我们",
+            	 "app-plus" : {
+            		"titleNView" : {
+            			"titleText":"联系我们",
+            			"titleColor":"white"
+            		}
+            	},
+            	"navigationBarBackgroundColor":"#A2DEFA"
+            	// "enablePullDownRefresh" : true
+            }
+        }
+        ,{
+            "path" : "pages/me/doctor/doctor",
+            "navigationBarTextStyle":"black",
+            "style" : {
+            	"navigationBarTitleText": "私人医生",
+            	 "app-plus" : {
+            		"titleNView" : {
+            			"titleText":"私人医生",
+            			"titleColor":"white"
+            		}
+            	},
+            	"navigationBarBackgroundColor":"#A2DEFA"
+            	// "enablePullDownRefresh" : true
+            }
+        }
     ],
 	"tabBar" : {
 	        "color" : "#bfbfbf",
