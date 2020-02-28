@@ -1,0 +1,119 @@
+.header{
+	background-color: #A2DEFA;
+	height: 240rpx;
+	width: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-align:center;
+	-webkit-align-items:center;
+	        align-items:center /*设置交叉轴的对齐方式*/
+}
+.user-img{
+	height: 160rpx;
+	width: 160rpx;
+	border-radius:50%;
+	border:6rpx solid white;
+	margin-left: 40rpx;
+	/* box-shadow:20upx 20upx 10upx #a2a2a3 ; */
+}
+.user-info{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	margin-left: 40rpx;
+}
+.user-name{
+	color: white;
+	font-size: 20px;
+}
+.user-other{
+	color: white;
+	padding-top: 20rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+}
+.user-gender{
+	font-size: 16px;
+}
+.user-age{
+	font-size: 16px;
+	padding-left: 30rpx;
+}
+.user-load{
+	position:absolute;
+	right:0rpx;
+}
+.arrows-right-user{
+	width: 30rpx;
+	height: 30rpx;
+	margin-right:50rpx;
+}
+.info-des{
+	color: black;
+	padding: 30rpx;
+	font-size: 12px;
+	font-weight:bold
+}
+.setting-body{
+	margin-top: 30rpx;
+	color: #A8A8A8;
+	padding-left: 40rpx;
+	padding-right: 40rpx;
+	margin-bottom: 100rpx;
+	font-size: 16px;
+}
+.setting-img{
+	width: 40rpx;
+	height: 40rpx;
+}
+.setting-line{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-flow: row;
+	        flex-flow: row;
+	-webkit-box-align:center;
+	-webkit-align-items:center;
+	        align-items:center;
+	height: 100rpx;
+	margin-bottom: 2rpx;
+}
+.setting-text{
+	margin-left: 30rpx;
+}
+.line{
+	background-color: #E4E4E4; 
+	height: 2rpx;
+	/*解决:ios5不显示*/
+	-webkit-transform: scale(0.99);
+	        transform: scale(0.99);
+	-webkit-transform-origin: 0 0;
+	        transform-origin: 0 0;
+}
+.arrows-right-setting{
+	width: 50rpx;
+	height: 50rpx;
+	position:absolute;
+	right:40rpx;
+}
+/*item的点击样式*/
+.setting-click{
+	background-color:#F5F5F5;
+}
+

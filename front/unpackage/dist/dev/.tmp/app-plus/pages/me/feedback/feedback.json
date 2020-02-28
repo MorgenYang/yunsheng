@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "意见反馈",
+  "navigationBarBackgroundColor": "#A2DEFA",
+  "titleNView": {
+    "titleText": "意见反馈",
+    "titleColor": "white"
+  },
+  "usingComponents": {}
+}

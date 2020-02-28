@@ -1,0 +1,232 @@
+
+.item-top{
+	background-color: #fff;
+	height: 20upx;
+}
+.item-bottom{
+	display:flex;
+	flex-direction: row;
+}
+.img{
+	width: 100%;
+	height: 100%;
+}
+.item{
+	width:92%;
+	margin-top: 20upx;
+	border-bottom-width: 1px;
+	border-color: #eee;
+	/* background-color: #fff; */
+	background-color: #FFFFFF;
+		display: flex;
+}
+
+/* 新闻列表  emmm 仅供参考 */
+.news-item{
+	height: 200upx;
+	flex-direction: row;
+	padding: 24upx 30upx;
+}
+.online-item{
+	flex-direction: column;
+	padding: 12upx 30upx;
+	/* height: 800upx; */
+}
+
+.item-right{
+	padding-left: 20upx;
+	overflow: hidden;
+}
+.item-title{
+	font-size: 30upx;
+	color: #303133;
+	height: 40upx;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.item-body{
+	font-size: 26upx;
+	height: 106upx;
+	margin-top: 10upx;
+	overflow: hidden;
+	display: -webkit-box;  
+	-webkit-box-orient: vertical; 
+	-webkit-line-clamp: 3; 
+	color: #aaa;
+}
+.bot{
+	flex-direction: row;
+	margin-top: 20upx;
+	justify-content: space-between;
+}
+.author{
+	font-size: 22upx;
+	color: #aaa;
+}
+.time{
+	font-size: 22upx;
+	color: #aaa;
+	margin-left: 20upx;
+	
+}
+.img-list{
+	flex-shrink: 0;
+	background-color: #fff;
+	width: 320upx;
+	height: 200upx;
+}
+
+.uni-scroll-view{
+	text-align: center;
+}
+
+.img-list-single{
+	width: 710upx;
+	height: 400upx;
+	margin: 16upx 20upx;
+}
+.play-btn{
+	 position: absolute;
+	 z-index: 99;
+	 width: 120upx;
+	 height: 120upx;
+	 margin-top: 210upx;
+	 margin-left:42%; 
+	-webkit-transition: .5s ease-in-out;/* css的transition允许css的属性值在一定的时间内从一个状态平滑的过渡到另一个状态 */
+	-moz-transition: .5s ease-in-out;/*这里为了兼容其他浏览器*/
+	 -o-transition: .5s ease-in-out;
+}
+.video-head{
+	display: flex;
+	flex-direction: row;
+	padding-top: 20upx;
+	padding-left: 20upx;
+}
+.video-title{
+	font-size: 28upx;
+}
+.title-img{
+	width: 30upx;
+	height: 30upx;
+	margin-top: 4upx;
+	margin-right: 10upx;
+}
+
+.item-video{
+	margin-top: 20upx;
+	background-color:#FFFFFF;
+}
+.online-head{
+	display: flex;
+	flex-direction: row;
+	height: 80upx;
+	width: 100%;
+	align-items: center;
+}
+.photo{
+	width:80upx;
+	height:80upx;
+	border-radius:50%;
+	border:0upx solid #A2DEFA;
+}
+.online-head-mid{
+	margin-left: 20upx;
+}
+.online-head-name{
+	padding-top: 6upx;
+	font-size: 26upx;
+}
+.online-head-other{
+	flex-direction: row;
+	padding-top: 4upx;
+	font-size: 14upx;
+}
+.onlie-head-space{
+	padding-left: 4upx;
+	padding-right: 4upx;
+}
+.online-head-attention{
+	width: 120upx;
+	height: 40upx;
+	font-size: 24upx;
+	border-radius: 20px;
+	margin-left: auto;
+	border:4upx solid #A2DEFA;
+	text-align: center;
+}
+.online-head-attention-cancel{
+	width: 120upx;
+	height: 40upx;
+	font-size: 24upx;
+	border-radius: 20px;
+	margin-left: auto;
+	border:4upx solid #aaa;
+	color:#aaa ;
+	text-align: center;
+}
+
+.text-one-line{
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.online-title{
+	padding-top: 10upx;
+	font-size: 26upx;
+	height: 40upx;
+}
+.online-context{
+	/*overflow: hidden;
+	display: -webkit-box;  
+	 -webkit-box-orient: vertical; 
+	-webkit-line-clamp: 3; */
+	color: #aaa;
+	font-size: 20upx;
+	padding-top: 10upx;
+	padding-bottom: 30upx;
+}
+
+.online-video-image{
+	width: 695upx;
+	height: 400upx;
+	border-radius:6upx;
+	/* border:10upx solid #A2DEFA; */
+}
+.online-video-play-btn{
+	 position: absolute;
+	 z-index: 99;
+	 width: 120upx;
+	 height: 120upx;
+	 margin-top: 330upx;
+	 margin-left:39%; 
+	-webkit-transition: .5s ease-in-out;/* css的transition允许css的属性值在一定的时间内从一个状态平滑的过渡到另一个状态 */
+	-moz-transition: .5s ease-in-out;/*这里为了兼容其他浏览器*/
+	 -o-transition: .5s ease-in-out;
+}
+.online-bottom{
+	display: flex;
+	flex-direction: row;
+	height: 40upx;
+	font-size: 24upx;
+	margin-top: 20upx;
+	margin-bottom: 10upx;
+}
+.online-icon-layout{
+	display: flex;
+	flex-direction: row;
+	margin-right: 30upx;	
+	align-items: center;
+}
+.online-icon{
+	width: 40upx;
+	height: 40upx;
+	margin-right: 10upx;
+}
+.online-icon-layout-right{
+	display: flex;
+	flex-direction: row;
+	margin-left: auto;
+}

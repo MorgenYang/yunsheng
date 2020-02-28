@@ -54,7 +54,7 @@
 						id:1,
 						title:"健康商城",
 						imageSrc:"../../static/icon/settings/store.png",
-						linkUrl:""
+						linkUrl:"./shop/shop"
 					},
 					{
 						id:2,

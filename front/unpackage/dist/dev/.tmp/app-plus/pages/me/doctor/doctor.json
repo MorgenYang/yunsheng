@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "私人医生",
+  "navigationBarBackgroundColor": "#A2DEFA",
+  "titleNView": {
+    "titleText": "私人医生",
+    "titleColor": "white"
+  },
+  "usingComponents": {}
+}

@@ -26,19 +26,32 @@
 				// "navigationBarTitleText": "uni-app"
 				"app-plus" : {
 					"titleNView" : false
-				}
+				}		
+				// "enablePullDownRefresh" : true
+			}
+		},
+		
+		{
+			"path": "pages/medical/medical",
+			"style": {
+				"navigationBarTitleText": "学术活动",
+				"navigationBarBackgroundColor":"#A2DEFA"
+				
+				/* "app-plus" : {
+					"titleNView" : false
+				} , */
+			
 				// "enablePullDownRefresh" : true
 			}
 		},
 		{
-			"path": "pages/medical/medical",
-			"style": {
-				// "navigationBarTitleText": "uni-app"
-				"app-plus" : {
-					"titleNView" : false
-				}
-				// "enablePullDownRefresh" : true
-			}
+		   "path" : "pages/medical/videoDetail",
+		   "navigationBarTextStyle":"black",
+		   "style" : {
+		   	"navigationBarTitleText": "视频",
+		   	"navigationBarBackgroundColor":"#A2DEFA"
+		   	// "enablePullDownRefresh" : true
+		   }
 		},
 		{
 			"path": "pages/meals/meals",
@@ -154,6 +167,20 @@
             	"navigationBarBackgroundColor":"#A2DEFA"
             	// "enablePullDownRefresh" : true
             }
+        },{
+           "path" : "pages/me/shop/shop",
+           "navigationBarTextStyle":"black",
+           "style" : {
+           	"navigationBarTitleText": "健康商城",
+           	 "app-plus" : {
+           		"titleNView" : {
+           			"titleText":"健康商城",
+           			"titleColor":"white"
+           		}
+           	},
+           	"navigationBarBackgroundColor":"#A2DEFA"
+           	// "enablePullDownRefresh" : true
+           }
         }
     ],
 	"tabBar" : {

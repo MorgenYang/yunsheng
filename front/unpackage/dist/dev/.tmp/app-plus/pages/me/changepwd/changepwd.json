@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "修改密码",
+  "navigationBarBackgroundColor": "#A2DEFA",
+  "titleNView": {
+    "titleText": "修改密码",
+    "titleColor": "white"
+  },
+  "usingComponents": {}
+}

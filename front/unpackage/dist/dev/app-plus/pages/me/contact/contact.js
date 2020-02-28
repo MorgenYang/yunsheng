@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"content{ display: -webkit-box; display: -webkit-flex; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -webkit-flex-flow: column; flex-flow: column; padding-top: ",[0,300],"; padding-left: ",[0,40],"; padding-right: ",[0,40],"; color: #8B8B8B; font-size: 13px; text-align:center }\nwx-text{ padding-top: ",[0,14],"; }\n",],undefined,{path:"./pages/me/contact/contact.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/me/contact/contact.wxml') } }));

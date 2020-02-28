@@ -1,0 +1,1 @@
+<view class="content"><text>{{address}}</text><text>{{phone}}</text><text>{{email}}</text></view>
