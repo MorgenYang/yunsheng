@@ -1,1 +1,0 @@
-<view><video class="video" autoplay="true" src="{{item.url}}" poster="{{item.image}}"></video></view>

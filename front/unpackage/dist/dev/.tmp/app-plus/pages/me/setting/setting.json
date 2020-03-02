@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "个人设置",
-  "navigationBarBackgroundColor": "#A2DEFA",
-  "titleNView": {
-    "titleText": "个人设置",
-    "titleColor": "white"
-  },
-  "usingComponents": {}
-}

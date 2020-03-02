@@ -1,1 +1,0 @@
-<view><input class="pwd" password="true" type="text" placeholder="旧密码"/><input class="pwd" password="true" type="text" placeholder="新密码"/><input class="pwd" password="true" type="text" placeholder="确认密码"/><button class="submit">提交</button></view>
