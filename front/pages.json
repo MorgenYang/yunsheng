@@ -182,6 +182,54 @@
            	// "enablePullDownRefresh" : true
            }
         }
+        ,{
+            "path" : "pages/me/shop/shop",
+            "style" : {}
+        },{
+		    "path" : "pages/me/doctor/chat",
+		    "navigationBarTextStyle":"black",
+		    "style" : {
+		    	"navigationBarTitleText": "聊天",
+		    	 "app-plus" : {
+		    		"titleNView" : {
+		    			"titleText":"聊天",
+		    			"titleColor":"white"
+		    		}
+		    	},
+		    	"navigationBarBackgroundColor":"#A2DEFA"
+		    	// "enablePullDownRefresh" : true
+		    }
+		}
+        ,{
+            "path" : "pages/me/login/login",
+           "navigationBarTextStyle":"black",
+           "style" : {
+           	"navigationBarTitleText": "登录",
+           	 "app-plus" : {
+           		"titleNView" : {
+           			"titleText":"登录",
+           			"titleColor":"white"
+           		}
+           	},
+           	"navigationBarBackgroundColor":"#A2DEFA"
+           	// "enablePullDownRefresh" : true
+           }
+        }
+        ,{
+            "path" : "pages/me/register/register",
+            "navigationBarTextStyle":"black",
+            "style" : {
+            	"navigationBarTitleText": "注册",
+            	 "app-plus" : {
+            		"titleNView" : {
+            			"titleText":"注册",
+            			"titleColor":"white"
+            		}
+            	},
+            	"navigationBarBackgroundColor":"#A2DEFA"
+            	// "enablePullDownRefresh" : true
+            }
+        }
     ],
 	"tabBar" : {
 	        "color" : "#bfbfbf",

@@ -7,7 +7,9 @@
 	"transformPx": false,
     /* 5+App特有相关 */
 	"app-plus": {
-		"usingComponents": true,
+		// TODO app使用mimc-uniapp-sdk 需要改成 false
+		"usingComponents" : false,
+		//"usingComponents": true,
 		"nvueCompiler": "uni-app",
 		"splashscreen": {
 			"alwaysShowBeforeRender": true,

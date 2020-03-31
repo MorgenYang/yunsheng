@@ -100,6 +100,9 @@
 					icon:"none",
 				    duration: 300
 				});
+				uni.navigateTo({
+				    url: "./chat"
+				});
 			}
 			
 		}
