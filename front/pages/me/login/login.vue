@@ -4,7 +4,7 @@
 	      <input type="text" placeholder="手机号" v-model="user.username" />
 	      <input type="text" placeholder="密码" password="true" v-model="user.password" />
 		  <view class="img-code">
-			  <image class="img" :src="user.image"></image>
+			  <image @tap="loadVaildCode()" class="img" :src="user.image"></image>
 			  <input type="text" placeholder="验证码" v-model="user.code"/>
 		  </view>
 	      <!-- <button type="primary" @click="signUp">注册</button> -->
@@ -42,6 +42,7 @@
 						if(data.code==200 && data.data!=null){
 							this.user.image = data.data.image;
 							this.user.verifyToken = data.data.verifyToken;
+							
 						}
 				    }
 				});
@@ -60,7 +61,26 @@
 						console.log(res);
 						var data = res.data;
 						if(data.code==200){
-							
+							uni.setStorage({
+							    key: 'ys_user_id',
+							    data: data.data.loginClientUserVo.id,
+							    success: function () {
+							        console.log('缓存uid成功');
+							    },
+								fail: function () {
+									console.log('缓存uid失败');
+								}
+							});
+							uni.setStorage({
+							    key: 'ys_user_token',
+							    data: data.data.token,
+							    success: function () {
+							        console.log('缓存utoken成功');
+							    },
+								fail: function () {
+									console.log('缓存utoken失败');
+								}
+							});
 						}
 				    }
 				});

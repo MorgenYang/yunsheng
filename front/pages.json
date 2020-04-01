@@ -35,7 +35,7 @@
 			"path": "pages/medical/medical",
 			"style": {
 				"navigationBarTitleText": "学术活动",
-				"navigationBarBackgroundColor":"#A2DEFA"
+				"navigationBarBackgroundColor":"#3AA9D1"
 				
 				/* "app-plus" : {
 					"titleNView" : false
@@ -49,7 +49,7 @@
 		   "navigationBarTextStyle":"black",
 		   "style" : {
 		   	"navigationBarTitleText": "视频",
-		   	"navigationBarBackgroundColor":"#A2DEFA"
+		   	"navigationBarBackgroundColor":"#3AA9D1"
 		   	// "enablePullDownRefresh" : true
 		   }
 		},
@@ -74,7 +74,7 @@
 						"titleColor":"white"
 					}
 			 	},
-				"navigationBarBackgroundColor":"#A2DEFA"
+				"navigationBarBackgroundColor":"#3AA9D1"
 			 	// "enablePullDownRefresh" : true
 			 }
         }
@@ -89,7 +89,7 @@
 						"titleColor":"white"
 					}
 				},
-				"navigationBarBackgroundColor":"#A2DEFA"
+				"navigationBarBackgroundColor":"#3AA9D1"
 				// "enablePullDownRefresh" : true
 			}
         }
@@ -104,7 +104,7 @@
            			"titleColor":"white"
            		}
            	},
-           	"navigationBarBackgroundColor":"#A2DEFA"
+           	"navigationBarBackgroundColor":"#3AA9D1"
            	// "enablePullDownRefresh" : true
            }
         }
@@ -119,7 +119,7 @@
            			"titleColor":"white"
            		}
            	},
-           	"navigationBarBackgroundColor":"#A2DEFA"
+           	"navigationBarBackgroundColor":"#3AA9D1"
            	// "enablePullDownRefresh" : true
            }
         }
@@ -134,7 +134,7 @@
             			"titleColor":"white"
             		}
             	},
-            	"navigationBarBackgroundColor":"#A2DEFA"
+            	"navigationBarBackgroundColor":"#3AA9D1"
             	// "enablePullDownRefresh" : true
             }
         }
@@ -149,7 +149,7 @@
             			"titleColor":"white"
             		}
             	},
-            	"navigationBarBackgroundColor":"#A2DEFA"
+            	"navigationBarBackgroundColor":"#3AA9D1"
             	// "enablePullDownRefresh" : true
             }
         }
@@ -164,28 +164,30 @@
             			"titleColor":"white"
             		}
             	},
-            	"navigationBarBackgroundColor":"#A2DEFA"
+            	"navigationBarBackgroundColor":"#3AA9D1"
             	// "enablePullDownRefresh" : true
             }
-        },{
-           "path" : "pages/me/shop/shop",
-           "navigationBarTextStyle":"black",
-           "style" : {
-           	"navigationBarTitleText": "健康商城",
-           	 "app-plus" : {
-           		"titleNView" : {
-           			"titleText":"健康商城",
-           			"titleColor":"white"
-           		}
-           	},
-           	"navigationBarBackgroundColor":"#A2DEFA"
-           	// "enablePullDownRefresh" : true
-           }
         }
-        ,{
-            "path" : "pages/me/shop/shop",
-            "style" : {}
-        },{
+		// ,{
+  //          "path" : "pages/me/shop/shop",
+  //          "navigationBarTextStyle":"black",
+  //          "style" : {
+  //          	"navigationBarTitleText": "健康商城",
+  //          	 "app-plus" : {
+  //          		"titleNView" : {
+  //          			"titleText":"健康商城",
+  //          			"titleColor":"white"
+  //          		}
+  //          	},
+  //          	"navigationBarBackgroundColor":"#3AA9D1"
+  //          	// "enablePullDownRefresh" : true
+  //          }
+  //       }
+  //       ,{
+  //           "path" : "pages/me/shop/shop",
+  //           "style" : {}
+  //       }
+		,{
 		    "path" : "pages/me/doctor/chat",
 		    "navigationBarTextStyle":"black",
 		    "style" : {
@@ -196,7 +198,7 @@
 		    			"titleColor":"white"
 		    		}
 		    	},
-		    	"navigationBarBackgroundColor":"#A2DEFA"
+		    	"navigationBarBackgroundColor":"#3AA9D1"
 		    	// "enablePullDownRefresh" : true
 		    }
 		}
@@ -211,7 +213,7 @@
            			"titleColor":"white"
            		}
            	},
-           	"navigationBarBackgroundColor":"#A2DEFA"
+           	"navigationBarBackgroundColor":"#3AA9D1"
            	// "enablePullDownRefresh" : true
            }
         }
@@ -226,14 +228,27 @@
             			"titleColor":"white"
             		}
             	},
-            	"navigationBarBackgroundColor":"#A2DEFA"
+            	"navigationBarBackgroundColor":"#3AA9D1"
             	// "enablePullDownRefresh" : true
             }
+        }
+        ,{
+            "path" : "pages/me/info/info",
+            "style" : {
+				"navigationBarTitleText": "我的资料",
+				 "app-plus" : {
+					"titleNView" : {
+						"titleText":"我的资料",
+						"titleColor":"white"
+					}
+				},
+				"navigationBarBackgroundColor":"#3AA9D1"
+			}
         }
     ],
 	"tabBar" : {
 	        "color" : "#bfbfbf",
-	        "selectedColor" : "#7bbfea",
+	        "selectedColor" : "#3AA9D1",
 	        "borderStyle" : "black",
 	        "backgroundColor" : "#ffffff",
 	        "list" : [

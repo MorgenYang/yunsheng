@@ -13,7 +13,7 @@
 				</view>
 			</view>
 			<view class="user-load">
-				<image class="arrows-right-user" src="../../static/icon/settings/arrows-right-user.png"></image>
+				<image @tap="setFunc" class="arrows-right-user" src="../../static/icon/settings/arrows-right-user.png"></image>
 			</view>
 		</view>
 		
@@ -41,7 +41,8 @@
 					userName:"张伟",
 					userGender: "男",
 					userAge: 18,
-					userImg:"http://img0.imgtn.bdimg.com/it/u=1787676231,2721036559&fm=26&gp=0.jpg"
+					userImg:"http://img0.imgtn.bdimg.com/it/u=1787676231,2721036559&fm=26&gp=0.jpg",
+					userInfo:"info/info"
 				},
 				setting:[
 					{
@@ -111,6 +112,12 @@
 					    url: this.setting[id].linkUrl
 					});
 				}
+			},
+			setFunc() {
+				console.log(this.user.userInfo)
+				uni.navigateTo({
+				    url: this.user.userInfo
+				});
 			}
 		}
 	}
