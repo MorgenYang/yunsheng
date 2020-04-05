@@ -2,32 +2,37 @@
 	<view class="container">
 		<view class="form">
 			<view class="row">
-				<text>手机号：</text>
 				<input @blur="quaryPhone" type="text" placeholder="请输入手机号" v-model.lazy="user.phone" />
 			</view>
+			<view class="line"></view>
 			<view class="hintdefcolor" :style='{color: user.hintColor}'>
-			<text>{{user.phoneHint}}</text>
+				<text>{{user.phoneHint}}</text>
 			</view>
 			<view class="row">
-				<text>密 码：</text>
 				<input @blur="checkPwd(0)" type="text" placeholder="请输入密码" password="true" v-model="user.password" />
 			</view>
+			<view class="line"></view>
+			<view class="hintdefcolor"></view>
 			<view class="row">
-				<text>确认密码：</text>
-				<input @blur="checkPwd(1)" type="text" placeholder="请再次输入密码" password="true" v-model="user.rePassword" />
+				<input @blur="checkPwd(1)" type="text" placeholder="确认密码" password="true" v-model="user.rePassword" />
 			</view>
+			<view class="line"></view>
+			<view class="hintdefcolor"></view>
 			<!-- <view class="hintdefcolor"> -->
 			<!-- <text>{{user.pwdHint}}</text> -->
 			<!-- </view> -->
-			<view class="img-code">
+			<view class="row">
+				<input type="text" placeholder="请输入验证码 (点击刷新)" v-model="user.imgCode" />
 				<image @tap="loadVaildCode" class="img" :src="user.image"></image>
-				<input class="txt-size img-code-input" type="text" placeholder="请输入验证码" v-model="user.imgCode" />
-
 			</view>
-			<view class="img-code">
-				<button :disabled="info.flag" class="txt-size sms-btn" type="primary" @tap="getSms()">{{info.getsmsbtn}}</button>
-				<input class="txt-size img-code-input" type="text" placeholder="请输入短信验证码" v-model="user.smsCode" />
+			<view class="line"></view>
+			<view class="hintdefcolor"></view>
+			<view class="row">
+				<input type="text" placeholder="请输入短信验证码" v-model="user.smsCode" />
+				<button :disabled="info.flag" class="txt-size sms-btn" type="primary" @tap="getSms()">{{info.getsmsbtn}}</button>	
 			</view>
+			<view class="line"></view>
+			<view class="hintdefcolor"></view>
 			<button class="btn-register" type="primary" @tap="signIn">注册</button>
 
 		</view>
@@ -63,7 +68,7 @@
 					}
 				],
 				info: {
-					getsmsbtn: "获取短信验证码",
+					getsmsbtn: "获取验证码",
 					flag: false,
 					count: 1
 				}
@@ -269,12 +274,14 @@
 </script>
 <style>
 	.container {
-		padding: 80upx;
+		padding: 100upx;
 	}
-
 	.txt-size {
-		font-size: 12px;
-		height: 70upx;
+		font-size: 18upx;
+		height: 60upx;
+		vertical-align:middle;
+		text-align: center;
+		line-height: 53upx;
 	}
 
 	.btn {
@@ -282,47 +289,45 @@
 	}
 
 	.img {
-		height: 70upx;
-		width: 160upx;
-		margin-right: 20upx;
+		height: 66upx;
+		width: 180upx;
+		padding-bottom:4upx;
 	}
 
 	.img-code {
 		display: flex;
 		flex-direction: row;
 	}
-
+	.img-code input {
+		font-size: 32upx ;
+	}
 	.row {
 		display: flex;
 		flex-direction: row;
 		width: 100%;
 		align-self: center;
+		background:#FFFFFF ;
 	}
-
-	.row text {
-		height: 70upx;
-		line-height: 70upx;
-		font-size: 16px;
-		text-align: left;
-		width: 30%;
+	.line{
+		background-color: #E4E4E4; 
+		height: 2upx;
+		/*解决:ios5不显示*/
+		transform: scale(0.99);
+		transform-origin: 0 0;
 	}
-
-	.radio {
-		margin-right: 40upx;
-	}
-
 	.row input {
 		height: 70upx;
-		border: solid 2upx #DDDDDD;
 		text-indent: 20upx;
-		margin-bottom: 20upx;
-		width: 70%;
+		width:100%;
+		font-size: 32upx;
+		border:none; 
+		background-color:transparent; 
 	}
-
 	.btn-register {
 		width: 100%;
 		margin-top: 40upx;
 		margin-bottom: 20upx;
+		font-size: 32upx ;
 	}
 
 	.img-code-input {
@@ -331,22 +336,31 @@
 		margin-left: 20upx;
 		border: solid 2upx #DDDDDD;
 		margin-bottom: 20upx;
+		font-size: 32upx ;
 	}
 
 	.sms-btn {
-		width: 300upx;
+		width: 220upx;
 		margin-left: 0upx;
+		margin: 0;
+		padding: 0;
+		border: 1px solid transparent;
+		outline: none;
+		background: #1482D1;
 	}
 
 	.register {
-		font-size: 16px;
+		font-size: 32upx;
 		padding: 20upx;
 	}
 
 	.hintdefcolor {
-		font-size: 8upx;
+		font-size: 16upx;
 		color: #ff0000;
-		margin-left: 30%;
-		margin-bottom: 10upx;
+		height: 16upx;
+		margin-left: 20upx;
+		padding-top: 4upx;
+		margin-bottom: 8upx;
 	}
+
 </style>
