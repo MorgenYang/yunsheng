@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 
 Vue.config.productionTip = false
+Vue.prototype.serviceUrl = 'http://www.healthycloudsci.com';
 
 App.mpType = 'app'
 
