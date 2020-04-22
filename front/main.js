@@ -2,7 +2,9 @@ import Vue from 'vue'
 import App from './App'
 
 Vue.config.productionTip = false
-Vue.prototype.serviceUrl = 'http://www.healthycloudsci.com';
+Vue.prototype.appid = ''
+Vue.prototype.domainName = 'http://www.healthycloudsci.com';
+
 
 App.mpType = 'app'
 
@@ -15,3 +17,5 @@ const app = new Vue({
     ...App
 })
 app.$mount()
+
+
