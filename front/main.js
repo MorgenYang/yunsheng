@@ -2,9 +2,17 @@ import Vue from 'vue'
 import App from './App'
 
 Vue.config.productionTip = false
-Vue.prototype.appid = ''
-Vue.prototype.domainName = 'http://www.healthycloudsci.com';
+Vue.prototype.domainName = 'https://www.healthycloudsci.com/ysapi';
+Vue.prototype.openid = '';
 
+Vue.prototype.getGlobalUser = function(key) {
+	var userInfo = uni.getStorageSync("globalUser");
+	if (userInfo != null && userInfo != "" && userInfo != undefined) {
+		return userInfo;
+	} else {
+		return null;
+	}
+}
 
 App.mpType = 'app'
 
