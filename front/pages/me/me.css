@@ -6,6 +6,19 @@
 	flex-direction: row;
 	align-items:center /*设置交叉轴的对齐方式*/
 }
+.header-for-login{
+	background-color: #3AA9D1;
+	height: 90upx;
+	width: 100%;
+}
+.header-for-login-btn{
+	background-color: #3AA9D1;
+	color: white;
+	height: 80upx;
+	width: 50%;
+	vertical-align: center;
+	margin-left: 0;
+}
 .user-img{
 	height: 160upx;
 	width: 160upx;
@@ -34,7 +47,7 @@
 }
 .user-age{
 	font-size: 16px;
-	padding-left: 30upx;
+	padding-left: 0;
 }
 .user-load{
 	position:absolute;

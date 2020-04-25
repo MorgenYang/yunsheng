@@ -1,24 +1,8 @@
 <template>
 	<view>
 		<view class="setting-body">
-			<view >
-				<view @tap="selectHead" class="setting-line" >
-					<text>头像</text>
-					<image class="user-img" :src="user.userImg"></image>
-				</view>
-				<view class="line"></view>
-				<view @tap="modifyNickname" class="setting-line" >
-					<text>昵称</text>
-					<text class="nickname">{{user.nickname}}</text>
-				</view>
-				<view class="line"></view>
-				<!-- <view class="setting-line">
-					<text>出生日期</text>
-					<text class="birth"></text>
-				</view>
-				<view class="line"></view> -->
-			</view>
-			<button @click="logout" class="logout" type="default">退出登录</button>
+			<button @getuserinfo="getUserInfo" open-type="getUserInfo">获取微信信息</button>
+			<button @getphonenumber="getPhoneNumber" open-type="getPhoneNumber">绑定手机号</button>
 		</view>
 	</view>
 </template>
@@ -27,62 +11,55 @@
 	export default {
 		data() {
 			return {
-				user: {
-					nickname:"morgen",
-					birthday:"",
-					userImg: "http://img0.imgtn.bdimg.com/it/u=1787676231,2721036559&fm=26&gp=0.jpg"
-				}
+				
 			}
 		},
 		methods: {
-			showMsg(msg) {
-				uni.showToast({
-					title: msg,
-					icon: "none",
-					duration: 1000
-				});
-			},
-			selectHead(){
-				var uImg = "";
-				uni.chooseImage({
-				    count: 1,
-				    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-				    sourceType: ['album'], //从相册选择
-				    success: function (res) {
-						uImg = res.tempFilePaths[0];
-						
-				    }
-				});
-				this.showMsg(uImg + "morge")
-			},
-			modifyNickname(){
-				
-			},
-			logout(){
-				var flag = false;
-				var token = "";
-				uni.getStorage({
-				    key: 'ys_user_token',
-				    success: function (res) {
-						token = res.data;
-				    }
-				});
-				uni.request({
-				    url: 'http://120.24.53.84/ysapi/logout',
-					method:"POST",
-					header: {
-						"token": token
+			getUserInfo(){
+				console.log("getUserInfo");
+				uni.getUserInfo({
+					provider: 'weixin',
+					success: function (infoRes) {
+						uni.setStorageSync('avatarUrl', infoRes.userInfo.avatarUrl);
+						uni.setStorageSync('gender', infoRes.userInfo.gender);
+						uni.setStorageSync('nickName', infoRes.userInfo.nickName);
 					},
-				    success: (res) => {
-						if (res.data.code==200) {
-							flag = true;
-							this.showMsg(res.data.msg);
-						}
-				    }
+					fail:function(e){
+						console.log('获取用户信息失败');
+					}
 				});
-				
-				uni.navigateTo({
-				    url: "../login/login"
+			},
+			getPhoneNumber(e){
+				let that = this;
+				var edata = e.detail.encryptedData;
+				var iv = e.detail.iv;
+				uni.login({
+					provider: 'weixin',
+					success: function(loginRes) {
+						var logincode = loginRes.code;
+						var openid = uni.getStorageSync('openid');
+						uni.request({
+							url: that.domainName + '/wechatPhone',
+							method: "POST",
+							data: {
+								"code": logincode,
+								"encryptedData": edata,
+								"iv": iv,
+								"openid": openid
+							},
+							success: (res) => {
+								if (res.data.code == 200) {
+									console.log(res.data);
+									try {
+										console.log(res.data.data.phoneNumber);
+										uni.setStorageSync('phone', res.data.data.phoneNumber);
+									} catch (e) {
+										console.log(e);
+									}
+								}
+							}
+						});
+					}
 				});
 			}
 		}
