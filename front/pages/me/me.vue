@@ -1,8 +1,8 @@
 <template>
 	<view class="content">
-		<view class="header" v-if="user.openid != ''">
+		<view class="header" v-if="user.phone != '' && user.openid != ''">
 			<image class="user-img" :src="user.avatarUrl"></image>
-			<view class="user-info" @tap="setFunc">
+			<view class="user-info">
 				<text class="user-name">{{user.nickName}}</text>
 				<view class="user-other">
 					<text class="user-gender" v-if="user.gender=='1'">男</text>
@@ -15,8 +15,11 @@
 				<image  class="arrows-right-user" src="../../static/icon/settings/arrows-right-user.png"></image>
 			</view>
 		</view>
+		<view class="header-for-login" v-else-if="user.openid != '' && user.phone == ''">
+			<button class="header-for-login-btn" @getphonenumber="getPhoneNumber" open-type="getPhoneNumber">获取手机号</button>
+		</view>
 		<view class="header-for-login" v-else>
-			<button class="header-for-login-btn" @getphonenumber="getPhoneNumber" open-type="getPhoneNumber">请登录/注册</button>
+			<button class="header-for-login-btn" @getuserinfo="getUserInfo" open-type="getUserInfo">微信登录</button>
 		</view>
 
 		<view class="setting-body">
@@ -41,7 +44,8 @@
 					token: '',
 					phone: '',
 					avatarUrl: '',
-					nickName: ''
+					nickName: '',
+					gender: ''
 				},
 				setting: [{
 						id: 0,
@@ -100,8 +104,56 @@
 			this.user.phone = uni.getStorageSync('phone');
 			this.user.avatarUrl = uni.getStorageSync('avatarUrl');
 			this.user.nickName = uni.getStorageSync('nickName');
+			
+			console.log(this.user.phone);
+			console.log(this.user.openid);
+			console.log(this.user.phone);
 		},
 		methods: {
+			getUserInfo(e) {
+				let that = this;
+				uni.getUserInfo({
+					provider: 'weixin',
+					success: function (infoRes) {
+						uni.setStorageSync('avatarUrl', infoRes.userInfo.avatarUrl);
+						uni.setStorageSync('gender', infoRes.userInfo.gender);
+						uni.setStorageSync('nickName', infoRes.userInfo.nickName);
+						that.user.avatarUrl = infoRes.userInfo.avatarUrl;
+						that.user.gender = infoRes.userInfo.gender;
+						that.user.nickName = infoRes.userInfo.nickName;
+						uni.login({
+							provider:'weixin',
+							success: (res) => {
+								uni.request({
+									url: that.domainName + '/wechatRegister',
+									method: "POST",
+									data: {
+										"avatarUrl": that.user.avatarUrl,
+										  "city": "",
+										  "code": res.code,
+										  "country": "",
+										  "gender": that.user.gender,
+										  "nickName": that.user.nickName,
+										  "province": ""
+									},
+									success: (res) => {
+										console.log(res.data);
+										if (res.data.code == 200) {
+											console.log(res.data.data.openid);
+											that.user.openid = res.data.data.openid;
+											uni.setStorageSync('openid', that.user.openid);
+										
+										}
+									}
+								});
+							}
+						});
+					},
+					fail:function(e){
+						console.log('获取用户信息失败');
+					}
+				});
+			},
 			getPhoneNumber(e) {
 				//拿到edata和iv
 				let that = this;
@@ -112,43 +164,19 @@
 				uni.login({
 					provider: 'weixin',
 					success: function(loginRes) {
-						console.log(loginRes.code);
 						uni.request({
-							url: that.domainName + '/wechatlogin',
+							url: that.domainName + '/wechatPhone',
 							method: "POST",
 							data: {
-								"code": loginRes.code,
+								  "code": loginRes.code,
+								  "encryptedData": edata,
+								  "iv": iv
 							},
 							success: (res) => {
 								if (res.data.code == 200) {
-									console.log(res);
-									that.user.openid = res.data.data.loginClientUserVo.id;
-									uni.setStorageSync('openid', that.user.openid);
-									that.user.token = res.data.data.token;
-									uni.setStorageSync('token', that.user.token);
-
-									// 			//获取phone params(edata,iv,openid,code)
-									// 			uni.login({
-									// 				provider: 'weixin',
-									// 				success: function(loginRes) {
-									// 					console.log(loginRes);
-									// 					uni.request({ // TODO: get phone
-									// 						url: that.domainName + '/wechatPhone',
-									// 						method: "POST",
-									// 						data: {
-									// 							"code": loginRes.code,
-									// 							"encryptedData": edata,
-									// 							"iv": iv,
-									// 							"openid": that.openid
-									// 						},
-									// 						success: (res) => {
-									// 							var data = res.data.data;
-									// 							that.phone = data.phoneNumber;
-									// 							console.log(that.phone);
-									// 						},
-									// 					});
-									// 				},
-									// 			});			
+									that.user.phone = res.data.data.loginClientUserVo.phone;
+									console.log(that.user.phone);
+									uni.setStorageSync('phone', that.user.phone);
 								} else {
 									console.log(res.data.msg);
 								}
@@ -156,53 +184,6 @@
 						});
 					}
 				});
-
-				// uni.login({
-				// 	provider: 'weixin',
-				// 	success: function(loginRes) {
-				// 		console.log(loginRes);
-				// 		// uni.request({ // TODO: get phone
-				// 		// 	url: that.domainName + '/wechatPhone',
-				// 		// 	method: "POST",
-				// 		// 	data: {
-				// 		// 		"code": loginRes.code,
-				// 		// 		"encryptedData": edata,
-				// 		// 		"iv": iv,
-				// 		// 		"openid": _self.openid
-				// 		// 	},
-				// 		// 	success: (res) => {
-				// 		// 		var data = res.data.data;
-				// 		// 		_self.phone = data.phoneNumber;
-				// 		// 		uni.setStorageSync("phone", _self.phone);
-				// 		// 		console.log(res);
-
-				// 		// 		// uni.login({
-				// 		// 		// 	provider: 'weixin',
-				// 		// 		// 	success: function(loginRes) {
-				// 		// 		// 		console.log(loginRes.code);
-				// 		// 		// 		uni.request({ // login or regiser
-				// 		// 		// 			url: that.domainName + '/wechatRegisterOrBind',
-				// 		// 		// 			method: "POST",
-				// 		// 		// 			data: {
-				// 		// 		// 				"avatarUrl": '',
-				// 		// 		// 				"city": '',
-				// 		// 		// 				"code": loginRes.code,
-				// 		// 		// 				"country": '',
-				// 		// 		// 				"gender": '',
-				// 		// 		// 				"nickName": '',
-				// 		// 		// 				"phone": _self.phone,
-				// 		// 		// 				"province": ''
-				// 		// 		// 			},
-				// 		// 		// 			success: (res) => {
-				// 		// 		// 				console.log(res);
-				// 		// 		// 			}
-				// 		// 		// 		});
-				// 		// 		// 	}
-				// 		// 		// });
-				// 		// 	}
-				// 		// });
-				// 	}
-				// });
 			},
 			itemClick(e) {
 				let id = e.currentTarget.id.toString().substr(3);
@@ -216,11 +197,6 @@
 						url: this.setting[id].linkUrl
 					});
 				}
-			},
-			setFunc() {
-				uni.navigateTo({
-					url: 'info/info'
-				});
 			}
 
 		}
