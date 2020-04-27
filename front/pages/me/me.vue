@@ -124,28 +124,56 @@
 						uni.login({
 							provider:'weixin',
 							success: (res) => {
+								console.log(res.code);
+								//这里需要做登录验证操作，如果用户存在直接登录，不存在就注册
 								uni.request({
-									url: that.domainName + '/wechatRegister',
+									url: that.domainName + '/wechatlogin',
 									method: "POST",
 									data: {
-										"avatarUrl": that.user.avatarUrl,
-										  "city": "",
-										  "code": res.code,
-										  "country": "",
-										  "gender": that.user.gender,
-										  "nickName": that.user.nickName,
-										  "province": ""
+										  "code": res.code
 									},
 									success: (res) => {
-										console.log(res.data);
-										if (res.data.code == 200) {
-											console.log(res.data.data.openid);
-											that.user.openid = res.data.data.openid;
-											uni.setStorageSync('openid', that.user.openid);
-										
+										console.log(res);
+										if (200 == res.data.code) {
+											that.user.openid = res.data.data.loginClientUserVo.openid;
+											that.user.phone = res.data.data.loginClientUserVo.phone;
+										} else {
+											// 注册
+											uni.login({
+												provider:'weixin',
+												success: (res) => {
+													console.log(res.code);
+													uni.request({
+														url: that.domainName + '/wechatRegister',
+														method: "POST",
+														data: {
+															"avatarUrl": that.user.avatarUrl,
+															  "city": "",
+															  "code": res.code,
+															  "country": "",
+															  "gender": that.user.gender,
+															  "nickName": that.user.nickName,
+															  "province": ""
+														},
+														success: (res) => {
+															console.log(res.data);
+															if (res.data.code == 200) {
+																console.log(res.data.data.openid);
+																that.user.openid = res.data.data.openid;
+																uni.setStorageSync('openid', that.user.openid);
+															
+															}
+														}
+													});
+												}
+											})
+											
 										}
 									}
-								});
+								})
+								
+								
+								
 							}
 						});
 					},
