@@ -220,22 +220,24 @@
 				var config = {
 					url: 'https://mimc.chat.xiaomi.net/api/account/token',
 					data: {
-						appId: '2882303761517669588',
-						appKey: '5111766983588',
-						appSecret: 'b0L3IOz/9Ob809v8H2FbVg==',
-						appAccount: 'fushillu09'
+						appId: '2882303761518342451',
+						appKey: '5801834263451',
+						appSecret: '+yD0sEY2Vf8CSDd9b0rmcQ==',
+						appAccount: '18627806932'
 					}, //  使用mimc默认接口，做测试使用。
 					statusChange: function(bindResult, errType, errReason, errDesc) {
 						console.log('登录状态：', bindResult);
 			
-						if (bindResult) {
+						/* if (bindResult) {
 							console.log('发送。。。。。。。。。。。。。。。。。。。。。。。。。。');
 							var message_ = $this.Base64.encode('这是AP	11111P发送的' + Math.random());
 							var jsonMsg = String(JSON.stringify({ version: 0, msgId: 'TEXT_1234', timestamp: String(new Date().valueOf()), payload: message_ }));
 							user.sendMessage('fushilu', jsonMsg);
-						}
+						} */
 					}, // 登录结果回调
-					// serverAck: function() {}, // 发送消息后，服务器接收到消息ack的回调
+					serverAck: function(message) {// 发送消息后，服务器接收到消息ack的回调
+						console.log("===回调"+message);
+					}, 
 					receiveP2PMsg: function(message) {
 						var content = $this.Base64.decode(JSON.parse(message.getPayload()).payload);
 						console.log('解密：', content);
@@ -437,8 +439,9 @@
 				if(!this.textMsg){
 					return;
 				}
-				let content = this.replaceEmoji(this.textMsg);
-				let msg = {text:content}
+				/* let content = this.replaceEmoji(this.textMsg);
+				let msg = {text:content} */
+				let msg = {text:this.textMsg} 
 				this.sendMsg(msg,'text');
 				this.textMsg = '';//清空输入框
 			},
@@ -472,6 +475,12 @@
 				lastid++;
 				let msg = {type:'user',msg:{id:lastid,time:nowDate.getHours()+":"+nowDate.getMinutes(),type:type,userinfo:{uid:0,username:"大黑哥",face:"/static/img/face.jpg"},content:content}}
 				// 发送消息
+				var message_ = $this.Base64.encode(content.toString());
+				console.log("==============");
+				console.log(message_);
+				var jsonMsg = String(JSON.stringify({ version: 0, msgId: 'TEXT_1234', timestamp: String(new Date().valueOf()), payload: message_ }));
+				user.sendMessage('18771566577', jsonMsg);
+		
 				this.screenMsg(msg);
 				/* // 定时器模拟对方回复,三秒
 				setTimeout(()=>{

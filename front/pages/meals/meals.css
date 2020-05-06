@@ -1,0 +1,235 @@
+
+.item-top{
+	background-color: #fff;
+	height: 20upx;
+}
+.item-bottom{
+	display:flex;
+	flex-direction: row;
+}
+.item-column{
+	display:flex;
+	flex-direction: column;
+}
+.img{
+	width: 100%;
+	height: 100%;
+}
+.item{
+	width:100%;
+	margin-top: 20upx;
+	border-bottom-width: 1px;
+	border-color: #eee;
+	background-color: #FFFFFF;
+	display: flex;
+}
+
+.news-item{
+	height: 280upx;
+	flex-direction: row;
+}
+.item-right{
+	padding-left: 40upx;
+	overflow: hidden;
+}
+.item-title{
+	font-size: 36upx;
+	color: #197EC6;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.item-level{
+	flex-direction: row;
+	margin-top: 14upx;
+}
+.item-tip{
+	font-size: 26upx;
+	color: #197EC6;
+}
+.star-title{
+	padding-right: 10upx;
+}
+.item-function{
+	margin-top: 4upx;
+	flex-direction: row;
+}
+.function-context{
+	overflow: hidden;
+	word-break: break-all;  /* break-all(允许在单词内换行。) */
+	text-overflow: ellipsis;  /* 超出部分省略号 */
+	display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+	-webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+	-webkit-line-clamp: 5; /** 显示的行数 **/
+}
+.function-context-text{
+	color:#858585;
+	padding-left: 8upx;
+}
+.star-img{
+	padding-top: 3upx;
+	width:30upx;
+	height:30upx;
+}
+.item-body{
+	font-size: 26upx;
+	height: 106upx;
+	margin-top: 10upx;
+	overflow: hidden;
+	display: -webkit-box;  
+	-webkit-box-orient: vertical; 
+	-webkit-line-clamp: 3; 
+	color: #aaa;
+}
+.img-list{
+	flex-shrink: 0;
+	background-color: #fff;
+	width: 310upx;
+	height: 270upx;
+}
+
+.uni-scroll-view{
+	text-align: center;
+}
+
+.type-head{
+	display: flex;
+	flex-direction: row;
+}
+.type-title{
+	font-size: 28upx;
+}
+.title-img{
+	width: 30upx;
+	height: 30upx;
+	margin-top: 10upx;
+	margin-right: 10upx;
+}
+
+.food-head{
+	margin-top: 16upx;
+	height: 240upx;
+	background-color: #D0EDFB;
+	border-top-left-radius:1em;
+	border-top-right-radius:1em;
+	display: flex;
+	flex-direction: row;
+	
+}
+.date-size{
+	width: 160upx;
+	height: 160upx;
+	margin-left: 10upx;
+	border-radius:10upx;
+	margin-right: 6upx;
+	margin-top: 40upx;
+}
+
+.w-enlish{
+	font-size: 26upx;
+	padding-top: 10upx;
+}
+.w1{
+	margin-left: 40upx;
+	background: #82C6F7;
+	color: #1F77E4;
+}
+.w2{
+	background: #F4E892;
+	color: #E0B928;
+}
+.w3{
+	background: #A6F5C6;
+	color: #49C380;
+}
+.w4{
+	background: #E7D7FB;
+	color: #B48AE0;
+}
+.w5{
+	background: #F6C7B2;
+	color: #EF9160;
+}
+.w6{
+	background: #00FF7F;
+	color: #228B22;
+}
+.w7{
+	background: #BA55D3;
+	color: #9400D3;
+	margin-right: 40upx;
+}
+.nav {
+	white-space: nowrap;
+}
+.nav .cu-item {
+	display: inline-block;
+}
+.date-col{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 26upx;
+	
+}
+.pointer{
+	width:40upx;
+	height:40upx;
+	margin-left: 70upx;
+}
+.pointer-hiden{
+	visibility:hidden;
+}
+.pointer-one{
+	width:40upx;
+	height:40upx;
+	margin-left: 100upx;
+}
+.week-inline-img{
+	width: 100%;
+	height: 340upx;
+}
+.week-swiper{
+	background-color: #EDF8FC;
+}
+.card-item{
+	background-color: #FFFFFF;
+	height: 200upx;
+	margin-left: 40upx;
+	margin-right: 40upx;
+	margin-top: 20upx;
+	border-radius: 16upx;
+}
+.card-context{
+	margin-left: 30upx;
+}
+.card-left-img{
+	width: 130upx;
+	height:130upx;
+	margin-left: 16upx;
+	border-radius:120upx
+}
+.card-title{
+	margin-top: 10upx;
+	color: #2183CE;
+	font-size: 38upx;
+	width: 250upx;
+}
+.card-des{
+	margin-top: 16upx;
+	font-size: 26upx;
+	color: #B3B3B3;
+	width: 250upx;
+	overflow: hidden;
+	word-break: break-all;  /* break-all(允许在单词内换行。) */
+	text-overflow: ellipsis;  /* 超出部分省略号 */
+	display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+	-webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+	-webkit-line-clamp: 2; /** 显示的行数 **/
+}
+.card-center{
+	align-items: center;
+	margin-left: 4upx;
+}
