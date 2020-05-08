@@ -1,21 +1,21 @@
 <template>
 	<view class="content">
-		<view class="header" v-if="user.phone != '' && user.openid != ''">
+		<view class="header" v-if="(user.phone != '' && user.phone != null) && user.openid != ''">
 			<image class="user-img" :src="user.avatarUrl"></image>
 			<view class="user-info">
 				<text class="user-name">{{user.nickName}}</text>
 				<view class="user-other">
-					<text class="user-gender" v-if="user.gender=='1'">男</text>
+					<!-- <text class="user-gender" v-if="user.gender=='1'">男</text>
 					<text class="user-gender" v-else-if="user.gender=='0'">女</text>
-					<text class="user-gender" v-else></text>
+					<text class="user-gender" v-else></text> -->
 					<text class="user-age">手机号：{{user.phone}}</text>
 				</view>
 			</view>
 			<view class="user-load">
-				<image  class="arrows-right-user" src="../../static/icon/settings/arrows-right-user.png"></image>
+				<image class="arrows-right-user" src="../../static/icon/settings/arrows-right-user.png"></image>
 			</view>
 		</view>
-		<view class="header-for-login" v-else-if="user.openid != '' && user.phone == ''">
+		<view class="header-for-login" v-else-if="user.openid != '' && (user.phone == '' || user.phone == null)">
 			<button class="header-for-login-btn" @getphonenumber="getPhoneNumber" open-type="getPhoneNumber">获取手机号</button>
 		</view>
 		<view class="header-for-login" v-else>
@@ -104,7 +104,7 @@
 			this.user.phone = uni.getStorageSync('phone');
 			this.user.avatarUrl = uni.getStorageSync('avatarUrl');
 			this.user.nickName = uni.getStorageSync('nickName');
-			
+
 			console.log(this.user.phone);
 			console.log(this.user.openid);
 			console.log(this.user.phone);
@@ -114,7 +114,7 @@
 				let that = this;
 				uni.getUserInfo({
 					provider: 'weixin',
-					success: function (infoRes) {
+					success: function(infoRes) {
 						uni.setStorageSync('avatarUrl', infoRes.userInfo.avatarUrl);
 						uni.setStorageSync('gender', infoRes.userInfo.gender);
 						uni.setStorageSync('nickName', infoRes.userInfo.nickName);
@@ -122,7 +122,7 @@
 						that.user.gender = infoRes.userInfo.gender;
 						that.user.nickName = infoRes.userInfo.nickName;
 						uni.login({
-							provider:'weixin',
+							provider: 'weixin',
 							success: (res) => {
 								console.log(res.code);
 								//这里需要做登录验证操作，如果用户存在直接登录，不存在就注册
@@ -130,17 +130,23 @@
 									url: that.domainName + '/wechatlogin',
 									method: "POST",
 									data: {
-										  "code": res.code
+										"code": res.code
 									},
 									success: (res) => {
 										console.log(res);
 										if (200 == res.data.code) {
 											that.user.openid = res.data.data.loginClientUserVo.openid;
 											that.user.phone = res.data.data.loginClientUserVo.phone;
+											uni.setStorageSync('openid', that.user.openid);
+											uni.setStorageSync('phone', that.user.phone);
+											uni.showToast({
+												title: '登录成功',
+												duration: 2000
+											});
 										} else {
 											// 注册
 											uni.login({
-												provider:'weixin',
+												provider: 'weixin',
 												success: (res) => {
 													console.log(res.code);
 													uni.request({
@@ -148,37 +154,51 @@
 														method: "POST",
 														data: {
 															"avatarUrl": that.user.avatarUrl,
-															  "city": "",
-															  "code": res.code,
-															  "country": "",
-															  "gender": that.user.gender,
-															  "nickName": that.user.nickName,
-															  "province": ""
+															"city": "",
+															"code": res.code,
+															"country": "",
+															"gender": that.user.gender,
+															"nickName": that.user.nickName,
+															"province": ""
 														},
 														success: (res) => {
 															console.log(res.data);
-															if (res.data.code == 200) {
+															if (200 == res.data.code) {
 																console.log(res.data.data.openid);
 																that.user.openid = res.data.data.openid;
 																uni.setStorageSync('openid', that.user.openid);
-															
+																uni.showToast({
+																	title: '注册成功，请绑定手机号',
+																	duration: 2000,
+																	icon: 'none'
+																});
 															}
+														},
+														fail: (res) => {
+															uni.showToast({
+																title: '注册失败，请重新注册',
+																duration: 2000
+															});
 														}
 													});
 												}
 											})
-											
+
 										}
 									}
 								})
-								
-								
-								
+
+
+
 							}
 						});
 					},
-					fail:function(e){
-						console.log('获取用户信息失败');
+					fail: function(e) {
+						uni.showToast({
+							title: '获取信息失败',
+							duration: 2000,
+							icon: 'none'
+						});
 					}
 				});
 			},
@@ -196,17 +216,27 @@
 							url: that.domainName + '/wechatPhone',
 							method: "POST",
 							data: {
-								  "code": loginRes.code,
-								  "encryptedData": edata,
-								  "iv": iv
+								"code": loginRes.code,
+								"encryptedData": edata,
+								"iv": iv
 							},
 							success: (res) => {
 								if (res.data.code == 200) {
 									that.user.phone = res.data.data.loginClientUserVo.phone;
 									console.log(that.user.phone);
 									uni.setStorageSync('phone', that.user.phone);
+									uni.showToast({
+										title: '绑定成功',
+										duration: 2000,
+										icon: 'none'
+									});
 								} else {
 									console.log(res.data.msg);
+									uni.showToast({
+										title: '获取手机号失败',
+										duration: 2000,
+										icon: 'none'
+									});
 								}
 							}
 						});
