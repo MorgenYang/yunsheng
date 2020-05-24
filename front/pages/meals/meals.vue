@@ -11,22 +11,21 @@
 			>{{item.name}}</view>
 		</scroll-view>
 		
-	
-	
-			<!-- 内容部分 -->
+
+		<!-- 内容部分 -->
 		<swiper id="swiper" class="swiper-box " :duration="300" :current="tabCurrentIndex" @change="changeTab">
-			<swiper-item v-for="tabItem in tabBars" :key="tabItem.id" class="week-swiper">
-				<scroll-view class="panel-scroll-box" v-if="tabItem.id==1" :scroll-y="enableScroll" @scrolltolower="loadMore">
+			<swiper-item v-for="tabItem in tabBars" :key="tabItem.id" class="week-swiper" @touchmove.stop="">
+				<scroll-view class="panel-scroll-box" v-if="tabItem.id==1" :scroll-y="enableScroll">
 					<view class="uni-margin-wrap">
 						<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
-							<swiper-item v-for="(item, index) in picList">
+							<swiper-item v-for="(item, index) in picList" :key="index">
 								<image class="swiper-item" mode="scaleToFill" :src="item.url"></image>
 							</swiper-item>	
 						</swiper>
 					</view>
 											
-					<view v-for="(menu, index) in todayRecommendList" :key="index">
-						<view class="item-line">
+					<view class="item-food" >
+						<view class="item-line" v-for="(menu, index) in todayRecommendList" :key="index">
 							<view class="type-head">
 								<image class="title-img"  src="../../static/icon/settings/icon.png"></image>
 								<view class="type-title"> {{menu.title}} </view>
@@ -49,52 +48,59 @@
 								</view>
 							</view>	
 						</view>
-					</view>
+				   </view> 
 				</scroll-view>
 				
 				<view class="week-scroll-box"  v-if="tabItem.id==2">
 					<view class="food-head">
 						<scroll-view scroll-x class="nav" scroll-with-animation :scroll-left="weekScrollLeft">
-							<view class="cu-item" v-for="(week, index) in weekList"  >
-								<view class="date-size"   :class="week.class" :data-id="week.id" @tap="weekSelect">
+							<view class="cu-item" :class="index==0?'w-left':(index==weekList.length-1?'w-right':'')" v-for="(week, index) in weekList" :key="index" >
+								<view class="date-size" :class="week.class" :data-index="index" :data-id="week.id" @tap="weekSelect">
 									<view class="date-col">
 										<text>{{week.chinaName}}</text>
 										<text class="w-enlish">{{week.englishName}}</text>
 									</view>
 								</view>	
-								<image src="../../static/icon/img/arrows-down.png"  
+								 <image src="../../static/icon/img/arrows-down.png"  
 									:class="weekCurrent==index?(0==index?'pointer-one':'pointer'):'pointer pointer-hiden'">
 								</image>
 							</view>
 						</scroll-view>
 					</view>
 					<!-- 内容部分 <view class="item-line">-->
-					<swiper :current="weekCurrent" style="height: 100%;" >
-						<swiper-item v-for="week in weekList" :key="week.id" @touchmove.stop="">
+					<swiper :current="weekCurrent" style="height: 100%;" @change="ontabchange">
+						<swiper-item v-for="(week,weekIndex) in weekList" :key="weekIndex">
 							<scroll-view scroll-y="true" style="height: 100%;">
-								 <block v-for="food in (weeksFoodList[week.id].recommendList)">
-									<image mode="scaleToFill" class="week-inline-img" :src="food.image"></image>
-									<block v-for="item in food.foodList">
-										<uni-card class="card-item" isShadow="true">
-											<view class="item-bottom">
-												<image class="card-left-img" :src="item.image"></image>
-												<view class="card-context">
-													 <text class="card-title">{{item.name}}</text>
-													 <text class="card-des">{{item.description}}</text>
+								<view class="food-bottom">
+								 <block v-for="(food,foodIndex) in (weeksFoodList[week.id-1].recommendList)" :key="foodIndex">
+									<image mode="scaleToFill" class="week-inline-img" :src="food.image" :class="foodIndex>0?'week-inline-top':''"></image>
+									<block v-for="(item,itemIndex) in food.foodList">
+										<!-- <uni-card class="card-item" isShadow="true" > -->
+										<view class="cu-card ">
+											<view class="cu-item shadow">
+												<view class="item-bottom card">
+													<image class="card-left-img" :src="item.image"></image>
+													<view class="card-context">
+														 <text class="card-title">{{item.name}}</text>
+														 <text class="card-des">{{item.description}}</text>
+													</view>
+													<view class="item-bottom card-center">
+														<image v-for="(level,levelIndex) in item.star"
+															src="../../static/icon/img/star.png" class="star-img">
+														</image>
+													</view>
+													<image src="../../static/icon/img/del-btn.png" class="del" @tap="delItem(weekIndex,foodIndex,itemIndex)"></image>
 												</view>
-												<view class="item-bottom card-center">
-													<image v-for="level in item.star" 
-														src="../../static/icon/img/star.png" class="star-img">
-													</image>
-												</view>
-											</view>
-										</uni-card> 
+											</view> 
+										</view>
 									</block>
 								 </block>
+								 </view>
 							</scroll-view>
 					
 						</swiper-item>
 					</swiper>			
+					<button hover-class='none' class="custom-btn">深入定制</button>
 				</view>
 						
 			</swiper-item>
@@ -103,18 +109,18 @@
 </template>
 
 <script>
-	import uniCard from '@/components/uni-card/uni-card.vue'
-	
+
 	let windowWidth = 0, scrollTimer = false, tabBar;
 	let tabList = [{name: '今日推荐',id: '1',}, {name: '定制餐食',id: '2'}];
 	
-	var a = [6, 0, 1, 2, 3, 4, 5]; //日期转换0-原代表周日
+	var a = [7,1,2,3,4,5,6]; //new Date().getDay()==>0代表周日
+	let weekIndex=1;
 	let week = a[new Date().getDay()] ;
-	let weekScrollLeft_default = (week-1) *80;
+	let weekScrollLeft_default;
 	
 	export default {
 		components: {
-			uniCard
+			
 		},
 		data() {
 			return {
@@ -126,7 +132,7 @@
 				autoplay: true,
 				interval: 2000,
 				duration: 500,
-				weekCurrent:week,
+				weekCurrent:weekIndex,
 				TabCur:0,
 				weekScrollLeft:weekScrollLeft_default,
 				picList:[
@@ -160,19 +166,25 @@
 								"name":"八宝饭",
 								"level":5,
 								"function":"八宝饭里面含有丰富的糖类、枣酸、钙、磷、铁、维生素等物质，使得八宝饭具有补血、安心神和增强食欲的作用。平时消化不良的人可以通过进食八宝饭改善下肠胃"
+							},
+							{
+								"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2603886866,2595760544&fm=26&gp=0.jpg",
+								"name":"八宝饭",
+								"level":5,
+								"function":"八宝饭里面含有丰富的糖类、枣酸、钙、磷、铁、维生素等物质，使得八宝饭具有补血、安心神和增强食欲的作用。平时消化不良的人可以通过进食八宝饭改善下肠胃"
 							}
 						]
 					}
 							
 				],
 				weekList:[
-					{"id":0,"chinaName":"周一","englishName":"Monday",class:"w1"},
-					{"id":1,"chinaName":"周二","englishName":"Tuesday",class:"w2"},
-					{"id":2,"chinaName":"周三","englishName":"Wednesday",class:"w3"},
-					{"id":3,"chinaName":"周四","englishName":"Thursday",class:"w4"},
-					{"id":4,"chinaName":"周五","englishName":"Friday",class:"w5"},
-					{"id":5,"chinaName":"周六","englishName":"Saturday",class:"w6"},
-					{"id":6,"chinaName":"周日","englishName":"Sunday",class:"w7"},
+					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},
+					{"id":2,"chinaName":"周二","englishName":"Tuesday",class:"w2"},
+					{"id":3,"chinaName":"周三","englishName":"Wednesday",class:"w3"},
+					{"id":4,"chinaName":"周四","englishName":"Thursday",class:"w4"},
+					{"id":5,"chinaName":"周五","englishName":"Friday",class:"w5"},
+					{"id":6,"chinaName":"周六","englishName":"Saturday",class:"w6"},
+					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
 				],
 				weeksFoodList:[
 				{
@@ -182,13 +194,13 @@
 							"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 							"foodList":[
 								{
-									"name":"小米粥",
+									"name":"小米粥(一)",
 									"star":2,
 									"description":"开肠胃、补虚损、易丹田",
 									"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
 								},
 								{
-									"name":"鸡蛋",
+									"name":"鸡蛋(一)",
 									"star":4,
 									"description":"富含高蛋白和大量的维生素",
 									"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
@@ -200,13 +212,13 @@
 							"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 							"foodList":[
 								{
-									"name":"小米粥",
+									"name":"小米粥(一)",
 									"star":2,
 									"description":"开肠胃、补虚损、易丹田",
 									"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
 								},
 								{
-									"name":"鸡蛋",
+									"name":"鸡蛋(一)",
 									"star":1,
 									"description":"富含高蛋白和大量的维生素",
 									"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
@@ -218,13 +230,13 @@
 							"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 							"foodList":[
 								{
-									"name":"小米粥",
+									"name":"小米粥(一)",
 									"star":2,
 									"description":"开肠胃、补虚损、易丹田",
 									"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
 								},
 								{
-									"name":"鸡蛋",
+									"name":"鸡蛋(一)",
 									"star":3,
 									"description":"富含高蛋白和大量的维生素",
 									"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
@@ -243,7 +255,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[
 									{
-										"name":"小米粥",
+										"name":"小米粥(二)",
 										"star":3,
 										"description":"开肠胃、补虚损、易丹田",
 										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
@@ -254,7 +266,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[											
 									{
-										"name":"鸡蛋",
+										"name":"鸡蛋(二)",
 										"star":2,
 										"description":"富含高蛋白和大量的维生素",
 										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
@@ -267,7 +279,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[
 									{
-										"name":"鸡蛋",
+										"name":"鸡蛋(二)",
 										"star":3,
 										"description":"富含高蛋白和大量的维生素",
 										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
@@ -284,7 +296,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[
 									{
-										"name":"鸡蛋",
+										"name":"鸡蛋(三)",
 										"star":4,
 										"description":"富含高蛋白和大量的维生素",
 										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
@@ -297,7 +309,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[											
 									{
-										"name":"小米粥",
+										"name":"小米粥(三)",
 										"star":3,
 										"description":"开肠胃、补虚损、易丹田",
 										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
@@ -310,7 +322,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[
 									{
-										"name":"鸡蛋",
+										"name":"鸡蛋(三)",
 										"star":5,
 										"description":"富含高蛋白和大量的维生素",
 										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
@@ -327,7 +339,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[
 									{
-										"name":"小米粥",
+										"name":"小米粥(四)",
 										"star":3,
 										"description":"开肠胃、补虚损、易丹田",
 										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
@@ -340,7 +352,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[											
 									{
-										"name":"鸡蛋",
+										"name":"鸡蛋(四)",
 										"star":4,
 										"description":"富含高蛋白和大量的维生素",
 										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
@@ -353,7 +365,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[
 									{
-										"name":"小米粥",
+										"name":"小米粥(四)",
 										"star":3,
 										"description":"开肠胃、补虚损、易丹田",
 										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
@@ -371,7 +383,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[
 									{
-										"name":"鸡蛋",
+										"name":"鸡蛋(五)",
 										"star":3,
 										"description":"富含高蛋白和大量的维生素",
 										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
@@ -384,7 +396,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[											
 									{
-										"name":"小米粥",
+										"name":"小米粥(五)",
 										"star":2,
 										"description":"开肠胃、补虚损、易丹田",
 										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
@@ -397,7 +409,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[
 									{
-										"name":"鸡蛋",
+										"name":"鸡蛋(五)",
 										"star":4,
 										"description":"富含高蛋白和大量的维生素",
 										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
@@ -416,7 +428,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[
 									{
-										"name":"小米粥",
+										"name":"小米粥(六)",
 										"star":3,
 										"description":"开肠胃、补虚损、易丹田",
 										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
@@ -429,7 +441,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[											
 									{
-										"name":"小米粥",
+										"name":"小米粥(六)",
 										"star":3,
 										"description":"开肠胃、补虚损、易丹田",
 										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
@@ -442,7 +454,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[
 									{
-										"name":"鸡蛋",
+										"name":"鸡蛋(六)",
 										"star":5,
 										"description":"富含高蛋白和大量的维生素",
 										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
@@ -458,7 +470,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[
 									{
-										"name":"鸡蛋",
+										"name":"鸡蛋(七)",
 										"star":3,
 										"description":"富含高蛋白和大量的维生素",
 										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
@@ -469,7 +481,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[											
 									{
-										"name":"鸡蛋",
+										"name":"鸡蛋(七)",
 										"star":2,
 										"description":"富含高蛋白和大量的维生素",
 										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
@@ -480,7 +492,7 @@
 								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
 								"foodList":[
 									{
-										"name":"小米粥",
+										"name":"小米粥(七)",
 										"star":4,
 										"description":"开肠胃、补虚损、易丹田",
 										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
@@ -491,7 +503,6 @@
 							
 					}	
 				]
-		
 			}
 		},
 		
@@ -509,14 +520,108 @@
 			// 获取屏幕宽度
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 			this.loadTabbars();
+			console.log("week========="+week);
+			console.log("weekIndex========="+weekIndex);
+			
+			if(week==1){
+				this.weekList=[
+					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
+					{"id":1,"chinaName":"今天","englishName":"Monday",class:"w1"},
+					{"id":2,"chinaName":"周二","englishName":"Tuesday",class:"w2"},	
+					{"id":3,"chinaName":"周三","englishName":"Wednesday",class:"w3"},
+					{"id":4,"chinaName":"周四","englishName":"Thursday",class:"w4"},
+					{"id":5,"chinaName":"周五","englishName":"Friday",class:"w5"},
+					{"id":6,"chinaName":"周六","englishName":"Saturday",class:"w6"},
+				]
+			}else if(week==2){
+				this.weekList=[
+					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},	
+					{"id":2,"chinaName":"今天","englishName":"Wednesday",class:"w2"},
+					{"id":3,"chinaName":"周三","englishName":"Tuesday",class:"w3"},
+					{"id":4,"chinaName":"周四","englishName":"Thursday",class:"w4"},
+					{"id":5,"chinaName":"周五","englishName":"Friday",class:"w5"},
+					{"id":6,"chinaName":"周六","englishName":"Saturday",class:"w6"},
+					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
+				]
+			}else if(week==3){
+				this.weekList=[
+					{"id":2,"chinaName":"周二","englishName":"Wednesday",class:"w2"},
+					{"id":3,"chinaName":"今天","englishName":"Wednesday",class:"w3"},
+					{"id":4,"chinaName":"周四","englishName":"Thursday",class:"w4"},
+					{"id":5,"chinaName":"周五","englishName":"Friday",class:"w5"},
+					{"id":6,"chinaName":"周六","englishName":"Saturday",class:"w6"},
+					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
+					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},
+				]
+			}else if(week==4){
+				this.weekList=[
+					{"id":3,"chinaName":"周三","englishName":"Tuesday",class:"w3"},
+					{"id":4,"chinaName":"今天","englishName":"Wednesday",class:"w4"},
+					{"id":5,"chinaName":"周五","englishName":"Friday",class:"w5"},
+					{"id":6,"chinaName":"周六","englishName":"Saturday",class:"w6"},
+					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
+					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},
+					{"id":2,"chinaName":"周二","englishName":"Monday",class:"w2"},
+				]
+			}else if(week==5){
+				this.weekList=[	
+					{"id":4,"chinaName":"周四","englishName":"Wednesday",class:"w4"},
+					{"id":5,"chinaName":"今天","englishName":"Friday",class:"w5"},
+					{"id":6,"chinaName":"周六","englishName":"Saturday",class:"w6"},
+					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
+					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},
+					{"id":2,"chinaName":"周二","englishName":"Monday",class:"w2"},
+					{"id":3,"chinaName":"周三","englishName":"Tuesday",class:"w3"},
+				]
+			}else if(week==6){
+				this.weekList=[
+					{"id":5,"chinaName":"周五","englishName":"Friday",class:"w5"},
+					{"id":6,"chinaName":"今天","englishName":"Wednesday",class:"w6"},
+					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
+					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},
+					{"id":2,"chinaName":"周二","englishName":"Saturday",class:"w2"},
+					{"id":3,"chinaName":"周三","englishName":"Tuesday",class:"w3"},
+					{"id":4,"chinaName":"周四","englishName":"Thursday",class:"w4"},
+				]
+			}else if(week==7){
+				this.weekList=[
+					{"id":6,"chinaName":"周六","englishName":"Wednesday",class:"w6"},
+					{"id":7,"chinaName":"今天","englishName":"Sunday",class:"w7"},
+					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},
+					{"id":2,"chinaName":"周二","englishName":"Saturday",class:"w2"},
+					{"id":3,"chinaName":"周三","englishName":"Tuesday",class:"w3"},
+					{"id":4,"chinaName":"周四","englishName":"Thursday",class:"w4"},	
+					{"id":5,"chinaName":"周五","englishName":"Friday",class:"w5"},
+				]
+			}
+			weekScrollLeft_default= (weekIndex-1) *80;
 			
 		},
 		methods: {
+			delItem(weekIndex,foodIndex,itemIndex){
+				let weekContextIndex = this.weekList[weekIndex].id-1;
+				var foodList =this.weeksFoodList[weekContextIndex].recommendList[foodIndex].foodList;
+				console.log("weekContextIndex:"+weekContextIndex);
+				console.log("foodIndex:"+foodIndex);
+				console.log("foodList:"+foodList);
+				foodList.splice(itemIndex,1)
+			},
+			ontabchange(e) {
+			    let index = e.target.current || e.detail.current;
+			    this.weekCurrent = index;
+				console.log(e);
+			    this.weekScrollLeft = (index-1) *80;
+			   
+			},
 			weekSelect(e) {
-				this.weekCurrent = e.currentTarget.dataset.id;
+				this.weekCurrent = e.currentTarget.dataset.index;
+				if(this.weekCurrent>0){
+					this.weekScrollLeft = (e.currentTarget.dataset.index-1) *80;
+				}
+				/* this.weekCurrent = e.currentTarget.dataset.id;
 				if(this.weekCurrent>0){
 					this.weekScrollLeft = (e.currentTarget.dataset.id-1) *80;
-				}
+				} */
 			},
 			//加载tabbar,顶部导航栏
 			loadTabbars(){
@@ -694,6 +799,7 @@ page, .content{
 
 .panel-scroll-box{
 	height: 100%;
+	margin-bottom: 40upx;
 	.panel-item{
 		background: #fff;
 		padding: 30px 0;
