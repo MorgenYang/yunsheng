@@ -97,11 +97,10 @@
 								 </block>
 								 </view>
 							</scroll-view>
-					
+							<button hover-class='none' class="custom-btn" @tap="customization(week)">深入订制</button>
 						</swiper-item>
 					</swiper>			
-					<button hover-class='none' class="custom-btn">深入定制</button>
-				</view>
+									</view>
 						
 			</swiper-item>
 		</swiper>
@@ -520,8 +519,6 @@
 			// 获取屏幕宽度
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 			this.loadTabbars();
-			console.log("week========="+week);
-			console.log("weekIndex========="+weekIndex);
 			
 			if(week==1){
 				this.weekList=[
@@ -598,30 +595,27 @@
 			
 		},
 		methods: {
+			customization(week){
+				console.log(week.id);
+				uni.navigateTo({
+					url: `/pages/meals/customization/customization?`
+				})
+			},
 			delItem(weekIndex,foodIndex,itemIndex){
 				let weekContextIndex = this.weekList[weekIndex].id-1;
 				var foodList =this.weeksFoodList[weekContextIndex].recommendList[foodIndex].foodList;
-				console.log("weekContextIndex:"+weekContextIndex);
-				console.log("foodIndex:"+foodIndex);
-				console.log("foodList:"+foodList);
 				foodList.splice(itemIndex,1)
 			},
 			ontabchange(e) {
 			    let index = e.target.current || e.detail.current;
 			    this.weekCurrent = index;
-				console.log(e);
-			    this.weekScrollLeft = (index-1) *80;
-			   
+			    this.weekScrollLeft = (index-1) *80;			
 			},
 			weekSelect(e) {
 				this.weekCurrent = e.currentTarget.dataset.index;
 				if(this.weekCurrent>0){
 					this.weekScrollLeft = (e.currentTarget.dataset.index-1) *80;
 				}
-				/* this.weekCurrent = e.currentTarget.dataset.id;
-				if(this.weekCurrent>0){
-					this.weekScrollLeft = (e.currentTarget.dataset.id-1) *80;
-				} */
 			},
 			//加载tabbar,顶部导航栏
 			loadTabbars(){

@@ -206,7 +206,16 @@
 				"navigationBarBackgroundColor": "#3AA9D1"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/meals/customization/customization",
+            "navigationBarTextStyle": "black",
+            "style": {
+				"navigationBarTitleText": "深入定制",
+				"navigationBarBackgroundColor": "#3AA9D1"
+				// "enablePullDownRefresh" : true
+				}
+        }
+    ],
 	"tabBar": {
 		"color": "#bfbfbf",
 		"selectedColor": "#3AA9D1",
