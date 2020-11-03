@@ -264,10 +264,12 @@
 	position:absolute;
 	right:15upx;
 	bottom:15upx;
-	font-size: 16px;
-	height: 72upx;
+	font-size: 14px;
+	height: 60upx;
 	color: #007AFF;
 	border: #007AFF solid 1upx;
+	line-height: 60upx;
+	/* padding-top: 8upx; */
 }
 .del{
 	width: 50upx;
