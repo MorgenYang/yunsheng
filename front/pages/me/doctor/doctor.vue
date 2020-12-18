@@ -36,10 +36,18 @@
 				<text class="title">服务内容</text>
 			</view>
 			<view class="service-dispaly">
+				<!--  #ifdef MP-WEIXIN -->
+				 <button open-type='contact' session-from='' class="service-btn service-btn-left mp-button" hover-class="setting-click">
+					<image class="icon" src="../../../static/icon/settings/online-icon.png"></image>
+					在线问诊
+				</button> 
+				<!--  #endif -->
+				<!--  #ifndef MP-WEIXIN -->
 				<view class="service-btn service-btn-left" @tap="onlineVisits" hover-class="setting-click">
 					<image class="icon" src="../../../static/icon/settings/online-icon.png"></image>
 					在线问诊
 				</view>
+				<!--  #endif -->
 				<view class="service-btn service-btn-right">
 					<image class="icon" src="../../../static/icon/settings/movie-icon.png"></image>
 					视频问诊
@@ -100,11 +108,10 @@
 					icon:"none",
 				    duration: 300
 				});
-				uni.navigateTo({
+				/* uni.navigateTo({
 				    url: "./chat"
-				});
+				}); */
 			}
-			
 		}
 	}
 </script>

@@ -1,6 +1,8 @@
 <template>
 	<view>
-		<video class="video" autoplay="true" :src="item.url" :poster="item.image"></video>
+		<view class="cpt-mask">  
+			<video class="video" autoplay="true" :src="item.url" :poster="item.image"></video>
+		</view>  
 	</view>
 </template>
 
@@ -23,8 +25,9 @@
 </script>
 
 <style>
-	.video{
+ 	.video{
 		width: 100%;
 		height: 420upx;
-	}
+	} 
+
 </style>

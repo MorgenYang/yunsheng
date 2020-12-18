@@ -22,18 +22,20 @@
 			<image class="title-img"  src="../../../static/icon/settings/icon.png"></image>
 			<view class="type-title">饮食习惯</view>
 		</view>
-	   <view class="setting-body">
-		<block v-for="(item,index) in setting" hover-class="setting-click" v-bind:key="item.id" @tap="itemClick" >
-			<picker class="setting-line"  @change="bindPickerChange"  :range="array" v-bind:id="item.id">            
-				<!-- <image class="setting-img" src="/static/icon/settings/health-record.png"></image> -->
-				<!-- <image class="setting-img" :src="item.imageSrc"></image> -->
-				<text class="setting-text">{{item.title}}</text>
-				<text class="choose-value">{{item.choose}}</text>
-				<image class="arrows-right-setting" src="/static/icon/settings/arrows-right-setting.png"></image>
-			</picker>
-			<view :class="{line:(index !=setting.length-1)}"></view>
-		</block>
-	   </view>
+		<view v-for="item1 in itemList1" style="width: 90%; margin: auto; margin-bottom: 20upx;"
+			v-bind:key="item1.id">
+			<xfl-select 
+				:list="list1"
+				:clearable="true"
+				:isCanInput="false"  
+				:selectHideType="'hideAll'"
+				:style_Container="listBoxStyle"
+				:placeholder = "item1">
+			</xfl-select>
+		</view>
+	 <view class="bottom-view">
+		  <button hover-class='none'  @tap="individualization()" class="custom-btn">个性化定制</button>
+	 </view>
 	</view>
 </template>
 
@@ -53,57 +55,20 @@
 					'芒果',
 					'大白菜',
 				],
-				array: ['否', '是'],
-				setting: [{
-						id: 0,
-						title: "是否素食",
-						imageSrc: "/static/icon/settings/health-record.png",
-						choose:''
-					},
-					{
-						id: 1,
-						title: "回避食物",
-						imageSrc: "/static/icon/settings/store.png",
-						choose:''
-					},
-					{
-						id: 2,
-						title: "是否包含薯类",
-						imageSrc: "/static/icon/settings/doctor.png",
-						choose:''
-					},
-					{
-						id: 3,
-						title: "是否包含豆制品",
-						imageSrc: "/static/icon/settings/settings.png",
-						choose:''
-					},
-					{
-						id: 4,
-						title: "是否喝豆浆",
-						imageSrc: "/static/icon/settings/settings.png",
-						choose:''
-					},
-					{
-						id: 5,
-						title: "是否喝牛奶",
-						imageSrc: "/static/icon/settings/settings.png",
-						choose:''
-					}
-					
-				]
+				itemList1:["是否素食","回避食物","是否包含薯类","是否包含豆制品","是否喝豆浆","是否喝牛奶"],
+				list1:['否','是']
 			}
 		},
-		   
-		methods: {
-			 bindPickerChange: function(e) {
-				let index = e.target.id;
-				this.setting[index].choose=e.target.value==1?'是':'否'; 
+		methods: {	
+			 individualization:function(e){
+				 uni.navigateTo({
+					 url: "/pages/meals/individualization/individualization"
+				 });
 			 }
 		}
 	}
 </script>
 
 <style>
-	@import url("./customization.css");
+	@import url("../item.css");
 </style>

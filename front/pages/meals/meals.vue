@@ -30,7 +30,8 @@
 								<image class="title-img"  src="../../static/icon/settings/icon.png"></image>
 								<view class="type-title"> {{menu.title}} </view>
 							</view>
-							<view v-for="(itemMenu, index) in menu.menus" :key="index" class="item news-item">
+							<view v-for="(itemMenu, index) in menu.menus" :key="index" class="item news-item" 
+								@tap="itemDetail(itemMenu)" hover-class="setting-click">
 								<image class="img-list" mode="scaleToFill" :src="itemMenu.image"></image>
 								<view class="item-right">
 									<view class="item-title">{{itemMenu.name}}</view>
@@ -100,8 +101,7 @@
 							<button hover-class='none' class="custom-btn" @tap="customization(week)">深入订制</button>
 						</swiper-item>
 					</swiper>			
-									</view>
-						
+				</view>		
 			</swiper-item>
 		</swiper>
 	</view>
@@ -595,6 +595,12 @@
 			
 		},
 		methods: {
+			itemDetail(itemMenu){
+				//console.log(itemMenu);
+				uni.navigateTo({
+					url: './foodDetails?name='+itemMenu.name
+				});
+			},
 			customization(week){
 				console.log(week.id);
 				uni.navigateTo({

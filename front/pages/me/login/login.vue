@@ -4,7 +4,7 @@
 	      <input type="text" placeholder="手机号" v-model="user.username" />
 	      <input type="text" placeholder="密码" password="true" v-model="user.password" />
 		  <view class="img-code">
-			  <image @tap="loadVaildCode()" class="img" :src="user.image"></image>
+			  <image @tap="loadVaildCode()" class="img" :src="user.image" onerror="/icon/img/del-btn.png"></image>
 			  <input type="text" placeholder="验证码" v-model="user.code"/>
 		  </view>
 	      <!-- <button type="primary" @click="signUp">注册</button> -->
@@ -36,19 +36,26 @@
 		methods: {
 			loadVaildCode(){
 				uni.request({
-				    url: 'http://120.24.53.84/ysapi/verificationCode/getBase64Image',
+					//https://www.healthycloudsci.com/login
+				    //url: 'http://120.24.53.84/ysapi/verificationCode/getBase64Image',
+				    url: 'https://www.healthycloudsci.com/verificationCode/getBase64Image',
 				    success: (res) => {
 						var data = res.data;
 						if(data.code==200 && data.data!=null){
 							this.user.image = data.data.image;
 							this.user.verifyToken = data.data.verifyToken;
-							
+						}else{
+							this.user.image = '/static/img/star.png'
 						}
-				    }
+				    },
+					fail:(res)=>{
+						this.user.image = '/static/img/star.png'
+					}
 				});
 			},
 			signIn(){
-				uni.request({
+				uni.reLaunch({url: "/pages/education/education"});
+				/* uni.request({
 				    url: 'http://120.24.53.84/ysapi/login',
 					method:"POST",
 					data: {
@@ -83,11 +90,11 @@
 							});
 						}
 				    }
-				});
+				}); */
 			},
 			registerUser(){
 				uni.navigateTo({
-				    url: "../register/register"
+				    url: "/pages/me/register/register"
 				});
 			}
 		}
@@ -95,8 +102,17 @@
 </script>
 
 <style>
+	page{
+		height: 100%;
+	}
   .container {
-  	padding: 260upx 80upx 80upx 80upx;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding-left: 80upx;
+	padding-right: 80upx;
+	height: 100%;
   }
   .img{
 	  height: 80upx;

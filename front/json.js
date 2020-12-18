@@ -1,3 +1,24 @@
+const eduTabList=[{
+	name: '亚健康',
+		id: '1',
+	}, {
+		name: '抗衰',
+		id: '2'
+	}, {
+		name: '慢病',
+		id: '3',
+	},{
+		name: '康复',
+		id: '4'
+	},{
+		name: '养生',
+		id: '5'
+	},{
+		name: '情治',
+		id: '6'
+	}
+];
+
 const tabList = [{
 	name: '会议报道',
 	id: '1',
@@ -10,10 +31,10 @@ const tabList = [{
 }];
 const newsList = [{
 		id: 1,
-		title: '春节宅在家，看看这份片单吧',
+		title: '春节宅在家，看看这份片单吧，看看这份片单吧，看看这份片单吧',
 		content: '推荐影片: 囧妈、饮食男女、老妈操碎心、未来同学会',
 		author: '新京报',
-		image:'http://t8.baidu.com/it/u=2247852322,986532796&fm=79&app=86&f=JPEG?w=1280&h=853',
+		image:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1385962744,1434240400&fm=26&gp=0.jpg',
 		time: '2020.1.26',
 		type: 1
 	},{
@@ -21,7 +42,7 @@ const newsList = [{
 		title: '在闲鱼上捡漏是怎样一种体验？',
 		content: '闲鱼是阿里巴巴旗下的一款产品，笔者也是接触闲鱼很多了，分享一些事情给大家。说实话咸鱼捡漏还是很可能的，买对了肯定比你正规渠道买的便宜很多，当然你得花费一定的精力。我在咸鱼买了很多很多东西，至今还没碰到翻车的情况',
 		author: '爱考过',
-		image:'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2133231534,4242817610&fm=173&app=49&f=JPEG?w=218&h=146&s=4FB42BC55E2A26076B2D1301030060C6',
+		image:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3737656113,3356173548&fm=26&gp=0.jpg',
 		time: '2020.1.26',
 		type: 1
 	},{
@@ -42,18 +63,18 @@ const newsList = [{
 		type: 1
 	},{
 		id: 5,
-		title: '别再玩手机了，赶紧学前端赶紧学前端',
+		title: '和分库东风快递今飞凯达',
 		content: '防护等级非的翻江倒海父节点劲是多喝水更待何时回到家发货单',
 		author: '爱考过',
-		image:'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2133231534,4242817610&fm=173&app=49&f=JPEG?w=218&h=146&s=4FB42BC55E2A26076B2D1301030060C6',
+		image:'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2885004340,2522264287&fm=26&gp=0.jpg',
 		time: '2020.1.26',
 		type: 1
 	},{
 		id: 6,
-		title: '别再玩手机了，赶紧学前端赶紧学前端',
-		content: '防护等级非的翻江倒海父节点劲是多喝水更待何时回到家发货单',
+		title: '孵化基地还返深咖啡快解散',
+		content: '方单号看见发货是咖啡机独守空房附件款到发货科技师范接口的',
 		author: '爱考过',
-		image:'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2133231534,4242817610&fm=173&app=49&f=JPEG?w=218&h=146&s=4FB42BC55E2A26076B2D1301030060C6',
+		image:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606804796866&di=f9d72ba3d3394d1abb679cc7d8009835&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F1%2F53d74d5654534.jpg',
 		time: '2020.1.26',
 		type: 1
 	}
@@ -75,7 +96,7 @@ const videoList = [{
 		content: '防护等级非的翻江倒海父节点劲是多喝水更待何时回到家发货单',
 		author: '爱考过',
 		url:"http://baobab.kaiyanapp.com/api/v1/playUrl?vid=164016&resourceType=video&editionType=default&source=aliyun&playUrlType=url_oss",
-		image:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1580370484666&di=5aae16052fb42ab48783495f81d33e9c&imgtype=0&src=http%3A%2F%2Fimg.jk51.com%2Fimg_jk51%2F389919186.jpeg',
+		image:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=155072005,2180532394&fm=26&gp=0.jpg',
 		time: '2020.1.26',
 		//initialTime:0,
 		type: 1
@@ -85,7 +106,7 @@ const videoList = [{
 		content: 'fhdfh涣发大号反间谍法孵涣发大号反间谍法孵化基地很费劲地方还返绝代风华涣发大号反间谍法孵化基地很费劲地方还返绝代风华化基地很费劲地方还返绝代风华',
 		author: '新京报',
 		url:"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
-		image:'http://hbimg.b0.upaiyun.com/357d23d074c2954d568d1a6f86a5be09d190a45116e95-0jh9Pg_fw658',
+		image:'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2885004340,2522264287&fm=26&gp=0.jpg',
 		time: '2020.1.26',
 		//initialTime:0,
 		type: 1
@@ -134,7 +155,7 @@ const onlineClassList =[
 		photo:"周医生",
 		time:"5分钟前",
 		isAttention:0,
-		image:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1580370484666&di=5aae16052fb42ab48783495f81d33e9c&imgtype=0&src=http%3A%2F%2Fimg.jk51.com%2Fimg_jk51%2F389919186.jpeg',
+		image:'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2540953494,3095782289&fm=26&gp=0.jpg',
 		division:"胸外科",
 		title:"减肥不吃晚饭可以瘦吗",
 		content:"科学饮食减肥法,通过科学控制日常饮食达到减肥的目的",
@@ -147,7 +168,7 @@ const onlineClassList =[
 		photo:"周医生",
 		time:"5分钟前",
 		isAttention:0,
-		image:'http://hbimg.b0.upaiyun.com/357d23d074c2954d568d1a6f86a5be09d190a45116e95-0jh9Pg_fw658',
+		image:'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1193902139,2875569950&fm=26&gp=0.jpg',
 		division:"胸外科",
 		title:"减肥不吃晚饭可以瘦吗",
 		content:"科学饮食减肥法,通过科学控制日常饮食达到减肥的目的",
@@ -192,5 +213,6 @@ export default {
 	newsList,
 	videoList,
 	onlineClassList,
-	evaList
+	evaList,
+	eduTabList
 }

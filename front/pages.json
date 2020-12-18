@@ -1,16 +1,28 @@
 {
-	"pages": [{
+	"pages": [
+		/* {
 			"path": "pages/home/home",
 			"style": {
-				"navigationBarTitleText": "首页",
+				"titleNView" : false,
+				"navigationBarBackgroundColor": "#1F7DD6"
+				//"navigationBarTitleText": "首页",
+				//"navigationBarBackgroundColor": "#3AA9D1"
+				// "enablePullDownRefresh" : true
+				     
+			}
+		}, */
+		{
+			"path": "pages/education/education",
+			"style": {
+				"navigationBarTitleText": "健康教育",
 				"navigationBarBackgroundColor": "#3AA9D1"
 				// "enablePullDownRefresh" : true
 			}
 		},
 		{
-			"path": "pages/education/education",
+			"path": "pages/education/detail",
 			"style": {
-				"navigationBarTitleText": "健康教育",
+				"navigationBarTitleText": "详情",
 				"navigationBarBackgroundColor": "#3AA9D1"
 				// "enablePullDownRefresh" : true
 			}
@@ -23,11 +35,19 @@
 				// "enablePullDownRefresh" : true
 			}
 		},
-
+		{
+			"path": "pages/me/login/login",
+			"navigationStyle":"custom",
+			"style": {  
+			  "app-plus": {  
+			    "titleNView": false //禁用原生导航栏  
+			  }  
+			}
+		},
 		{
 			"path": "pages/medical/medical",
 			"style": {
-				"navigationBarTitleText": "学术活动",
+				"navigationBarTitleText": "学术在线",
 				"navigationBarBackgroundColor": "#3AA9D1"
 
 				/* "app-plus" : {
@@ -54,6 +74,13 @@
 				// "enablePullDownRefresh" : true
 			}
 		}, {
+			"path": "pages/meals/foodDetails",
+			"style": {
+				"navigationBarTitleText": "膳食管理",
+				"navigationBarBackgroundColor": "#3AA9D1"
+				// "enablePullDownRefresh" : true
+			}
+		},{
 			"path": "pages/me/setting/setting",
 			"navigationBarTextStyle": "black",
 			"style": {
@@ -151,7 +178,7 @@
 				"navigationBarBackgroundColor": "#3AA9D1"
 				// "enablePullDownRefresh" : true
 			}
-		}, {
+		}/* , {
 			"path": "pages/me/doctor/chat",
 			"navigationBarTextStyle": "black",
 			"style": {
@@ -164,22 +191,8 @@
 				// },
 				"navigationBarBackgroundColor": "#3AA9D1"
 				// "enablePullDownRefresh" : true
-			}
-		}, {
-			"path": "pages/me/login/login",
-			"navigationBarTextStyle": "black",
-			"style": {
-				"navigationBarTitleText": "登录",
-				// "mp-weixin": {
-				// 	"titleNView": {
-				// 		"titleText": "登录",
-				// 		"titleColor": "white"
-				// 	}
-				// },
-				"navigationBarBackgroundColor": "#3AA9D1"
-				// "enablePullDownRefresh" : true
-			}
-		}, {
+			} 
+		}*/, {
 			"path": "pages/me/register/register",
 			"navigationBarTextStyle": "black",
 			"style": {
@@ -215,18 +228,28 @@
 				// "enablePullDownRefresh" : true
 				}
         }
+        ,{
+            "path" : "pages/meals/individualization/individualization",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "个性化定制",
+				"navigationBarBackgroundColor": "#3AA9D1",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"tabBar": {
 		"color": "#bfbfbf",
 		"selectedColor": "#3AA9D1",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
-		"list": [{
+		"list": [/* {
 				"pagePath": "pages/home/home",
 				"text": "首页",
 				"iconPath": "static/icon/tabbar/tabbar/home.png",
 				"selectedIconPath": "static/icon/tabbar/tabbar-sel/home-sel.png"
-			},
+			}, */
 			{
 				"pagePath": "pages/education/education",
 				"text": "健康教育",
@@ -241,7 +264,7 @@
 			},
 			{
 				"pagePath": "pages/medical/medical",
-				"text": "学术活动",
+				"text": "学术在线",
 				"iconPath": "static/icon/tabbar/tabbar/medical.png",
 				"selectedIconPath": "static/icon/tabbar/tabbar-sel/medical-sel.png"
 			},

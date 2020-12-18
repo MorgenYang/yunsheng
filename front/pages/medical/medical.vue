@@ -1,5 +1,7 @@
 <template>
 	<view class="content">
+		
+		
 		<!-- 顶部选项卡 -->
 		<scroll-view id="nav-bar" class="nav-bar" scroll-x scroll-with-animation :scroll-left="scrollLeft">
 			<view 
@@ -32,17 +34,18 @@
 					</scroll-view>
 					
 					<scroll-view class="panel-scroll-box" v-if="tabItem.id==2" :scroll-y="enableScroll" @scrolltolower="loadMore">
-						<view v-for="(item, index) in tabItem.videoList" :key="index" class="item-video" @tap="palyVideo(item)">
+						<view v-for="(item, index) in tabItem.videoList" :key="index" class="item-video" >
 							<view class="video-head">
 								<image class="title-img"  src="../../static/icon/settings/icon.png"></image>
-								<view class="video-title"> {{item.title}} </view>
+								<view class="video-title" > {{item.title}} </view>
 							</view>
-							<image class="img-list-single" mode="aspectFill" :src="item.image"></image>
-							<image class="play-btn" src="../../static/icon/settings/play.png"></image>
+							<j-video class="img-list-single" :poster="item.image" :url="item.url" ></j-video>
+							<!-- <image  mode="aspectFill" :src="item.image" @tap="playVideo(item)"></image>
+							<image class="play-btn" src="../../static/icon/settings/play.png" @tap="playVideo(item)"></image> -->
 							<!-- <video :id="'video_'+index" class="img-list-single" ref="video" @play="playVideo"  @pause="pauseVideo($event,item)"
 								src="http://baobab.kaiyanapp.com/api/v1/playUrl?vid=164016&resourceType=video&editionType=default&source=aliyun&playUrlType=url_oss"
 								 poster="http://t8.baidu.com/it/u=2247852322,986532796&fm=79&app=86&f=JPEG?w=1280&h=853"></video> -->		
-							</view>			
+						</view>			
 						<mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
 					</scroll-view>
 					
@@ -87,7 +90,6 @@
 				</swiper-item>
 			</swiper>
 		</mix-pulldown-refresh>
-		
 	</view>
 </template>
 
@@ -107,9 +109,7 @@
 				tabCurrentIndex: 0, //当前选项卡索引
 				scrollLeft: 0, //顶部选项卡左滑距离
 				enableScroll: true,
-				tabBars: [],
-				videoCur:0,
-				video: null,
+				tabBars: []
 			}
 		},
 		
@@ -139,14 +139,6 @@
 				item.isAttention = 1;
 				item.attentionCount = item.attentionCount+1;
 			},
-			//跳转页面播放视频
-			palyVideo(item){
-				var item = JSON.stringify(item); // 这里转换成 字符串
-				//console.log(item);
-				uni.navigateTo({
-				    url: './videoDetail?item='+encodeURIComponent(item)
-				}) 
-			},
 			//加载tabbar,顶部导航栏
 			loadTabbars(){
 				let tabList = json.tabList;
@@ -163,7 +155,6 @@
 			//加载数据
 			loadDataList(type){
 				let tabItem = this.tabBars[this.tabCurrentIndex];
-				
 				//type add 加载更多 refresh下拉刷新
 				if(type === 'add'){
 					if(tabItem.loadMoreStatus === 2){
@@ -176,7 +167,7 @@
 					tabItem.refreshing = true;
 				}
 				// #endif
-				
+		
 				//setTimeout模拟异步请求数据
 				setTimeout(()=>{
 					let newsList = [];
@@ -362,9 +353,14 @@
 page, .content{
 	background-color: #f8f8f8;
 	height: 100%;
+	width: 100%;
 	overflow: hidden;
 }
-
+.videoDetail{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
 /* 顶部tabbar */
 .nav-bar{
 	position: relative;
@@ -417,11 +413,26 @@ page, .content{
 		border-bottom: 2px solid #000;
 	}
 }
+.custom-view{
+	overflow: hidden;
+	z-index: 999;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	.video{
+		width:700upx;
+		height:600upx ;
+	}
+	.cancel{
+		margin-top: 100rpx;
+		width: 60rpx;
+		height: 60rpx;
+	}
+}	
 
 view{
 	display:flex;
 	flex-direction: column;
-}	
-	
+}
 @import url("./medical.css");
 </style>

@@ -104,3 +104,9 @@
 .setting-click{
 	background-color:#A2DEFA;
 }
+.mp-button::after {
+	border: none;
+}
+button{
+	background-color:#f8f8f800;
+}

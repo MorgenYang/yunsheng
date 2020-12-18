@@ -78,14 +78,14 @@
 	height: 200upx;
 }
 
-.uni-scroll-view{
+/* .uni-scroll-view{
 	text-align: center;
 }
-
+ */
 .img-list-single{
-	width: 710upx;
-	height: 400upx;
-	margin: 16upx 20upx;
+/* 	width: 710upx;
+	height: 400upx; 
+	padding: 16upx 20upx;*/
 }
 .play-btn{
 	 position: absolute;

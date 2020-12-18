@@ -26,7 +26,7 @@
 }
 
 .news-item{
-	height: 280upx;
+	height: 282upx;
 	flex-direction: row;
 	/* margin-bottom: 20upx; */
 }
@@ -91,10 +91,10 @@
 	height: 270upx;
 }
 
-.uni-scroll-view{
+/* .uni-scroll-view{
 	text-align: center;
 }
-
+ */
 .type-head{
 	display: flex;
 	flex-direction: row;
@@ -276,4 +276,8 @@
 	height: 50upx;
 	margin-top: 30upx;
 	padding: 12upx;
+}
+/*item的点击样式*/
+.setting-click{
+	background-color:#F5F5F5;
 }

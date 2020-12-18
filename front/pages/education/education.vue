@@ -1,258 +1,339 @@
 <template>
-    <view class="tabs">
-        <scroll-view id="tab-bar" class="scroll-h" :scroll-x="true" :show-scrollbar="false" :scroll-into-view="scrollInto">
-            <view v-for="(tab,index) in tabBars" :key="tab.id" class="uni-tab-item" :id="tab.id" :data-current="index" @click="ontabtap">
-                <text class="uni-tab-item-title" :class="tabIndex==index ? 'uni-tab-item-title-active' : ''">{{tab.name}}</text>
-            </view>
-        </scroll-view>
-        <view class="line-h"></view>
-        <swiper :current="tabIndex" class="swiper-box" style="flex: 1;" :duration="300" @change="ontabchange">
-            <swiper-item class="swiper-item" v-for="(tab,index1) in newsList" :key="index1">
-				<scroll-view class="scroll-v list" enableBackToTop="true" scroll-y @scrolltolower="loadMore(index1)">
-					<view v-for="(newsitem,index2) in tab.data" :key="newsitem.id">
-						<media-item :options="newsitem" @close="close(index1,index2)" @click="goDetail(newsitem)"></media-item>
-					</view>
-					<view class="loading-more" v-if="tab.isLoading || tab.data.length > 4">
-						<text class="loading-more-text">{{tab.loadingText}}</text>
-					</view>
-				</scroll-view>
-				<!-- # endif -->
-            </swiper-item>
-        </swiper>
-    </view>
+	<view class="content">
+		<!-- 顶部选项卡 -->
+		<scroll-view id="nav-bar" class="nav-bar" scroll-x scroll-with-animation :scroll-left="scrollLeft">
+			<view 
+				v-for="(item,index) in tabBars" :key="item.id"
+				class="nav-item"
+				:class="{current: index === tabCurrentIndex}"
+				:id="'tab'+index"
+				@click="changeTab(index)"
+			>{{item.wzlx}}</view>
+		</scroll-view>
+		
+		<!-- 下拉刷新组件 -->
+		<mix-pulldown-refresh ref="mixPulldownRefresh" class="panel-content" :top="90" @refresh="onPulldownReresh" @setEnableScroll="setEnableScroll">
+			<!-- 内容部分 -->
+			<swiper id="swiper" class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="changeTab">
+				<swiper-item v-for="tabItem in tabBars" :key="tabItem.id">
+					<scroll-view class="panel-scroll-box" :scroll-y="enableScroll" @scrolltolower="loadMore">
+						<view v-for="(item, index) in tabItem.list" :key="index" class="item news-item"
+							@click="navToDetails(item)" hover-class="setting-click">						
+						<!-- 	<image class="img-list" mode="aspectFill" :src="item.image"></image> -->
+							<image class="img-list" mode="aspectFill" :src="item.wzfm"></image>
+							<view class="item-right">
+								<view class="item-title">{{item.wzbt}}</view>
+								<view class="item-body">{{item.wzjj}}</view>
+							</view>
+						</view>						
+						<mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
+					</scroll-view> 
+					
+				</swiper-item>
+			</swiper>
+		</mix-pulldown-refresh>
+	</view>
 </template>
+
+
 <script>
-    import mediaItem from './news-item.nvue';
+	import json from '@/json'
+	import mixPulldownRefresh from '@/components/mix-pulldown-refresh/mix-pulldown-refresh';
+	import mixLoadMore from '@/components/mix-load-more/mix-load-more';
+	
+	let windowWidth = 0, scrollTimer = false, tabBar;
+	export default {
+		components: {
+			mixPulldownRefresh,
+			mixLoadMore
+		},
+		data() {
+			return {
+				tabCurrentIndex: 0, //当前选项卡索引
+				scrollLeft: 0, //顶部选项卡左滑距离
+				enableScroll: true,
+				tabBars: []
+			}
+		},
+		async onLoad() {
+			// 获取屏幕宽度
+			windowWidth = uni.getSystemInfoSync().windowWidth;
+			this.loadTabbars();
+		},
+		methods: {
+			//加载tabbar,顶部导航栏
+			loadTabbars(){
+				//加载文章类型
+				uni.request({
+					url: this.reqAddress+'/wzlx/getPageList',
+					method:"POST",
+					header: {
+						'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ3ZWIiLCJpc3MiOiJ5c2FwaSIsImV4cCI6MTYwODA4MDkyMywiaWF0IjoxNjA3ODI4OTIzLCJqdGkiOiI5ZTNlOWQ0OTMyNzM0NmM2OTk0ZjI2YTA4ZjBiZWVjNyIsInVzZXJuYW1lIjoiby03LUk1TnBRUHJULUhqNmN4UXdMLVFxS2U5ZyJ9.sMzFrKb9NuQYs-LJCB8sW0P1D4GLKGXV48ZNH-GMot0'
+					},
+					data:{"current": 1,"size": 5},
+					success: (res) => {
+						var data = res.data;
+						if(data.code==200 && data.data!=null){
+							this.tabBars = data.data.records;
+							this.tabBars.forEach(item =>{
+								item.list = [];
+								item.loadMoreStatus = 0;  //加载更多 0加载前，1加载中，2没有更多了
+								item.refreshing = 0;
+								item.current = 1;
+								item.size = 5;		
+							});
+							this.loadDataList('add');					
+						}
+					},
+					fail:(res)=>{
+						
+					}
+				});
+			},
+			//加载数据
+			loadDataList(type){
+				let tabItem = this.tabBars[this.tabCurrentIndex];
+				//type add 加载更多 refresh下拉刷新
+				if(type === 'add'){
+					if(tabItem.loadMoreStatus === 2){
+						return;
+					}
+					tabItem.loadMoreStatus = 1;
+					//注意*** 不自动刷新--需要强制刷新
+					this.$forceUpdate();
+				}
+				// #ifdef APP-PLUS
+				else if(type === 'refresh'){
+					tabItem.refreshing = true;
+				}
+				// #endif
+				if(type === 'refresh'){
+					tabItem.current = 1;
+				}
+				setTimeout(()=>{
+					let domainName = this.domainName;
+					//加载文章列表信息
+					uni.request({
+						url: this.reqAddress+'/wzbaseinfo/getPageList',
+						method:"POST",
+						header: {
+							'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ3ZWIiLCJpc3MiOiJ5c2FwaSIsImV4cCI6MTYwODA4MDkyMywiaWF0IjoxNjA3ODI4OTIzLCJqdGkiOiI5ZTNlOWQ0OTMyNzM0NmM2OTk0ZjI2YTA4ZjBiZWVjNyIsInVzZXJuYW1lIjoiby03LUk1TnBRUHJULUhqNmN4UXdMLVFxS2U5ZyJ9.sMzFrKb9NuQYs-LJCB8sW0P1D4GLKGXV48ZNH-GMot0'
+						},
+						data:{
+						  "current": tabItem.current,
+						  "keyword": "",
+						  "orders": [
+						    {
+						      "asc": false,
+						      "column":"xssx"
+						    }
+						  ],
+						  "size": tabItem.size,
+						  "wzlx":tabItem.id
+						},
+						success: (res) => {
+							//var data = JSON.parse(decodeURIComponent(res.data));
+							var data = res.data;		
+							console.log(data);
+							if(data.code==200 && data.data!=null){
+								tabItem.current++;
+								if(type === 'refresh'){
+									tabItem.list = []; //刷新前清空数组
+								}
+								let result = data.data.records;
+								result.forEach(function(item, index) {
+									if(item.wzfm){
+										item.wzfm=item.wzfm.replace(/&quot;/g,"\"");
+										let imageObj = JSON.parse(item.wzfm);
+										if(imageObj.length>0){
+											item.wzfm = domainName+imageObj[0].url;	
+										}
+									}							
+								});
+								tabItem.list = tabItem.list.concat(result);
+								//tabItem.list.concat(data.data.records);
+								//下拉刷新 关闭刷新动画
+								if(type === 'refresh'){
+									this.$refs.mixPulldownRefresh && this.$refs.mixPulldownRefresh.endPulldownRefresh();
+									// #ifdef APP-PLUS
+									tabItem.refreshing = false;
+									// #endif
+									tabItem.loadMoreStatus = 0;
+								}
+								//上滑加载 处理状态
+								if(type === 'add'){
+									tabItem.loadMoreStatus = tabItem.list.length == data.data.total ? 2: 0;
+								}
+								//注意*** 不自动刷新--需要强制刷新
+								this.$forceUpdate();
+							}
+						}
+					});
+				},500);
+			},
+			//详情页面
+			navToDetails(item){
+				let data = {
+					id: item.id,
+					fwbnrPC: item.fwbnrPC
+				}
+				var textObj = JSON.stringify(data)
+				uni.navigateTo({
+					//url: '/pages/education/detail?data='+encodeURIComponent(textObj),
+					url: '/pages/education/detail?id='+item.id,
+					animationType: 'slide-in-right',
+					animationDuration: 200
+				});
+			},
+			
+			//下拉刷新
+			onPulldownReresh(){
+				this.loadDataList('refresh');
+			},
+			//上滑加载
+			loadMore(){
+				this.loadDataList('add');
+			},
+			//设置scroll-view是否允许滚动，在小程序里下拉刷新时避免列表可以滑动
+			setEnableScroll(enable){
+				if(this.enableScroll !== enable){
+					this.enableScroll = enable;
+				}
+			},
 
-    // 缓存每页最多
-    const MAX_CACHE_DATA = 100;
-    // 缓存页签数量
-    const MAX_CACHE_PAGE = 3;
-
-    const newsData = {
-        data0: {
-            "datetime": "40分钟前",
-            "article_type": 0,
-            "title": "uni-app行业峰会频频亮相，开发者反响热烈!",
-            "source": "DCloud",
-            "comment_count": 639
-        },
-        data1: {
-            "datetime": "一天前",
-            "article_type": 1,
-            "title": "DCloud完成B2轮融资，uni-app震撼发布!",
-            "image_url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/shuijiao.jpg?imageView2/3/w/200/h/100/q/90",
-            "source": "DCloud",
-            "comment_count": 11395
-        },
-        data2: {
-            "datetime": "一天前",
-            "article_type": 2,
-            "title": "中国技术界小奇迹：HBuilder开发者突破200万",
-            "image_url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/muwu.jpg?imageView2/3/w/200/h/100/q/90",
-            "source": "DCloud",
-            "comment_count": 11395
-        },
-        data3: {
-            "article_type": 3,
-            "image_list": [{
-                "url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/cbd.jpg?imageView2/3/w/200/h/100/q/90",
-                "width": 563,
-                "height": 316
-            }, {
-                "url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/muwu.jpg?imageView2/3/w/200/h/100/q/90",
-                "width": 641,
-                "height": 360
-            }, {
-                "url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/shuijiao.jpg?imageView2/3/w/200/h/100/q/90",
-                "width": 640,
-                "height": 360
-            }],
-            "datetime": "5分钟前",
-            "title": "uni-app 支持使用 npm 安装第三方包，生态更趋丰富",
-            "source": "DCloud",
-            "comment_count": 11
-        },
-        data4: {
-            "datetime": "2小时前",
-            "article_type": 4,
-            "title": "uni-app 支持原生小程序自定义组件，更开放、更自由",
-            "image_url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/cbd.jpg?imageView2/3/w/200/h/100/q/90",
-            "source": "DCloud",
-            "comment_count": 69
-        }
-    };
-
-    export default {
-        components: {
-            mediaItem
-        },
-        data() {
-            return {
-                newsList: [],
-                cacheTab: [],
-                tabIndex: 0,
-                tabBars: [{
-                    name: '亚健康',
-                    id: 'yajiankang'
-                }, {
-                    name: '抗衰',
-                    id: 'kangshuai'
-                }, {
-                    name: '慢病',
-                    id: 'manbing'
-                }, {
-                    name: '康复',
-                    id: 'kangfu'
-                }, {
-                    name: '养生',
-                    id: 'yangsheng'
-                }, {
-                    name: '情治',
-                    id: 'qingzhi'
-                }],
-                scrollInto: "",
-                showTips: false,
-                navigateFlag: false,
-                pulling: false,
-                refreshIcon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAB5QTFRFcHBw3Nzct7e39vb2ycnJioqK7e3tpqam29vb////D8oK7wAAAAp0Uk5T////////////ALLMLM8AAABxSURBVHja7JVBDoAgDASrjqj//7CJBi90iyYeOHTPMwmFZrHjYyyFYYUy1bwUZqtJIYVxhf1a6u0R7iUvWsCcrEtwJHp8MwMdvh2amHduiZD3rpWId9+BgPd7Cc2LIkPyqvlQvKxKBJ//Qwq/CacAAwDUv0a0YuKhzgAAAABJRU5ErkJggg=="
-            }
-        },
-        onLoad() {
-            setTimeout(()=>{
-              this.tabBars.forEach((tabBar) => {
-                  this.newsList.push({
-                      data: [],
-                      isLoading: false,
-                      refreshText: "",
-                      loadingText: '加载更多...'
-                  });
-              });
-              this.getList(0);
-            },350)
-        },
-        methods: {
-            getList(index) {
-                let activeTab = this.newsList[index];
-                let list = [];
-                for (let i = 1; i <= 10; i++) {
-                    let item = Object.assign({}, newsData['data' + Math.floor(Math.random() * 5)]);
-                    item.id = this.newGuid();
-                    list.push(item);
-                }
-                activeTab.data = activeTab.data.concat(list);
-            },
-            goDetail(e) {
-                if (this.navigateFlag) {
-                    return;
-                }
-                this.navigateFlag = true;
-                uni.navigateTo({
-                    url: './detail/detail?title=' + e.title
-                });
-                setTimeout(() => {
-                    this.navigateFlag = false;
-                }, 200)
-            },
-            close(index1, index2) {
-                uni.showModal({
-                    content: '是否删除本条信息？',
-                    success: (res) => {
-                        if (res.confirm) {
-                            this.newsList[index1].data.splice(index2, 1);
-                        }
-                    }
-                })
-            },
-            loadMore(e) {
-                setTimeout(() => {
-                    this.getList(this.tabIndex);
-                }, 500)
-            },
-            ontabtap(e) {
-                let index = e.target.dataset.current || e.currentTarget.dataset.current;
-                this.switchTab(index);
-            },
-            ontabchange(e) {
-                let index = e.target.current || e.detail.current;
-                this.switchTab(index);
-            },
-            switchTab(index) {
-                if (this.newsList[index].data.length === 0) {
-                    this.getList(index);
-                }
-
-                if (this.tabIndex === index) {
-                    return;
-                }
-
-                // 缓存 tabId
-                if (this.newsList[this.tabIndex].data.length > MAX_CACHE_DATA) {
-                    let isExist = this.cacheTab.indexOf(this.tabIndex);
-                    if (isExist < 0) {
-                        this.cacheTab.push(this.tabIndex);
-                        //console.log("cache index:: " + this.tabIndex);
-                    }
-                }
-
-                this.tabIndex = index;
-                this.scrollInto = this.tabBars[index].id;
-
-                // 释放 tabId
-                if (this.cacheTab.length > MAX_CACHE_PAGE) {
-                    let cacheIndex = this.cacheTab[0];
-                    this.clearTabData(cacheIndex);
-                    this.cacheTab.splice(0, 1);
-                    //console.log("remove cache index:: " + cacheIndex);
-                }
-            },
-            clearTabData(e) {
-                this.newsList[e].data.length = 0;
-                this.newsList[e].loadingText = "加载更多...";
-            },
-            refreshData() {},
-            onrefresh(e) {
-                var tab = this.newsList[this.tabIndex];
-                if (!tab.refreshFlag) {
-                    return;
-                }
-                tab.refreshing = true;
-                tab.refreshText = "正在刷新...";
-
-                setTimeout(() => {
-                    this.refreshData();
-                    this.pulling = true;
-                    tab.refreshing = false;
-					tab.refreshFlag = false;
-                    tab.refreshText = "已刷新";
-                    setTimeout(() => { // TODO fix ios和Android 动画时间相反问题
-                        this.pulling = false;
-                    }, 500);
-                }, 2000);
-            },
-            onpullingdown(e) {
-                var tab = this.newsList[this.tabIndex];
-                if (tab.refreshing || this.pulling) {
-                    return;
-                }
-                if (Math.abs(e.pullingDistance) > Math.abs(e.viewHeight)) {
-                    tab.refreshFlag = true;
-                    tab.refreshText = "释放立即刷新";
-                } else {
-                    tab.refreshFlag = false;
-                    tab.refreshText = "下拉可以刷新";
-                }
-            },
-            newGuid() {
-                let s4 = function() {
-                    return (65536 * (1 + Math.random()) | 0).toString(16).substring(1);
-                }
-                return (s4() + s4() + "-" + s4() + "-4" + s4().substr(0, 3) + "-" + s4() + "-" + s4() + s4() + s4()).toUpperCase();
-            }
-        }
-    }
+			//tab切换
+			async changeTab(e){
+				if(scrollTimer){
+					//多次切换只执行最后一次
+					clearTimeout(scrollTimer);
+					scrollTimer = false;
+				}
+				let index = e;
+				//e=number为点击切换，e=object为swiper滑动切换
+				if(typeof e === 'object'){
+					index = e.detail.current
+				}
+				if(typeof tabBar !== 'object'){
+					tabBar = await this.getElSize("nav-bar")
+				}
+				//计算宽度相关
+				let tabBarScrollLeft = tabBar.scrollLeft;
+				let width = 0; 
+				let nowWidth = 0;
+				//获取可滑动总宽度
+				for (let i = 0; i <= index; i++) {
+					let result = await this.getElSize('tab' + i);
+					width += result.width;
+					if(i === index){
+						nowWidth = result.width;
+					}
+				}
+				if(typeof e === 'number'){
+					//点击切换时先切换再滚动tabbar，避免同时切换视觉错位
+					this.tabCurrentIndex = index; 
+				}
+				//延迟300ms,等待swiper动画结束再修改tabbar
+				scrollTimer = setTimeout(()=>{
+					if (width - nowWidth/2 > windowWidth / 2) {
+						//如果当前项越过中心点，将其放在屏幕中心
+						this.scrollLeft = width - nowWidth/2 - windowWidth / 2;
+					}else{
+						this.scrollLeft = 0;
+					}
+					if(typeof e === 'object'){
+						this.tabCurrentIndex = index; 
+					}
+					this.tabCurrentIndex = index; 
+					//第一次切换tab，动画结束后需要加载数据
+					let tabItem = this.tabBars[this.tabCurrentIndex];
+					if(this.tabCurrentIndex !== 0 && tabItem.loaded !== true){
+						this.loadDataList('add');
+						tabItem.loaded = true;
+					}
+				}, 300)
+				
+			},
+			//获得元素的size
+			getElSize(id) { 
+				return new Promise((res, rej) => {
+					let el = uni.createSelectorQuery().select('#' + id);
+					el.fields({
+						size: true,
+						scrollOffset: true,
+						rect: true
+					}, (data) => {
+						res(data);
+					}).exec();
+				});
+			},
+		}
+	}
 </script>
 
-<style>
-   @import url("education.css");
+<style lang='scss'>
+page, .content{
+	background-color: #F1F1F1;
+	height: 100%;
+	overflow: hidden;
+}
+
+/* 顶部tabbar */
+.nav-bar{
+	position: relative;
+	z-index: 10;
+	height: 90upx;
+	text-align: center;
+	white-space: nowrap;
+	box-shadow: 0 2upx 8upx rgba(0,0,0,.06);
+	background-color: #fff;
+	.nav-item{
+		display: inline-block;
+		/* width: 36upx; */
+		height: 90upx;
+		text-align: center;
+		line-height: 90upx;
+		padding-left: 30upx;
+		padding-right: 30upx;
+		font-size: 30upx;
+		color: #303133;
+		position: relative;
+		&:after{
+			content: '';
+			width: 0;
+			height: 0;
+			border-bottom: 4upx solid #007aff;
+			position: absolute;
+			left: 50%;
+			bottom: 0;
+			transform: translateX(-50%);
+			transition: .3s;
+		}
+	}
+	.current{
+		color: #007aff;
+		&:after{
+			width: 40%;
+		}
+	}
+}
+
+.swiper-box{
+	height: 100%;
+}
+
+.panel-scroll-box{
+	height: 100%;
+	.panel-item{
+		background: #fff;
+		padding: 30px 0;
+		border-bottom: 2px solid #000;
+	}
+}
+
+view{
+	display:flex;
+	flex-direction: column;
+}	
+	
+@import url("./education.css");
 </style>
