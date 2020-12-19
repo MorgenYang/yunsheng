@@ -1,12 +1,13 @@
 <template>
 	<view class="mask" :class="maskState===0 ? 'none' : maskState===1 ? 'show' : ''" @click="toggleMask">
-		<view class="mask-content"  @click.stop.prevent="stopPrevent">
+		<view class="mask-content" :style="'bottom:' + keyboardHeight + 'px'"  @click.stop.prevent="stopPrevent">
 			
 			<view class="mask-content-input">
+				<!-- :cursor-spacing = "100" -->
 				<textarea class="textarea"
 					v-model="content"
 					:placeholder="placeholder"
-					:cursor-spacing = "100"
+					:adjust-position="false"
 					:show-confirm-bar = "false"
 					:focus="focus"
 					maxlength="140"></textarea>
@@ -33,8 +34,14 @@
 				maskState: 0,
 				content: '',
 				focus: false,
-				item:null
+				item:null,
+				keyboardHeight:0
 			};
+		},
+		mounted(){
+			uni.onKeyboardHeightChange((res) => {
+				this.keyboardHeight = res.height;
+			})
 		},
 		created() {
 		},
@@ -83,6 +90,7 @@
 		transition: .3s;
 		-webkit-transition: .3s; 
 		.mask-content{
+			position: fixed;
 			width: 100%;
 			background: #FFFFFF;
 			transform: translateY(100%);
