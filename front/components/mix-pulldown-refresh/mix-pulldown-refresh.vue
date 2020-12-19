@@ -161,6 +161,10 @@
 	}
 	/* 下拉刷新部分 */
 	.mix-loading-wrapper{
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
 		position: absolute;
 		left: 0;
 		top: 0;
