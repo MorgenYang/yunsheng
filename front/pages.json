@@ -95,20 +95,6 @@
 				// "enablePullDownRefresh" : true
 			}
 		}, {
-			"path": "pages/me/changepwd/changepwd",
-			"navigationBarTextStyle": "black",
-			"style": {
-				"navigationBarTitleText": "修改密码",
-				// "mp-weixin": {
-				// 	"titleNView": {
-				// 		"titleText": "修改密码",
-				// 		"titleColor": "white"
-				// 	}
-				// },
-				"navigationBarBackgroundColor": "#3AA9D1"
-				// "enablePullDownRefresh" : true
-			}
-		}, {
 			"path": "pages/me/feedback/feedback",
 			"navigationBarTextStyle": "black",
 			"style": {

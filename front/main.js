@@ -5,7 +5,7 @@ Vue.config.productionTip = false;
 Vue.prototype.domainName = 'https://www.healthycloudsci.com';
 Vue.prototype.reqAddress = Vue.prototype.domainName+'/ysapi';
 Vue.prototype.openid = '';
-
+				
 Vue.prototype.getGlobalUser = function(key) {
 	var userInfo = uni.getStorageSync("globalUser");
 	if (userInfo != null && userInfo != "" && userInfo != undefined) {

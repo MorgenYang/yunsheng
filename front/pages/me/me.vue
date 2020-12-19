@@ -33,6 +33,7 @@
 		data() {
 			return {
 				user: {
+					id: '',
 					openid: '',
 					token: '',
 					phone: '',
@@ -70,12 +71,6 @@
 						imageSrc: "../../static/icon/settings/feedback.png",
 						linkUrl: "./feedback/feedback"
 					},
-					// {
-					// 	id: 5,
-					// 	title: "检查更新",
-					// 	imageSrc: "../../static/icon/settings/update.png",
-					// 	linkUrl: ""
-					// },
 					{
 						id: 5,
 						title: "关于我们",
@@ -92,15 +87,12 @@
 			}
 		},
 		onShow() {
-			this.user.openid = uni.getStorageSync('openid');
-			this.user.token = uni.getStorageSync('token');
-			this.user.phone = uni.getStorageSync('phone');
 			this.user.avatarUrl = uni.getStorageSync('avatarUrl');
 			this.user.nickName = uni.getStorageSync('nickName');
-
-			console.log(this.user.phone);
-			console.log(this.user.openid);
-			console.log(this.user.avatarUrl);
+			this.user.openid = uni.getStorageSync('openid');
+			this.user.id = uni.getStorageSync('id');
+			this.user.phone = uni.getStorageSync('phone');
+			this.user.gender = uni.getStorageSync('gender');
 			
 		},
 		methods: {
@@ -108,13 +100,11 @@
 				let that = this;
 				uni.getUserInfo({
 					provider: 'weixin',
-					success: function(infoRes) {
-						uni.setStorageSync('avatarUrl', infoRes.userInfo.avatarUrl);
-						uni.setStorageSync('gender', infoRes.userInfo.gender);
-						uni.setStorageSync('nickName', infoRes.userInfo.nickName);
-						that.user.avatarUrl = infoRes.userInfo.avatarUrl;
-						that.user.gender = infoRes.userInfo.gender;
-						that.user.nickName = infoRes.userInfo.nickName;
+					success: function(info) {
+						that.user.avatarUrl = info.userInfo.avatarUrl;
+						that.user.nickName = info.userInfo.nickName;
+						uni.setStorageSync('avatarUrl', that.user.avatarUrl);
+						uni.setStorageSync('nickName', that.user.nickName);
 						uni.login({
 							provider: 'weixin',
 							success: (res) => {
@@ -126,11 +116,17 @@
 										"code": res.code
 									},
 									success: (res) => {
-										console.log(res);
+										// console.log(res);
 										if (200 == res.data.code) {
-											that.user.openid = res.data.data.loginClientUserVo.openid;
-											that.user.phone = res.data.data.loginClientUserVo.phone;
+											var userClient = res.data.data.loginClientUserVo
+											that.user.openid = userClient.openid;
+											that.user.id = userClient.id;
+											that.user.phone = userClient.phone;
+											that.user.gender = userClient.gender;
 											uni.setStorageSync('openid', that.user.openid);
+											uni.setStorageSync('id', that.user.id);
+											uni.setStorageSync('phone', that.user.phone);
+											uni.setStorageSync('gender', that.user.gender);
 											uni.showToast({
 												title: '授权成功',
 												duration: 2000
@@ -140,6 +136,7 @@
 											uni.login({
 												provider: 'weixin',
 												success: (res) => {
+													// console.log(res);
 													uni.request({
 														url: that.reqAddress + '/wechatRegister',
 														method: "POST",
@@ -154,7 +151,6 @@
 														},
 														success: (res) => {
 															if (200 == res.data.code) {
-																console.log(res.data.data.openid);
 																that.user.openid = res.data.data.openid;
 																uni.setStorageSync('openid', that.user.openid);
 																uni.showToast({
@@ -177,9 +173,6 @@
 										}
 									}
 								})
-
-
-
 							}
 						});
 					},
@@ -213,7 +206,6 @@
 							success: (res) => {
 								if (res.data.code == 200) {
 									that.user.phone = res.data.data.loginClientUserVo.phone;
-									console.log(that.user.phone);
 									uni.setStorageSync('phone', that.user.phone);
 									uni.showToast({
 										title: '绑定成功',
@@ -221,7 +213,6 @@
 										icon: 'none'
 									});
 								} else {
-									console.log(res.data.msg);
 									uni.showToast({
 										title: '获取手机号失败',
 										duration: 2000,

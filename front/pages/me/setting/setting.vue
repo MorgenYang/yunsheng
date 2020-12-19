@@ -26,24 +26,11 @@
 							info:"接收消息",
 							onoff:true
 						},
-						/* {
-							id:1,
-							title:"图片加载",
-						}, */
 						{
 							id:1,
-							title:"修改密码",
-							linkUrl:"../changepwd/changepwd"
-						},
-						{
-							id:2,
 							title:"清除缓存",
 							info:"清除成功"
-						},
-						/* {
-							id:4,
-							title:"退出登录",
-						} */				
+						},			
 					]	
 				}
 		},
