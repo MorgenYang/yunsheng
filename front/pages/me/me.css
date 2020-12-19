@@ -19,6 +19,17 @@
 	vertical-align: center;
 	margin-left: 0;
 }
+.header-for-login-btn::after{
+	border: none;
+}
+.user-phone{
+	background-color: #3AA9D1;
+	color: white;
+	font-size: 16px;
+}
+.user-phone::after{
+	border: none;
+}
 .user-img{
 	height: 160upx;
 	width: 160upx;
