@@ -9,7 +9,14 @@
 		<!-- <view class="content_box">
 			<wxparser :rich-text="fwbnrPC" />
 		</view> -->
-		
+		<view class="wz-title">
+			{{wzbt}}
+		</view>
+		<view class="wz-other">
+			<text>发布时间: {{time}}</text>
+			<text class="author">作者: {{wzzz}}</text>
+			
+		</view>
 		<jyf-parser ref="article" class="article"></jyf-parser>
 		<!-- 
 		@param: commentList展示的评论列表数据
@@ -48,8 +55,10 @@
 				commentParam: {},
 				wzid:"",
 				commentList :[],//评论列表
-				topParent:{},
-				isTopParent:true
+				wzbt:"", //文章标题
+				wzzz:"", //文章作者
+				time:"" ,//发布时间
+				user:{}
 			}
 		},
 		onLoad: function (param) {
@@ -60,10 +69,10 @@
 			this.fwbnrPC = data.fwbnrPC;
 			 */
 			$this =this;
+			this.user = $this.getLoginUser();
 			this.wzid =param.id;
 			this.loadWzDetail(param.id);
 			this.loadPlList(param.id);
-			
 		},
 		methods: {
 			imageError(e, index) {  
@@ -77,13 +86,16 @@
 					url: url +'/wzbaseinfo/info/'+id,
 					method:"GET",
 					header: {
-						'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ3ZWIiLCJpc3MiOiJ5c2FwaSIsImV4cCI6MTYwODA4MDkyMywiaWF0IjoxNjA3ODI4OTIzLCJqdGkiOiI5ZTNlOWQ0OTMyNzM0NmM2OTk0ZjI2YTA4ZjBiZWVjNyIsInVzZXJuYW1lIjoiby03LUk1TnBRUHJULUhqNmN4UXdMLVFxS2U5ZyJ9.sMzFrKb9NuQYs-LJCB8sW0P1D4GLKGXV48ZNH-GMot0'
+						'token':$this.user.token
 					},
 					success: (res) => {
 						var data = res.data;
 						if(data.code==200 && data.data!=null){
 							let result = data.data;
 							if(result!=null &&  !(typeof(result)==="undefined") && result!=""){
+								$this.wzzz = result.wzzz;
+								$this.time = data.time;
+								$this.wzbt = result.wzbt;
 								let base =  base64.Base64;
 								this.$refs.article.setContent(base.decode(result.fwbnrPC));							
 							}	
@@ -98,7 +110,7 @@
 					url: url +'/tjWzpl/getPageList',
 					method:"POST",
 					header: {
-						'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ3ZWIiLCJpc3MiOiJ5c2FwaSIsImV4cCI6MTYwODA4MDkyMywiaWF0IjoxNjA3ODI4OTIzLCJqdGkiOiI5ZTNlOWQ0OTMyNzM0NmM2OTk0ZjI2YTA4ZjBiZWVjNyIsInVzZXJuYW1lIjoiby03LUk1TnBRUHJULUhqNmN4UXdMLVFxS2U5ZyJ9.sMzFrKb9NuQYs-LJCB8sW0P1D4GLKGXV48ZNH-GMot0'
+						'token':$this.user.token
 					},
 					data:{
 					  "current": 1,
@@ -118,7 +130,14 @@
 						if(data.code==200 && data.data!=null){
 							let result = [] ;
 							let childsArr =[];
-							data.data.records.forEach(function(item, index) {	
+							data.data.records.forEach(function(item, index) {
+								//判断评论是否当前登录用户（是否可删除评论条件）
+								item.isDelete = 0 ;
+								if($this.user.id!="" && $this.user.id!=null
+									&& item.plr!="" && item.plr!=null
+									&& $this.user.id==item.plr){
+									item.isDelete = 1;
+								} 
 								if(item.plcj==0){
 									item.childs=[];
 									result.push(item);
@@ -126,6 +145,7 @@
 									childsArr.push(item);
 								}
 							});
+						
 							//循环找到所有子评价的直接父级
 							childsArr.forEach(function(childItem, index) {
 								data.data.records.forEach(function(allItem, index) {
@@ -159,10 +179,18 @@
 		  	 * 回复问题
 		  	 */
 		  	clickComment() {
+				if($this.user.id==null || $this.user.id=="" ){
+					uni.showToast({
+						title: '请先登录',
+						duration: 2000,
+						icon: 'none'
+					});
+					return;
+				};
 		  		this.commentParam = {
-		  			avatarurl: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=107619675,3445212730&fm=26&gp=0.jpg',
-		  			nickname: 'AAA',
-		  			plsj: '2020-12-18 12:12:12',
+		  			avatarurl: $this.user.avatarUrl,
+		  			nickname: $this.user.nickName,
+		  			//plsj: '2020-12-18 12:12:12',
 		  			childs: []
 		  		};
 				this.placeholder="请输入评论内容…";
@@ -208,13 +236,13 @@
 		  	/**
 		  	 * 删除详情
 		  	 */
-		  	clickDeleteDetail() {
+		  	clickDeleteDetail(item) {
 		  		uni.showModal({
 		  			title: '提示',
 		  			content: '确定要删除吗？',
 		  			confirmColor: '#12B368',
 		  			success: function(res) {
-		  				/* 调用接口删除 */
+						
 		  			}
 		  		});
 		  	},
@@ -239,7 +267,23 @@
 		  			content: '确定要删除评论吗？',
 		  			confirmColor: '#12B368',
 		  			success: function(res) {
-		  				/* 调用接口删除 */
+		  				if (res.confirm) {
+		  					uni.request({
+		  						url: $this.reqAddress +'/tjWzpl/delete/'+item.id,
+		  						method:"POST",
+		  						header: {
+		  							'token':$this.user.token
+		  						},
+		  						success: (res) => {
+		  							var data = res.data;
+		  							if(data.code==200){
+		  								$this.$options.methods.loadPlList($this.wzid); 
+		  							}else{
+		  								
+		  							}
+		  						}
+		  					});
+		  				} 
 		  			}
 		  		});
 		  	},
@@ -252,7 +296,23 @@
 		  			content: '确定要删除评论吗？',
 		  			confirmColor: '#12B368',
 		  			success: function(res) {
-		  				/* 调用接口删除 */
+		  				if (res.confirm) {
+		  					uni.request({
+		  						url: $this.reqAddress +'/tjWzpl/delete/'+item.id,
+		  						method:"POST",
+		  						header: {
+		  							'token':$this.user.token
+		  						},
+		  						success: (res) => {
+		  							var data = res.data;
+		  							if(data.code==200){
+		  								$this.$options.methods.loadPlList($this.wzid); 
+		  							}else{
+		  								
+		  							}
+		  						}
+		  					});
+		  				} 
 		  			}
 		  		});
 		  	},
@@ -261,12 +321,21 @@
 		  	 * 回复 评论
 		  	 * @param {Object} item
 		  	 */
-		  	clickRecomment(item) {		  	 		
+		  	clickRecomment(item) {	
+				if($this.user.id==null || $this.user.id=="" ){
+					uni.showToast({
+						title: '请先登录',
+						duration: 2000,
+						icon: 'none'
+					});
+					return;
+				};
+		
 				this.commentParam = {};
 				this.commentParam = {
-					avatarurl: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=107619675,3445212730&fm=26&gp=0.jpg',
-					nickname: 'AAA',
-					plsj: '2020-12-18 12:12:12',
+					avatarurl: $this.user.avatarUrl,
+					nickname: $this.user.nickName,
+					//plsj: '2020-12-18 12:12:12',
 					parent: item
 				};
 				this.placeholder = '回复' + item.nickname + ':';
@@ -277,16 +346,23 @@
 		  	 * @param {Object} item
 		  	 */
 		  	clickRecommentChild(item) {
+				if($this.user.id==null || $this.user.id=="" ){
+					uni.showToast({
+						title: '请先登录',
+						duration: 2000,
+						icon: 'none'
+					});
+					return;
+				};
 				this.commentParam = {};
 				this.commentParam = {
-					avatarurl: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=107619675,3445212730&fm=26&gp=0.jpg',
-					nickname: 'AAA',
-					plsj: '2020-12-18 12:12:12',
+					avatarurl: $this.user.avatarUrl,
+					nickname: $this.user.nickName,
+					//plsj: '2020-12-18 12:12:12',
 					parent: item
 				};
 				this.placeholder = '回复' + item.nickname + ':';
 				this.$refs.ygcComment.toggleMask('show',item);
-		 
 		  	},
 		  	/**
 		  	 * 删除单级评论
@@ -330,13 +406,13 @@
 					url: url +'/tjWzpl/add',
 					method:"POST",
 					header: {
-						'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ3ZWIiLCJpc3MiOiJ5c2FwaSIsImV4cCI6MTYwODA4MDkyMywiaWF0IjoxNjA3ODI4OTIzLCJqdGkiOiI5ZTNlOWQ0OTMyNzM0NmM2OTk0ZjI2YTA4ZjBiZWVjNyIsInVzZXJuYW1lIjoiby03LUk1TnBRUHJULUhqNmN4UXdMLVFxS2U5ZyJ9.sMzFrKb9NuQYs-LJCB8sW0P1D4GLKGXV48ZNH-GMot0'
+						'token':$this.user.token
 					},
 					data:{
 					  "plcj": item==null?0:1,
 					  "plnr": result,
 					  "sjplid": (item!=null && item.id!=null)?item.id:0,
-					  "userid":"1258758167997136897",
+					  "userid":$this.user.id,
 					  "wzid": $this.wzid
 					},
 					success: (res) => {
@@ -376,12 +452,28 @@
 		margin-left:30upx ;
 		margin-right:30upx ;	
 	}
-	.title{
-		text-align: center;
+	.wz-title{
+		//text-align: center;
 		font-weight: bold;
-		font-size: 18px;
-		padding:30upx;
+		font-size: 20px;
+		padding-top: 20upx;
+		padding-bottom: 10upx;
+		margin-left:30upx ;
+		margin-right:30upx ;	
 	}
+	.wz-other{
+		margin-left:30upx ;
+		margin-right:30upx ;
+		display: flex;
+		flex-direction: column;
+		text{
+			font-size: 12px;
+		}
+		/* .author{
+			padding-left: 60upx;
+		} */
+	}
+
 	.img{
 		margin-top: 10upx;
 		width: 690upx;

@@ -14,6 +14,19 @@ Vue.prototype.getGlobalUser = function(key) {
 		return null;
 	}
 }
+Vue.prototype.getLoginUser = function() {
+	var userInfo = {
+		"id": uni.getStorageSync("id"),
+		"nickName": uni.getStorageSync("nickName"),
+		"avatarUrl": uni.getStorageSync("avatarUrl"),
+		"openid": uni.getStorageSync("openid"),
+		"phone": uni.getStorageSync("phone"),
+		"gender": uni.getStorageSync("gender"),
+		"token": uni.getStorageSync("token")
+	}
+	return userInfo;
+}
+
 
 App.mpType = 'app'
 

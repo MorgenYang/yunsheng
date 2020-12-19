@@ -93,6 +93,7 @@
 			this.user.id = uni.getStorageSync('id');
 			this.user.phone = uni.getStorageSync('phone');
 			this.user.gender = uni.getStorageSync('gender');
+			this.user.token = uni.getStorageSync('token');
 			
 		},
 		methods: {
@@ -123,10 +124,12 @@
 											that.user.id = userClient.id;
 											that.user.phone = userClient.phone;
 											that.user.gender = userClient.gender;
+											that.user.token = res.data.data.token;
 											uni.setStorageSync('openid', that.user.openid);
 											uni.setStorageSync('id', that.user.id);
 											uni.setStorageSync('phone', that.user.phone);
 											uni.setStorageSync('gender', that.user.gender);
+											uni.setStorageSync('token', res.data.data.token);
 											uni.showToast({
 												title: '授权成功',
 												duration: 2000

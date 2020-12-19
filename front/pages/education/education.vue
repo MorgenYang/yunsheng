@@ -70,7 +70,16 @@
 					header: {
 						'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ3ZWIiLCJpc3MiOiJ5c2FwaSIsImV4cCI6MTYwODA4MDkyMywiaWF0IjoxNjA3ODI4OTIzLCJqdGkiOiI5ZTNlOWQ0OTMyNzM0NmM2OTk0ZjI2YTA4ZjBiZWVjNyIsInVzZXJuYW1lIjoiby03LUk1TnBRUHJULUhqNmN4UXdMLVFxS2U5ZyJ9.sMzFrKb9NuQYs-LJCB8sW0P1D4GLKGXV48ZNH-GMot0'
 					},
-					data:{"current": 1,"size": 5},
+					data:{
+						"current": 1,
+						"size": 1000,
+						"orders": [
+						  {
+						    "asc": false,
+						    "column":"xspx"
+						  }
+						]
+					},
 					success: (res) => {
 						var data = res.data;
 						if(data.code==200 && data.data!=null){
@@ -80,7 +89,7 @@
 								item.loadMoreStatus = 0;  //加载更多 0加载前，1加载中，2没有更多了
 								item.refreshing = 0;
 								item.current = 1;
-								item.size = 5;		
+								item.size = data.total;		
 							});
 							this.loadDataList('add');					
 						}
