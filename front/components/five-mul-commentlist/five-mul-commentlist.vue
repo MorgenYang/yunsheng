@@ -1,5 +1,5 @@
 <template>
-	<view class="view-content-comment" style="margin-bottom: 100rpx;">
+	<view class="view-content-comment" style="padding-bottom: 100upx;">
 		<text class="title">{{ title }}</text>
 		<view class="view-conmment-note" v-if="commentList.length == 0">
 			<image

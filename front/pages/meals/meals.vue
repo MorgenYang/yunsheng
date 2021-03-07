@@ -10,10 +10,9 @@
 				@click="changeTab(index)"
 			>{{item.name}}</view>
 		</scroll-view>
-		
-
+	
 		<!-- 内容部分 -->
-		<swiper id="swiper" class="swiper-box " :duration="300" :current="tabCurrentIndex" @change="changeTab">
+		<swiper id="swiper" class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="changeTab">
 			<swiper-item v-for="tabItem in tabBars" :key="tabItem.id" class="week-swiper" @touchmove.stop="">
 				<scroll-view class="panel-scroll-box" v-if="tabItem.id==1" :scroll-y="enableScroll">
 					<view class="uni-margin-wrap">
@@ -25,29 +24,31 @@
 					</view>
 											
 					<view class="item-food" >
-						<view class="item-line" v-for="(menu, index) in todayRecommendList" :key="index">
+						<view class="item-line" v-for="(menu, index1) in todayRecommendList" :key="index1">
 							<view class="type-head">
 								<image class="title-img"  src="../../static/icon/settings/icon.png"></image>
-								<view class="type-title"> {{menu.title}} </view>
+								<view class="type-title"> {{menu.tjlx}} </view>
 							</view>
-							<view v-for="(itemMenu, index) in menu.menus" :key="index" class="item news-item" 
+							<view v-if="menu.tjcp!=undefined && menu.tjcp.length>=0" v-for="(itemMenu, index2) in menu.tjcp" :key="index2" class="item news-item" 
 								@tap="itemDetail(itemMenu)" hover-class="setting-click">
-								<image class="img-list" mode="scaleToFill" :src="itemMenu.image"></image>
+								<image class="img-list" mode="scaleToFill" :src="itemMenu.image"
+									@error="onImageError(index1,index2)"></image>
 								<view class="item-right">
-									<view class="item-title">{{itemMenu.name}}</view>
+									<view class="item-title">{{itemMenu.cpinfo.cpmc}}</view>
 									<view class="item-tip item-level">
 										<view class="star-title">推荐指数:</view>
-										<image v-for="(level, index) in itemMenu.level" :key="index" 
+										<image v-for="(level, index3) in itemMenu.tjcp" :key="index3" 
 											src="../../static/icon/img/star.png" class="star-img">
 										</image>
 									</view>
 									<view class="item-tip item-function">
 										<text class="function-context">
-											功效:<text class="function-context-text">{{itemMenu.function}}</text>
+											功效:<text class="function-context-text">{{itemMenu.cpinfo.jj}}</text>
 										</text>
 									</view>
 								</view>
 							</view>	
+							<view v-if="menu.tjcp==undefined ">暂无数据</view>
 						</view>
 				   </view> 
 				</scroll-view>
@@ -69,21 +70,25 @@
 						</scroll-view>
 					</view>
 					<!-- 内容部分 <view class="item-line">-->
-					<swiper :current="weekCurrent" style="height: 100%;" @change="ontabchange">
+					<swiper :current="weekCurrent"  @change="ontabchange" style="flex:1;">
 						<swiper-item v-for="(week,weekIndex) in weekList" :key="weekIndex">
 							<scroll-view scroll-y="true" style="height: 100%;">
 								<view class="food-bottom">
-								 <block v-for="(food,foodIndex) in (weeksFoodList[week.id-1].recommendList)" :key="foodIndex">
-									<image mode="scaleToFill" class="week-inline-img" :src="food.image" :class="foodIndex>0?'week-inline-top':''"></image>
-									<block v-for="(item,itemIndex) in food.foodList">
+								 <block v-for="(food,foodIndex) in (weeksFoodList[week.id-1]).recommendList" :key="foodIndex">
+									<!-- <image mode="scaleToFill" class="week-inline-img" :src="food.image" :class="foodIndex>0?'week-inline-top':''"></image> -->
+									<view class="type-head" style="margin-bottom: 6upx;">
+										<image class="title-img" style="margin-left: 30upx;" src="../../static/icon/settings/icon.png"></image>
+										<view class="type-title">{{food.cslxdesc}} </view>
+									</view>
+									<block v-for="(item,itemIndex) in food.dzcs">
 										<!-- <uni-card class="card-item" isShadow="true" > -->
 										<view class="cu-card ">
 											<view class="cu-item shadow">
 												<view class="item-bottom card">
-													<image class="card-left-img" :src="item.image"></image>
+													<image class="card-left-img" :src="item.cpinfo.image"></image>
 													<view class="card-context">
-														 <text class="card-title">{{item.name}}</text>
-														 <text class="card-des">{{item.description}}</text>
+														 <text class="card-title">{{item.cpinfo.cpmc}}</text>
+														 <text class="card-des">{{item.cpinfo.jj}}</text>
 													</view>
 													<view class="item-bottom card-center">
 														<image v-for="(level,levelIndex) in item.star"
@@ -112,11 +117,12 @@
 	let windowWidth = 0, scrollTimer = false, tabBar;
 	let tabList = [{name: '今日推荐',id: '1',}, {name: '定制餐食',id: '2'}];
 	
+	let nowDate = new Date(); 
 	var a = [7,1,2,3,4,5,6]; //new Date().getDay()==>0代表周日
 	let weekIndex=1;
-	let week = a[new Date().getDay()] ;
+	let week = a[nowDate.getDay()] ;
 	let weekScrollLeft_default;
-	
+	let $this;
 	export default {
 		components: {
 			
@@ -134,48 +140,13 @@
 				weekCurrent:weekIndex,
 				TabCur:0,
 				weekScrollLeft:weekScrollLeft_default,
+				placeholderImage:'/static/icon/img/image-error.png',//占位图
 				picList:[
 					{"id":1,"title":"aaa","url":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg"},
 					{"id":2,"title":"bbb","url":"https://thumbs.dreamstime.com/b/%E5%9C%A8%E9%87%8E%E9%A4%90%E6%A1%8C%E4%B8%8A%E7%9A%84%E7%83%A4-%E9%A3%9F%E8%86%B3%E9%A3%9F-55789502.jpg"},
 					{"id":3,"title":"bbb","url":"https://thumbs.dreamstime.com/b/%E8%8F%A9%E8%90%A8%E7%A2%97%EF%BC%8C%E5%81%A5%E5%BA%B7%E5%92%8C%E5%B9%B3%E8%A1%A1%E7%9A%84-%E9%A3%9F-%E4%B9%89%E8%80%85%E8%86%B3%E9%A3%9F-87269881.jpg"},
 				],
-				todayRecommendList:[				
-					{
-						"title":"菜品推荐",
-						"menus":[
-							{
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"name":"豆角烧茄子",
-								"level":4,
-								"function":"豇豆具有理中益气、健胃补肾、和五脏、调颜养身、生精髓、止消渴的功效。茄子含有丰富的抗氧化成分，它能改善脸上的肌肤问题，同时还能阻止电脑辐射对肌肤的伤害"
-							},
-							{
-								"image":"http://photocdn.sohu.com/20120214/Img334684297.jpg",
-								"name":"红烧肉",
-								"level":3,
-								"function":"红烧肉能开胃消食，红烧肉能调节身体平衡度，红烧肉能补血"
-							}
-						]
-					},
-					{
-						"title":"主食推荐",
-						"menus":[
-							{
-								"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2603886866,2595760544&fm=26&gp=0.jpg",
-								"name":"八宝饭",
-								"level":5,
-								"function":"八宝饭里面含有丰富的糖类、枣酸、钙、磷、铁、维生素等物质，使得八宝饭具有补血、安心神和增强食欲的作用。平时消化不良的人可以通过进食八宝饭改善下肠胃"
-							},
-							{
-								"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2603886866,2595760544&fm=26&gp=0.jpg",
-								"name":"八宝饭",
-								"level":5,
-								"function":"八宝饭里面含有丰富的糖类、枣酸、钙、磷、铁、维生素等物质，使得八宝饭具有补血、安心神和增强食欲的作用。平时消化不良的人可以通过进食八宝饭改善下肠胃"
-							}
-						]
-					}
-							
-				],
+				todayRecommendList:[],
 				weekList:[
 					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},
 					{"id":2,"chinaName":"周二","englishName":"Tuesday",class:"w2"},
@@ -186,322 +157,15 @@
 					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
 				],
 				weeksFoodList:[
-				{
-					"recommendList":
-					[
-						{
-							"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-							"foodList":[
-								{
-									"name":"小米粥(一)",
-									"star":2,
-									"description":"开肠胃、补虚损、易丹田",
-									"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
-								},
-								{
-									"name":"鸡蛋(一)",
-									"star":4,
-									"description":"富含高蛋白和大量的维生素",
-									"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
-								}
-							]
-						
-						},
-						{
-							"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-							"foodList":[
-								{
-									"name":"小米粥(一)",
-									"star":2,
-									"description":"开肠胃、补虚损、易丹田",
-									"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
-								},
-								{
-									"name":"鸡蛋(一)",
-									"star":1,
-									"description":"富含高蛋白和大量的维生素",
-									"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
-								}
-							]	
-						},
-						{
-		
-							"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-							"foodList":[
-								{
-									"name":"小米粥(一)",
-									"star":2,
-									"description":"开肠胃、补虚损、易丹田",
-									"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
-								},
-								{
-									"name":"鸡蛋(一)",
-									"star":3,
-									"description":"富含高蛋白和大量的维生素",
-									"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
-								}
-							]
-						
-						}
-					]
-				},
-					
-					{
-						"recommendList":
-						[
-								
-							{
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[
-									{
-										"name":"小米粥(二)",
-										"star":3,
-										"description":"开肠胃、补虚损、易丹田",
-										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
-									}
-								]
-							},	
-							{
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[											
-									{
-										"name":"鸡蛋(二)",
-										"star":2,
-										"description":"富含高蛋白和大量的维生素",
-										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
-									}
-								]
-								
-							},
-								
-							{
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[
-									{
-										"name":"鸡蛋(二)",
-										"star":3,
-										"description":"富含高蛋白和大量的维生素",
-										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
-									}
-								]
-							}
-								
-						]
-						
-					},
-					{
-						"recommendList":[
-							{
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[
-									{
-										"name":"鸡蛋(三)",
-										"star":4,
-										"description":"富含高蛋白和大量的维生素",
-										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
-									}
-								]
-							
-							},
-							{
-						
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[											
-									{
-										"name":"小米粥(三)",
-										"star":3,
-										"description":"开肠胃、补虚损、易丹田",
-										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
-									}
-								]
-								
-							},
-							{
-							
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[
-									{
-										"name":"鸡蛋(三)",
-										"star":5,
-										"description":"富含高蛋白和大量的维生素",
-										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
-									}
-								]
-							}			
-						]
-					},
-					{
-						"recommendList":
-						[
-									
-							{
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[
-									{
-										"name":"小米粥(四)",
-										"star":3,
-										"description":"开肠胃、补虚损、易丹田",
-										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
-								
-									}
-								]
-							},
-						
-							{
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[											
-									{
-										"name":"鸡蛋(四)",
-										"star":4,
-										"description":"富含高蛋白和大量的维生素",
-										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
-									}
-								]
-							
-							},
-							{
-							
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[
-									{
-										"name":"小米粥(四)",
-										"star":3,
-										"description":"开肠胃、补虚损、易丹田",
-										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
-									}
-								]
-							}							
-						]
-							
-					},
-					{
-						"recommendList":
-						[
-									
-							{
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[
-									{
-										"name":"鸡蛋(五)",
-										"star":3,
-										"description":"富含高蛋白和大量的维生素",
-										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
-									}
-								]
-						
-							},
-							{
-							
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[											
-									{
-										"name":"小米粥(五)",
-										"star":2,
-										"description":"开肠胃、补虚损、易丹田",
-										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
-									}
-								]
-						
-							},
-							{
-							
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[
-									{
-										"name":"鸡蛋(五)",
-										"star":4,
-										"description":"富含高蛋白和大量的维生素",
-										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
-									}
-								]
-							
-							}
-						]
-							
-					},
-					{
-						"recommendList":
-						[
-								
-							{
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[
-									{
-										"name":"小米粥(六)",
-										"star":3,
-										"description":"开肠胃、补虚损、易丹田",
-										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
-									}
-								]
-							
-							},
-							{
-							
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[											
-									{
-										"name":"小米粥(六)",
-										"star":3,
-										"description":"开肠胃、补虚损、易丹田",
-										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
-									}
-								]
-							
-							},
-							{
-							
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[
-									{
-										"name":"鸡蛋(六)",
-										"star":5,
-										"description":"富含高蛋白和大量的维生素",
-										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
-									}
-								]
-							}
-						]	
-					},
-					{
-						"recommendList":
-						[			
-							{
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[
-									{
-										"name":"鸡蛋(七)",
-										"star":3,
-										"description":"富含高蛋白和大量的维生素",
-										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
-									}
-								]
-							},
-							{
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[											
-									{
-										"name":"鸡蛋(七)",
-										"star":2,
-										"description":"富含高蛋白和大量的维生素",
-										"image":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2754723133,3961104611&fm=26&gp=0.jpg"
-									}
-								]
-							},
-							{
-								"image":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg",
-								"foodList":[
-									{
-										"name":"小米粥(七)",
-										"star":4,
-										"description":"开肠胃、补虚损、易丹田",
-										"image":"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=545335231,4052753289&fm=26&gp=0.jpg"
-									}
-								]
-							}	
-						]
-							
-					}	
+					{"recommendList":[]},
+					{"recommendList":[]},
+					{"recommendList":[]},
+					{"recommendList":[]},
+					{"recommendList":[]},
+					{"recommendList":[]},
+					{"recommendList":[]} 
 				]
+				
 			}
 		},
 		
@@ -518,83 +182,29 @@
 		onLoad() {
 			// 获取屏幕宽度
 			windowWidth = uni.getSystemInfoSync().windowWidth;
+			$this = this;
 			this.loadTabbars();
+			this.loadTodayRecommend();
+			this.weekList[week-1].chinaName='今天';
+			this.weekCurrent = week-1;
+			this.weekScrollLeft = (week-1-1) *80;
 			
-			if(week==1){
-				this.weekList=[
-					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
-					{"id":1,"chinaName":"今天","englishName":"Monday",class:"w1"},
-					{"id":2,"chinaName":"周二","englishName":"Tuesday",class:"w2"},	
-					{"id":3,"chinaName":"周三","englishName":"Wednesday",class:"w3"},
-					{"id":4,"chinaName":"周四","englishName":"Thursday",class:"w4"},
-					{"id":5,"chinaName":"周五","englishName":"Friday",class:"w5"},
-					{"id":6,"chinaName":"周六","englishName":"Saturday",class:"w6"},
-				]
-			}else if(week==2){
-				this.weekList=[
-					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},	
-					{"id":2,"chinaName":"今天","englishName":"Wednesday",class:"w2"},
-					{"id":3,"chinaName":"周三","englishName":"Tuesday",class:"w3"},
-					{"id":4,"chinaName":"周四","englishName":"Thursday",class:"w4"},
-					{"id":5,"chinaName":"周五","englishName":"Friday",class:"w5"},
-					{"id":6,"chinaName":"周六","englishName":"Saturday",class:"w6"},
-					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
-				]
-			}else if(week==3){
-				this.weekList=[
-					{"id":2,"chinaName":"周二","englishName":"Wednesday",class:"w2"},
-					{"id":3,"chinaName":"今天","englishName":"Wednesday",class:"w3"},
-					{"id":4,"chinaName":"周四","englishName":"Thursday",class:"w4"},
-					{"id":5,"chinaName":"周五","englishName":"Friday",class:"w5"},
-					{"id":6,"chinaName":"周六","englishName":"Saturday",class:"w6"},
-					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
-					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},
-				]
-			}else if(week==4){
-				this.weekList=[
-					{"id":3,"chinaName":"周三","englishName":"Tuesday",class:"w3"},
-					{"id":4,"chinaName":"今天","englishName":"Wednesday",class:"w4"},
-					{"id":5,"chinaName":"周五","englishName":"Friday",class:"w5"},
-					{"id":6,"chinaName":"周六","englishName":"Saturday",class:"w6"},
-					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
-					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},
-					{"id":2,"chinaName":"周二","englishName":"Monday",class:"w2"},
-				]
-			}else if(week==5){
-				this.weekList=[	
-					{"id":4,"chinaName":"周四","englishName":"Wednesday",class:"w4"},
-					{"id":5,"chinaName":"今天","englishName":"Friday",class:"w5"},
-					{"id":6,"chinaName":"周六","englishName":"Saturday",class:"w6"},
-					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
-					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},
-					{"id":2,"chinaName":"周二","englishName":"Monday",class:"w2"},
-					{"id":3,"chinaName":"周三","englishName":"Tuesday",class:"w3"},
-				]
-			}else if(week==6){
-				this.weekList=[
-					{"id":5,"chinaName":"周五","englishName":"Friday",class:"w5"},
-					{"id":6,"chinaName":"今天","englishName":"Wednesday",class:"w6"},
-					{"id":7,"chinaName":"周日","englishName":"Sunday",class:"w7"},
-					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},
-					{"id":2,"chinaName":"周二","englishName":"Saturday",class:"w2"},
-					{"id":3,"chinaName":"周三","englishName":"Tuesday",class:"w3"},
-					{"id":4,"chinaName":"周四","englishName":"Thursday",class:"w4"},
-				]
-			}else if(week==7){
-				this.weekList=[
-					{"id":6,"chinaName":"周六","englishName":"Wednesday",class:"w6"},
-					{"id":7,"chinaName":"今天","englishName":"Sunday",class:"w7"},
-					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},
-					{"id":2,"chinaName":"周二","englishName":"Saturday",class:"w2"},
-					{"id":3,"chinaName":"周三","englishName":"Tuesday",class:"w3"},
-					{"id":4,"chinaName":"周四","englishName":"Thursday",class:"w4"},	
-					{"id":5,"chinaName":"周五","englishName":"Friday",class:"w5"},
-				]
-			}
-			weekScrollLeft_default= (weekIndex-1) *80;
+			this.weekList.forEach(function(item, index) {
+				var day = nowDate.getDate()+(index-$this.weekCurrent);
+				let date = nowDate.getFullYear()+"-"+(nowDate.getMonth()+1)+'-'+day;
+				item.date = date;							
+			});
+			//weekScrollLeft_default= (week-1-1) *80;
+			//this.weekScrollLeft = (week-1-1) *80;
 			
+			let date = nowDate.getFullYear()+"-"+(nowDate.getMonth()+1)+'-'+nowDate.getDate();
+			this.loadCustomizationData(date);
 		},
 		methods: {
+			onImageError(index1,index2){
+				console.log("图片显示失败,显示占位图");
+				this.todayRecommendList[index1].tjcp[index2].image = this.placeholderImage;
+			},
 			itemDetail(itemMenu){
 				//console.log(itemMenu);
 				uni.navigateTo({
@@ -622,13 +232,12 @@
 				if(this.weekCurrent>0){
 					this.weekScrollLeft = (e.currentTarget.dataset.index-1) *80;
 				}
+				console.log(this.weekList[this.weekCurrent].date);
+				this.loadCustomizationData(this.weekList[this.weekCurrent].date);
 			},
 			//加载tabbar,顶部导航栏
 			loadTabbars(){
 				tabList.forEach(item=>{
-					/* item.newsList = [];
-					item.videoList = [];
-					item.onlineClassList = []; */
 					item.loadMoreStatus = 0;  //加载更多 0加载前，1加载中，2没有更多了
 					item.refreshing = 0;
 				})
@@ -638,6 +247,77 @@
 			//加载数据
 			loadDataList(type){
 				let tabItem = this.tabBars[this.tabCurrentIndex];
+			},
+			loadTodayRecommend(){
+				let url = $this.reqAddress+'/tjTjlx/getPageList';
+				$this.$api.post(url).then((res)=>{
+					let data = res.data;
+					if(data.code==200 && data.data!=null && data.data.records!=null){
+						let result = data.data.records;
+						$this.todayRecommendList = result;
+						result.forEach(function(item, index) {
+							if(item.id){
+								$this.loadTypeContent(item.id,index);
+							}							
+						});
+					}
+				}).catch((err)=>{
+					console.log('request fail', err);
+				})
+			},
+			loadTypeContent(id,index){
+				let url = $this.reqAddress+'/tjSsgl/getSsglList/'+id;
+				let domainName = $this.domainName;
+				$this.$api.post(url).then((res)=>{
+					let data = res.data;
+					if(data.code==200 && data.data!=null){
+						$this.todayRecommendList[index].tjcp = data.data;
+						data.data.forEach(function(item, index) {
+							if(item.cpfm){
+								item.cpfm=item.cpfm.replace(/&quot;/g,"\"");
+								let imageObj = JSON.parse(item.cpfm);
+								if(imageObj.length>0){
+									item.image = domainName+imageObj[0].url;	
+								}
+							}							
+						});
+						//注意*** 不自动刷新--需要强制刷新
+						this.$forceUpdate();
+					}
+				}).catch((err)=>{
+					console.log('request fail', err);
+				})
+			},
+			//加载
+			loadCustomizationData(dayDate){
+				//清空历史数据
+				/* this.weeksFoodList=[{"recommendList":[]},{"recommendList":[]},{"recommendList":[]},
+				{"recommendList":[]},{"recommendList":[]},{"recommendList":[]},{"recommendList":[]}]; */
+				if($this.weeksFoodList[$this.weekCurrent].recommendList.length>0){
+					return;
+				}
+				let url = $this.reqAddress+'/tjDzcs/getPageList?dzrq='+dayDate;
+				let domainName = $this.domainName;
+				$this.$api.post(url).then((res)=>{
+					let data = res.data;
+					if(data.code==200 && data.data!=null){
+						var result = data.data;
+						result.forEach(function(item, index1) {
+							item.dzcs.forEach(function(childItem, index2) {
+								if(childItem.cpinfo.cpfm){
+									childItem.cpinfo.cpfm=childItem.cpinfo.cpfm.replace(/&quot;/g,"\"");
+									let imageObj = JSON.parse(childItem.cpinfo.cpfm);
+									if(imageObj.length>0){
+										childItem.cpinfo.image = domainName+imageObj[0].url;	
+									}
+								}
+							});								
+						});
+						$this.weeksFoodList[$this.weekCurrent].recommendList= result;
+					}
+				}).catch((err)=>{
+					console.log('request fail', err);
+				})
 			},
 			//新闻详情
 			navToDetails(item){
@@ -793,7 +473,8 @@ page, .content{
 }
 
 .swiper-box{
-	height: 100%;
+	/* height: 100%; */
+	flex:1;
 	background-color:#FFFFFF;
 }
 
@@ -808,6 +489,7 @@ page, .content{
 }
 .week-scroll-box{
 	height: 100%;
+	flex: 1;
 }
 view{
 	display:flex;

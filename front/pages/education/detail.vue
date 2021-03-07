@@ -27,14 +27,36 @@
 		 -->
 		<five-mul-commentlist
 			:commentList="commentList"
-			@clickPraise="clickPraiseComment"
 			@clickDelete="clickDeleteComment"
 			@clickDeleteChild="clickDeleteCommentChild"
 			@clickRecomment="clickRecomment"
 			@clickRecommentChild="clickRecommentChild"
 		></five-mul-commentlist>
 		<view class="view-conmment-send-bottom">
-			<view class=" view-comment-textarea" @click="clickComment()"><view class="textarea-comment">写评论…</view></view>
+			<view class="view-comment-textarea" @click="clickComment()"><view class="textarea-comment">写评论…</view></view>
+			<!-- <image
+				class="praise-icon"
+				src="data:image/png;base64,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"
+				mode="aspectFill"
+				
+			></image> -->
+			<!-- #ifdef MP-WEIXIN-->
+			<button class="share-btn" open-type="share" ></button>
+			<!-- #endif -->
+			<image
+				class="praise-icon"
+				v-if="isCollect==false"
+				@click="addCollect()"
+				src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAD50lEQVRYR8WWXWhcRRTHz5ls4rIYEZVGwQ8UJRYftB9YFLEgKIJVodbWUhR9UHxxkw13Zkgi9WJd1pm7YdPFlzwptFrtx4Oah6r40KIPfrT2qTYoVEXUomhIYBOTzfxl4t2yxs1udleTA8Nyd5jz/82ZOWcO0xobr7E+tQVgrX3Ab0Ap9WGrG2kX4GgMsGPVAay1G4noVCy8SSl1uhWIliNgrX2diJ6ORd9QSj2zagCjo6M9c3NzvxDRm7Honq6urqv7+/svNAvRUgSstaNE1CeE2OoFnXMniGi/Uqp/tQD+JKITSqnFLLDW+izYqpS65H8HiKJIArAAHtVav+cFjTGPMPO7zKyklFEzEE0fgbX2NwA/aq3vqBYyxpxh5muVUlf9ZwCFQuGa+fn5TUR0CxHdGI9tzLxbSvl2tVAURU8AOERE40R0Ph7fdHZ2nspkMj8vB7UYgYoQgM1CiI3OufXM7AU7qhcCuMDM3yql7qnl0Fr7CYCbmblnyfwCgPNCiK+dc6eZ+csK2MUjsNY+TkSHiagEYIKIFocQ4pwQYmJ6enoiDMPSSsIbhmGqu7u71znnx61E1OsHM/vfFBHtVEod8b7+cQcqEMz8lXNut9baQ7RtxpheIcQhABuqxf8FEKdUJRKfCSF2BUHwfTsE+Xz+BufcO0S0Zal4TYBqCAAny+XyzuHh4aYrnPeTzWZ7EonEYWa+t5b4sgBLIvFRMpnckU6np5qJRLFYvGx2dta/lvcvJ14XYAnEeKlUeiwMw7mVQIRh2JVKpY4R0bZ64g0BlhzHUa21vx8NzRhzhJl9j3DxttetA/U8RlG0Ls7/opSyr6H632/DGBE9l0gkrhwYGPi93pqGpTiXy93X0dHxMTM/KaU8uBKAKIrSAPYD2KK1/rwtAGvtC0RUFELcGQTBFysEeAjAODPvkVK+1S7AYjjL5fK6oaGhXyvOcrncTYlEogjAAXhea/1TZc4Ys5mZPexLSqmX2wIwxnwqhLhCSrneOxobG+ucmpraB0BXO2bmF6WUWf/fyMjIdQsLCz8AOKC1fqotAGvtJIAPtNa7oih6FsAIEXXHTl8B0MHMg/H3dwD6ZmZmjqdSqTNENKmUurtlAGOMfxXPAjBxNbtrMXeZXyuXy3sHBwf/8N8+U4joVQCVxvQYgEuZeUMymbw+nU77Dqqm1c0CY8x2ZvYFpWIHhRDZIAjO1fIWn/0+InqwMi+EuC0IgrMtAVhrh3xJJ6LjfodKKd98NrR8Pr8dwF4AtxPRw0op36Q0HwFr7QFmfl9K6fuEpi2KIt8lOyllsSWAphVrLCgUCpdnMpnJNQNotIm/AEMvtDB9ckgCAAAAAElFTkSuQmCC"
+				mode="aspectFill"
+			></image>
+			 <image
+			 	class="praise-icon"
+			 	v-if="isCollect==true"
+				@click="cancelCollect()"
+			 	src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACgklEQVRYR+2WP0wTcRTHv++O/mowLhBiifQOYrRXURMXddTBwUETTTTGVGdXdVIHIcFEjRJ1cXYwDCR10MlFJqMDCwauRSPlPIxJiXQgKfzK3TONgAgH98/ahVvv+973897vvfsdockPNdkf2wCxOlBIJ96BqGxY8mLUo4wMMKElTyngt3Vjx+XjvXbtYxSIyACmJl4QcHXZ9KVhydx/A5hIi4MK4dNaQ6cqd/WWMR8WIlIHTD0xSEzX15oR0JexZH/DAcw9aCdVzHoY/TQs2d5wgIIuBsC442VEhPOZafkqDMSWRzDehTahiJQLpZPJTREoxcyPtjB4T0R5hltRQHMulIoKZ86BWknSwlxPCZX1sRsATF0MKYxDDHQCaAtTTQDtqCrl6X0/UF7R/gVQr1hVxCiA7gDJokhKqpRHNwWoZyxo4gKAhw2AqDIhl52W+XXbs7GQz5o44BCGwDgcpUyPmBl23VzWXhrxnYEVwdeenbtrbu0JMy7FgiCMwcEVw5Zjnpvjl7ygJZ8DfM1P5/meeYS4JZexqzObxQf6Epq6uEeM22EgiJFvZZlL26huFRcIoJhO3mDix2EAAAwHuaYDAZhpkSfCuZAAtmHJtF9MIICiJr4wsNcv2YYJX5Idme/wujdWpb4A412JY6pCH8Ka1/UK6Mx+a/FNrBkwNdFHwF2PJEUi3HKY5gn8gIAj6zUM9Gct2RcLYPm/78SfJDQL4qfGtBxYm3hSF5ddxn0Aq+f+bwGY6xfIMFqUZ8bUYtGrqqlu7KixuOn+XtlWAK8NS56N3QGu/34p6mC2tFAKMguTusi6jH4wdxjfaidjAQQxjKPx3YI4yYPEbgM0vQO/AOyW1yE8eg/ZAAAAAElFTkSuQmCC"
+				mode="aspectFill"
+			 ></image>
 		</view>
 		<ygc-comment ref="ygcComment" :placeholder="placeholder" @pubComment="sendComment"></ygc-comment>
 		<!-- <five-comment ref="detailComment" @sendComment="sendComment" :placeholder="placeholder"></five-comment> -->
@@ -58,111 +80,176 @@
 				wzbt:"", //文章标题
 				wzzz:"", //文章作者
 				time:"" ,//发布时间
-				user:{}
+				user:{},
+				isCollect:false
 			}
 		},
 		onLoad: function (param) {
-			/* 
-			let data  = JSON.parse(decodeURIComponent(param.data));
-			console.log(data.fwbnrPC);
-			this.id = data.id;
-			this.fwbnrPC = data.fwbnrPC;
-			 */
 			$this =this;
 			this.user = $this.getLoginUser();
 			this.wzid =param.id;
 			this.loadWzDetail(param.id);
-			this.loadPlList(param.id);
+			if(this.user.id){
+				this.checkCollect(this.wzid,this.user.id);
+			}
 		},
+	    // #ifdef MP-WEIXIN
+		onShareAppMessage(res) {
+			if (res.from === 'button') {// 来自页面内分享按钮
+			  console.log(res.target)
+			}
+			return {
+			  title: $this.wzbt,
+			  path: '/pages/education/detail?id='+this.wzid
+			}
+		 },
+		// #endif
 		methods: {
+			addShare(){
+				//分享到微信朋友 app端
+				/* uni.share({ 
+					provider: "weixin",
+					scene: "WXSceneSession",
+					type: 0,
+					href: "https://www.it610.com/article/1279654845837492224.htm",//这地址太长了，就省略了
+					title: "你笑起来真好看",
+					summary: "唐艺昕，你有火吗？没有,为何你点燃了我的心？",                         
+					//imageUrl: "http:*******************",
+					success: function(res) {
+						console.log("success:" + JSON.stringify(res));
+					},
+					fail: function(err) {
+						console.log("fail:" + JSON.stringify(err));
+					}
+				}); */
+			},
+			//添加收藏
+			addCollect(){
+				let url = $this.reqAddress+'/tjWzsc/add';
+				var data ={"szwzid":$this.wzid,"userid":$this.user.id};
+				$this.$api.post(url,data).then((res)=>{
+					let result = res.data;
+					if(result!=null && result.code==200){
+						$this.isCollect = true;
+						uni.showToast({
+						    title: "收藏成功",
+						    duration: 1000,
+							icon:"none"
+						});
+					}
+				}).catch((err)=>{
+					console.log('request fail', err);
+				})
+			},
+			//取消收藏
+			cancelCollect(){
+				let url = $this.reqAddress+'/tjWzsc/delete';
+				var data ={"szwzid":$this.wzid,"userid":$this.user.id};
+				$this.$api.post(url,data).then((res)=>{
+					let result = res.data;
+					if(result!=null && result.code==200){
+						$this.isCollect = false;
+						uni.showToast({
+						    title: "取消成功",
+						    duration: 1000,
+							icon:"none"
+						});
+					}
+				}).catch((err)=>{
+					console.log('request fail', err);
+				})
+			},
+			//检查是否收藏过
+			checkCollect(wzId,userId){
+				let url = $this.reqAddress+'/tjWzsc/check';
+				var data ={"szwzid":wzId,"userid":userId};
+				$this.$api.post(url,data).then((res)=>{
+					let result = res.data.data;
+					if(result==true){
+						$this.isCollect = result;
+					}
+				}).catch((err)=>{
+					console.log('request fail', err);
+				})
+			},
 			imageError(e, index) {  
 			    this.list[index]['tpnr'] = 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2315821891,1911640403&fm=26&gp=0.jpg';  
 			},
 			//加载文章详情
 			loadWzDetail(id){
-				let url = this.reqAddress;
-				let domainName = this.domainName;
-				uni.request({
-					url: url +'/wzbaseinfo/info/'+id,
-					method:"GET",
-					header: {
-						'token':$this.user.token
-					},
-					success: (res) => {
-						var data = res.data;
-						if(data.code==200 && data.data!=null){
-							let result = data.data;
-							if(result!=null &&  !(typeof(result)==="undefined") && result!=""){
-								$this.wzzz = result.wzzz;
-								$this.time = data.time;
-								$this.wzbt = result.wzbt;
-								let base =  base64.Base64;
-								this.$refs.article.setContent(base.decode(result.fwbnrPC));							
-							}	
-						}
+				uni.showLoading({
+					mask:true,
+					title:"加载中..."
+				})
+				let url = $this.reqAddress+'/wzbaseinfo/info/'+id;
+				$this.$api.get(url).then((res)=>{
+					let result = res.data.data;
+					if(result!=null &&  !(typeof(result)==="undefined") && result!=""){
+						$this.wzzz = result.wzzz;
+						$this.time = res.data.time;
+						$this.wzbt = result.wzbt;
+						let base =  base64.Base64;
+						let detail = base.decode(result.fwbnrPC);
+						//let detailStr =detail.replace(/\t/g,"&nbsp;&nbsp;&nbsp;&nbsp;").replace(/\s+/g,"&nbsp;");							
+						this.$refs.article.setContent(detail);
 					}
-				});
+					$this.$options.methods.loadPlList(id);
+				}).catch((err)=>{
+					console.log('request fail', err);
+					setTimeout(function () {
+					    uni.hideLoading();
+					}, 300);
+				})
 			},
 			//加载评论列表
 			loadPlList(id){
-				let url = $this.reqAddress;
-				uni.request({
-					url: url +'/tjWzpl/getPageList',
-					method:"POST",
-					header: {
-						'token':$this.user.token
-					},
-					data:{
-					  "current": 1,
-					  "keyword": "",
-					  "orders": [
-					    {
-					      "asc": false,
-					      "column":"plsj"
-					    }
-					  ],
-					  "size": 10000,
-					  "plwz":id
-					  //"sjpl":""
-					},
-					success: (res) => {
-						var data = res.data;
-						if(data.code==200 && data.data!=null){
-							let result = [] ;
-							let childsArr =[];
-							data.data.records.forEach(function(item, index) {
-								//判断评论是否当前登录用户（是否可删除评论条件）
-								item.isDelete = 0 ;
-								if($this.user.id!="" && $this.user.id!=null
-									&& item.plr!="" && item.plr!=null
-									&& $this.user.id==item.plr){
-									item.isDelete = 1;
-								} 
-								if(item.plcj==0){
-									item.childs=[];
-									result.push(item);
-								}else{
-									childsArr.push(item);
+				let url = $this.reqAddress+'/tjWzpl/getPageList';
+				let data ={"current": 1,"keyword": "", "orders": [{"asc": false,"column":"plsj"}],"size": 10000,"plwz":id};
+				$this.$api.post(url,data).then((res)=>{	
+					let dataJson = res.data;
+					if(dataJson!=null &&  !(typeof(dataJson)==="undefined") && dataJson!=""){
+						let result = [] ;
+						let childsArr =[];
+						dataJson.data.records.forEach(function(item, index) {
+							//判断评论是否当前登录用户（是否可删除评论条件）
+							item.isDelete = 0 ;
+							if($this.user.id!="" && $this.user.id!=null
+								&& item.plr!="" && item.plr!=null
+								&& $this.user.id==item.plr){
+								item.isDelete = 1;
+							} 
+							if(item.plcj==0){
+								item.childs=[];
+								result.push(item);
+							}else{
+								childsArr.push(item);
+							}
+						});					
+						//循环找到所有子评价的直接父级
+						childsArr.forEach(function(childItem, index) {
+							dataJson.data.records.forEach(function(allItem, index) {
+								if(childItem.sjpl==allItem.id){
+									//直接赋值--在小程序端会导致对象的循环引用问题
+									childItem.parent = JSON.parse(JSON.stringify(allItem));
 								}
 							});
-						
-							//循环找到所有子评价的直接父级
-							childsArr.forEach(function(childItem, index) {
-								data.data.records.forEach(function(allItem, index) {
-									if(childItem.sjpl==allItem.id){
-										//直接赋值--在小程序端会导致对象的循环引用问题
-										childItem.parent = JSON.parse(JSON.stringify(allItem));
-									}
-								});
-							});
-							//循环找到第一级评论下的所有直接和间接子类
-							result.forEach(function(item,index) {
-								$this.$options.methods.findNextChild(item,item.id,childsArr);
-							});					
-							$this.commentList = result;
-						}
+						});
+						//循环找到第一级评论下的所有直接和间接子类
+						result.forEach(function(item,index) {
+							$this.$options.methods.findNextChild(item,item.id,childsArr);
+						});					
+						$this.commentList = result;
+						setTimeout(function () {
+							uni.hideLoading();
+						}, 300);
 					}
-				});
+					
+				}).catch((err)=>{
+					console.log('request fail', err);
+					setTimeout(function () {
+					    uni.hideLoading();
+					}, 300);
+				})
 			},
 			//递归获取当前评论的子级评论
 			findNextChild(item,pId,childs){
@@ -197,43 +284,6 @@
 				this.$refs.ygcComment.toggleMask('show',null,null);
 		  	},
 		  	/**
-		  	 * 详情点赞
-		  	 * @param {Object} isPraise
-		  	 */
-		  	clickPraise(isPraise) {
-		  		let praiseParam = '1';
-		  		let praiseNum = parseInt(this.detailInfo.PRAISE_NUM);
-		  		switch (isPraise) {
-		  			case '0':
-		  				praiseParam = '1';
-		  				praiseNum++;
-		  				break;
-		  			case '1':
-		  				praiseParam = '0';
-		  				praiseNum--;
-		  				break;
-		  		}
-		  		this.detailInfo.IS_PRAISE = praiseParam;
-		  		this.detailInfo.PRAISE_NUM = praiseNum--;
-		  	},
-		  
-		  	/**
-		  	 *  查看图片大图
-		  	 * @param {Object} images
-		  	 * @param {Object} index
-		  	 */
-		  	cliclImage(images, index) {
-		  		uni.previewImage({
-		  			urls: images,
-		  			current: index,
-		  			longPressActions: {
-		  				itemColor: '#12B368',
-		  				success: function(data) {},
-		  				fail: function(err) {}
-		  			}
-		  		});
-		  	},
-		  	/**
 		  	 * 删除详情
 		  	 */
 		  	clickDeleteDetail(item) {
@@ -247,18 +297,6 @@
 		  		});
 		  	},
 		  	/**
-		  	 * 点赞多级评论
-		  	 * @param {Object} item
-		  	 */
-		  	clickPraiseComment(item) {
-		  		//只能点赞不能取消
-		  		if (item.IS_PRAISE == '1') {
-		  			return;
-		  		}
-		  		item.IS_PRAISE = '1';
-		  		item.PRAISE_NUM++;
-		  	},
-		  	/**
 		  	 * 删除多级评论
 		  	 */
 		  	clickDeleteComment(item) {
@@ -267,22 +305,8 @@
 		  			content: '确定要删除评论吗？',
 		  			confirmColor: '#12B368',
 		  			success: function(res) {
-		  				if (res.confirm) {
-		  					uni.request({
-		  						url: $this.reqAddress +'/tjWzpl/delete/'+item.id,
-		  						method:"POST",
-		  						header: {
-		  							'token':$this.user.token
-		  						},
-		  						success: (res) => {
-		  							var data = res.data;
-		  							if(data.code==200){
-		  								$this.$options.methods.loadPlList($this.wzid); 
-		  							}else{
-		  								
-		  							}
-		  						}
-		  					});
+		  				if (res.confirm) {							
+							$this.$options.methods.delComment(item); 
 		  				} 
 		  			}
 		  		});
@@ -297,26 +321,26 @@
 		  			confirmColor: '#12B368',
 		  			success: function(res) {
 		  				if (res.confirm) {
-		  					uni.request({
-		  						url: $this.reqAddress +'/tjWzpl/delete/'+item.id,
-		  						method:"POST",
-		  						header: {
-		  							'token':$this.user.token
-		  						},
-		  						success: (res) => {
-		  							var data = res.data;
-		  							if(data.code==200){
-		  								$this.$options.methods.loadPlList($this.wzid); 
-		  							}else{
-		  								
-		  							}
-		  						}
-		  					});
+		  					$this.$options.methods.delComment(item); 
 		  				} 
 		  			}
 		  		});
 		  	},
-		  
+			//删除评论
+			delComment(item){
+				let url = $this.reqAddress +'/tjWzpl/delete/'+item.id;
+				$this.$api.post(url).then((res)=>{
+					var data = res.data;
+					if(data.code==200){
+						$this.$options.methods.loadPlList($this.wzid); 
+					}
+				}).catch((err)=>{
+					console.log('request fail', err);
+					setTimeout(function () {
+					    uni.hideLoading();
+					}, 300);
+				})
+			},
 		  	/**
 		  	 * 回复 评论
 		  	 * @param {Object} item
@@ -365,30 +389,6 @@
 				this.$refs.ygcComment.toggleMask('show',item);
 		  	},
 		  	/**
-		  	 * 删除单级评论
-		  	 */
-		  	clickDeleteSig(item) {
-		  		uni.showModal({
-		  			title: '提示',
-		  			content: '确定要删除评论吗？',
-		  			confirmColor: '#12B368',
-		  			success: function(res) {
-		  				/* 调用接口删除 */
-		  			}
-		  		});
-		  	},
-		  	/**
-		  	 * 点赞单级评论
-		  	 */
-		  	clickPraiseSig(item) {
-		  		//只能点赞不能取消
-		  		if (item.IS_PRAISE == '1') {
-		  			return;
-		  		}
-		  		item.IS_PRAISE = '1';
-		  		item.PRAISE_NUM++;
-		  	},
-		  	/**
 		  	 * 发送评论
 		  	 * @param {Object} result
 		  	 */
@@ -401,43 +401,26 @@
 					});
 					return;
 				}
-				let url = this.reqAddress;
-				uni.request({
-					url: url +'/tjWzpl/add',
-					method:"POST",
-					header: {
-						'token':$this.user.token
-					},
-					data:{
-					  "plcj": item==null?0:1,
-					  "plnr": result,
-					  "sjplid": (item!=null && item.id!=null)?item.id:0,
-					  "userid":$this.user.id,
-					  "wzid": $this.wzid
-					},
-					success: (res) => {
-						var data = res.data;
-						if(data.code==200){
-							$this.$refs.ygcComment.toggleMask();
-							$this.$options.methods.loadPlList($this.wzid); 
-						}else{
-							
-						}
+				let url = $this.reqAddress +'/tjWzpl/add';
+				var data={
+				  "plcj": item==null?0:1,
+				  "plnr": result,
+				  "sjplid": (item!=null && item.id!=null)?item.id:0,
+				  "userid":$this.user.id,
+				  "wzid": $this.wzid
+				};
+				$this.$api.post(url,data).then((res)=>{
+					var dataJson = res.data;
+					if(dataJson.code==200){
+						$this.$refs.ygcComment.toggleMask();
+						$this.$options.methods.loadPlList($this.wzid); 
 					}
-				});
-			
-				/* $this.$refs.ygcComment.toggleMask();
-				$this.commentParam.plnr = result;
-				if(item!=null && item.topParent!=null){
-					$this.commentList.forEach(function(itemChild, index) {
-						if(itemChild.id==item.topParent.id){
-							itemChild.childs.push($this.commentParam);
-							return;
-						}
-					});
-				}else{
-					$this.commentList.push($this.commentParam);	
-				} */
+				}).catch((err)=>{
+					console.log('request fail', err);
+					setTimeout(function () {
+					    uni.hideLoading();
+					}, 300);
+				})
 		  	}
 		}
 	}
@@ -496,16 +479,15 @@
 		display: flex;
 		flex-direction: row;
 		background-color: white;
-		border-top: 1px solid $view-bg-color;
+		/* border-top: 1upx solid $uni-text-color-disable; */
 	}
 	
 	.view-comment-textarea {
 		background-color: $uni-bg-color-grey;
-		border-radius: 40rpx;
-		padding: 15rpx 20rpx;
-		margin: 25rpx 20rpx;
-		width: 80%;
-		flex: 1;
+		border-radius: 40upx;
+		padding: 15upx 20upx;
+		margin: 18upx 0upx 18upx 20upx;
+		width: 60%;
 		align-items: center;
 	}
 	.textarea-comment {
@@ -515,5 +497,29 @@
 		font-size: $uni-font-size-base;
 		// color: $uni-text-color;
 		color: $uni-text-sub-color;
+	}
+	.praise-icon {
+		height: 40rpx;
+		width: 40rpx;
+		font-size: 36rpx;
+		color: #999;
+		margin-top:36upx ;
+		margin-left: 30upx;
+	}
+	button::after{
+	    border: none;
+	    border-radius:  0;
+	}
+	
+	.share-btn{
+		margin: 0;
+		margin-left: 30upx;
+		margin-top: 36upx;
+		border: none;
+		background-color: transparent;
+		outline: none;	
+		background-size:40upx 40upx;
+		background-repeat:no-repeat;
+		background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAM90lEQVR4Xu1daZBdRRU+577MhBSICFViFASKLS5Ascgiu8oqShVboRbBifP63PcCQURRsIREUUpCYkzIzD09M44K7uDCIgiFQQgiKLIIsgq4AGIFWQrQTObdY3XVxAphbt++b5l775vuqqn5cU+fPv193+u7dPdpBF+mNQI4rXvvOw9eANNcBF4AXgDTHIFp3n0/AngBTHMEpnn3/QjgBTDNEZjm3fcjgBdAdyPAzDsi4hFxHB8ZBEEgIs8DwJo4jh+aMWPGndVq9aHuRsDeu64dAYaGhnZoNBpnIeJZKQQ/BQDXBUGwpFqtPjndxNCVAhgaGpobx/FiAHhrBkKfBYAlRLQkQ53Sm3adAJh5BQCc0QIz1xPRsS3UL1XVrhKA1vo6EWkHeY8T0c6lYrLJYLtGAMx8IQAsbBKHSasRUdfgk4RLV3RwYGBg10qlcgcAvKWdAgCAu4lonzb7LJS7rhAAMw8AQK1DyP6EiE7pkO/c3ZZeAMw8GwDM69vMFDQfjuP4RwDwVKVSOVREDgOA7V0YQMSLlFJfcrEtm03pBaC1rovIyhTgJ/0Vu44ciPji+Pj4/vV6/ZGyEZwWb+kFwMy3A8D7LR21vtYx87kA8PU0oADgMiI608GuVCbdIIDHAGCnxKdcxAVKKfNtILFEUdSHiN9KY67RaOxYr9efSLMr0/VuEMBLALB5EuiVSmXn/v7+x9NIYeYrAeDEFDsiIp3mq0zXSy2A0dHRTcbGxv5j+fW/qpTazIWQKIr2QcTbAGATi33XvRGUWgDM/E4A+KuFsKeIaAcXARibwcHBhUEQmA9KSeUFItrS1V8Z7EotAK31+0TkLgvQvyeifV2JGBwcPCoIghts9nEcb1Or1Z529Vl0u1ILYHBw8LAgCFZZbgG3KKUOz0JCFEUvIWLiM0Ucx4fXarVbsvgssq0XwEbsMPMvAeAYC2lVIhouMqlZYvMCeKMALgaALySBKCLnh2FobLqieAG8UQA/AIBTLbeVuUqpy7uCfYBy7w3sxDOA1voOEdk/ieAgCD5YrVZ/7QVQAAQ6IQBmNkvD3pbUvUajMaeb5gT8LWADptM+LBnTWbNmbTZ37txXC6D/toTgBbABjMw8BwBsy8RfJKJ2LzppC5HNOim1AJi5HwCGLJ2/gohOcwUniqKjEfF6i/2DRPReV39lsCu7AMw0rpnOnbQg4sVKqfNdiYiiKETEQYv9NUT0UVd/ZbAruwCuAoATLAKYr5Qyy8WcitZ6uYjY5vwvIKKvODkriVHZBWDm5hMnexDxeKXU1a5cMLOZNt7RIqhjlVK2W4RrU4WxK60ABgcHtw+CIG0r13ZE9DcXtCdWFj9ssf0vAGxLRGtc/JXFprQCYOaPA8D3LL/WB5VSzg9szPxpAPiGhbg7iMi29KwsnL8uztIKQGs9LCKfsqCeaQ2f1vpGETkiyZ+IDIRhOL+ULFuCLqUAoig6FhGvs5EhIieGYfhTF8KYuQcAxlJsu2oWcH1fyyqAmxHxAxbC/tXb27trX1/fiy4CiKLoeET8ucU2bjQa+9br9btd/JXJpnQCYOZzAOBSG8iIuEIptcCVCGZmAFCu9jnavQIA94vI/YhoJqRWtfpQWioBmMkfRLwJEWfYSIjj+KBarWb2CzgVZjZvCts6GRfMCBF/0Wg0Fmfp74ZdKI0ARkZG3jQ+Pn4TAOyXwsENRGRb0fO66sy8m/lVFYzXZsK5hIg+n7ViaQTAzD8GgJPTOoiIfUqpb6fZrb+eNqXs6qcgdpmXrZdCAK7kA8D3iegTWcjoMgGYrmcSQaEFEEXRIYhoHvpcJmAeDoLgiGq1+o8sAli+fPnmM2fONLuLuqbEcbyoVqs5JcsopABWrly5baVSOcchw9f/Scv63X9DtpnZug6wjMpwXb5eKAFEUXQAIpoFmebPOcNXFsUnkRlF0dcQkQCgW3b+/JCIPpYm3lwFYIbfnp6eA4Ig2F9EDPlHpQU8yfWFRLSoiXqTVjHPBO3y1QE/M4Mg2A4RDxORNHJf6+npmTNv3ry/2+LILIDR0dEtxsbGzkPEXeM4nmP+d6CjTi7b8ct3aqiARsxsJq7MBJatnElEl7VNAMPDw3vGcXy5iLwnb0ymM/nrsWdm813kQxYuLieiuW0RQCfSsDUponsBYBER2b7dN+m6XNUcElvcT0R7tCyAKIr2QEQDfN5lWW9v7yLXSZ68g+10+wMDA7tXKpX7bO2k5Tp0egaIomg1Ih7Y6Q5Z/F+DiFopdW2OMRSu6aVLl87adNNNX7ME9hwRJW5yMfVSBRBF0QmIaBZf5lE88RbUh4eHd2o0GiZHUlJp/RbAzBcBwBeniP11iHiXiNwuIqvCMLQma5iimArbDDObuREzRzJpQcRrlVIfaekZQGu9aiKpYkeBQEQ1Pj5+Z71e74aZuY5itd75xMer8ywCSE1wmXoLYGax9ca8EoZh+Oe0Hqf5SXtYSfM/Ha+nJbNAxJOUUtbbd8sCcCXOC6D9Eo2i6FlEtD3k7UREf2npFtAu4trlp/0wltPjRI7kZ5KiF5GXwzB8c1rv/AiQhlBBr2utjxERk88oqdxKRIemhe8FkIZQQa8zs9n0+lVLeMuJKO3ArPTvAO0autvlp6B8THlYaaukRGReGIajaYH5ESANoYJeZ+ZHASDxXKM4jveq1Wr3pIXvBZCGUAGvT6yQftkSWkMp1YOI1ld4U98LoIAEp4U0NDR0cBzHt1rs7iWiPdP8eAG4IFRAG2Y2u56+aQntO0T0SZfQ/QjgglLBbKIoGkVEG8FnE9Eyl7C9AFxQKpgNM5tNqnslhWXWDCqlfuMStheAC0oFshER1FqbbCW9lrC2ICKnvQ5eAAUi1yUUZja/fNs29ceIaBcXX/4h0BWlAtlpreeJyEhSSCLyszAMEzOnbVzPjwAFItcllLTT0RHxQqXUl118+RHAFaUC2TGzOa0kcZIn6xY5PwIUiFyXUKIoWoOIW1lsnVPj+RHABfEC2WitdxER2/G1zxDRO7KE7EeALGjlbKu1PkVEzAHYkxZE/JVS6ugsYXoBZEErZ1tmtp5nBABLiOizWcL0AsiCVs62URSZfRLHWV4BTwvD8IosYXoBZEErZ9soip5ExO2TwojjeLdarfZAljC9ALKglaPtyMjI28fHx20nlr5ERFtkDdELICtiOdkz84cBwLY3cjURHZw1PC+ArIjlZJ+2CBQRI6VULWt4XgBZEcvJnplNanyTIj/pFTDT6SjrnXgB5ERo1ma11veJyO4WARyolPptVr9eAFkRy8F+IpehyXyexNc6ADBrAGy5AiYfOdL60671/O3ykxZvN17XWh8qIrYj6+8hosQVQjZM/AhQAsUw8xkAsMISamoyqMRbR1r/2/XLbZeftHi78TozRwBgklgmlXOJaHEzffcjQDOoTXEdrfVqEUnM0YSITR9n5wUwxWRmbW7hwoXB7Nmz/w0AiVu9e3t7Z/f19f0zq29j7wXQDGpTWGdoaGjvOI7/YGnyUSJqOlurF8AUktlMU8x8OgDYDsC4iohOasa3HwGaRW0K62mtF4uIbY7fZE11OhtgsrD9CDCFZDbTFDObs4oTV/mIyMlhGF7ZjG8/AjSL2hTWY2aT7n2bpCYbjcacer1uWydojdaPAFNIZtamHBaBPk1EieJwac8LwAWlnGwc0vRmOiLPPwPkRGSzzWqtLxCRxNNQROTSMAw/16x//wzQCnJTUDctEVQQBKdXq9XvthKKvwW0gl6H6zKzScH7LkszexPRH1sJwwugFfQ6WDctEygAvAAAWxORWQvQdPECaBq6zlbUWh8nItcktSIit4VheEirUXgBtIpgh+oz89UAYMv1P0hE9Vab9wJoFcEO1Ndanyoi5jTTxCIip4ZhmLhP0DUsLwBXpKbIzvF0tifWrl377gULFqxtNSwXATwJALbtSJO+pwZBsHGWSuuEhTkHsNXOtFJ/knhbcZe5rohsNXEI55FplRFxqVLKHKrdckkVgNZ6VESckg62HI134IrAwUS02tXYZpcqAGaeDwDW40fbEYj34YaAiKwIw9BkCm1LcRGAWW78OwDoaUuL3kkrCNxIRM0csJ3YZqoATE2t9RIR+Uwrkfu6LSPwXKVSOai/v//xlj1t4MBJAMaemc2iw63b2bj35YzAAyJyfhiGiR+GnD1tZOgsgAkRLAWAs5ttzNfLjMDziLhs3bp1y+bPn/9K5toOFTIJwPiLouhoRLwAAA5w8O9NmkDAZAILguDmOI6XhWFoOxq2Ce+vr5JZAOurDw8PbxnH8X6NRmO/lqPosIO83/Fduiciz4nIn4IgeISI1rjUaYdN0wJoR+PeR/4IeAHkz0GuEXgB5Ap//o17AeTPQa4ReAHkCn/+jXsB5M9BrhF4AeQKf/6NewHkz0GuEXgB5Ap//o17AeTPQa4R/A/HD6jMsutBPgAAAABJRU5ErkJggg==');
 	}
 </style>

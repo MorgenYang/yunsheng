@@ -5,6 +5,9 @@ Vue.config.productionTip = false;
 Vue.prototype.domainName = 'https://www.healthycloudsci.com';
 Vue.prototype.reqAddress = Vue.prototype.domainName+'/ysapi';
 Vue.prototype.openid = '';
+
+import api from '@/common/vmeitime-http/request.js'
+Vue.prototype.$api = api
 				
 Vue.prototype.getGlobalUser = function(key) {
 	var userInfo = uni.getStorageSync("globalUser");

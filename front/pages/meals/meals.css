@@ -26,7 +26,7 @@
 }
 
 .news-item{
-	height: 282upx;
+	/* height: 282upx; */
 	flex-direction: row;
 	/* margin-bottom: 20upx; */
 }
@@ -44,7 +44,7 @@
 }
 .item-level{
 	flex-direction: row;
-	margin-top: 14upx;
+	margin-top: 10upx;
 }
 .item-tip{
 	font-size: 26upx;
@@ -63,7 +63,7 @@
 	text-overflow: ellipsis;  /* 超出部分省略号 */
 	display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
 	-webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
-	-webkit-line-clamp: 5; /** 显示的行数 **/
+	-webkit-line-clamp: 3; /** 显示的行数 **/
 }
 .function-context-text{
 	color:#858585;
@@ -87,8 +87,8 @@
 .img-list{
 	flex-shrink: 0;
 	background-color: #fff;
-	width: 310upx;
-	height: 270upx;
+	width: 260upx;
+	height: 190upx;
 }
 
 /* .uni-scroll-view{
@@ -105,7 +105,7 @@
 .title-img{
 	width: 30upx;
 	height: 30upx;
-	margin-top: 10upx;
+	margin-top: 6upx;
 	margin-right: 10upx;
 }
 
@@ -210,17 +210,17 @@
 .card-left-img{
 	width: 130upx;
 	height:130upx;
-	margin-left: 16upx;
+	/* margin-left: 16upx; */
 	border-radius:120upx
 }
 .card-title{
 	padding-top: 10upx;
 	color: #2183CE;
-	font-size: 38upx;
+	font-size: 30upx;
 	width: 250upx;
 }
 .card-des{
-	padding-top: 16upx;
+	padding-top: 14upx;
 	font-size: 26upx;
 	color: #B3B3B3;
 	width: 250upx;
@@ -238,7 +238,7 @@
 }
 
 .card{
-	 padding: 30upx 0upx 30upx 20upx;
+	 padding: 26upx 0upx 26upx 20upx;
 }
 .food-bottom{
 	background-color: #D0EDFB;

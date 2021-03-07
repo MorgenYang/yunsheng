@@ -80,7 +80,7 @@
 				"navigationBarBackgroundColor": "#3AA9D1"
 				// "enablePullDownRefresh" : true
 			}
-		},{
+		}/* ,{
 			"path": "pages/me/setting/setting",
 			"navigationBarTextStyle": "black",
 			"style": {
@@ -94,7 +94,21 @@
 				"navigationBarBackgroundColor": "#3AA9D1"
 				// "enablePullDownRefresh" : true
 			}
-		}, {
+		} */,{
+			"path": "pages/me/collecting/collecting",
+			"navigationBarTextStyle": "black",
+			"style": {
+				"navigationBarTitleText": "我的收藏",
+				// "mp-weixin": {
+				// 	"titleNView": {
+				// 		"titleText": "我的收藏",
+				// 		"titleColor": "white"
+				// 	}
+				// },
+				"navigationBarBackgroundColor": "#3AA9D1"
+				// "enablePullDownRefresh" : true
+			}
+		},{
 			"path": "pages/me/feedback/feedback",
 			"navigationBarTextStyle": "black",
 			"style": {

@@ -20,12 +20,15 @@
 						<view v-for="(item, index) in tabItem.list" :key="index" class="item news-item"
 							@click="navToDetails(item)" hover-class="setting-click">						
 						<!-- 	<image class="img-list" mode="aspectFill" :src="item.image"></image> -->
-							<image class="img-list" mode="aspectFill" :src="item.wzfm"></image>
+							<!--  -->
+							<view class="item-title">{{item.wzbt}}</view>
 							<view class="item-right">
-								<view class="item-title">{{item.wzbt}}</view>
 								<view class="item-body">{{item.wzjj}}</view>
+								<image class="img-list" v-if="item.wzfm!=null && item.wzfm!=''" 
+									mode="aspectFill" :src="item.wzfm">
+								</image>
 							</view>
-						</view>						
+													</view>						
 						<mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
 					</scroll-view> 
 					
@@ -41,6 +44,7 @@
 	import mixPulldownRefresh from '@/components/mix-pulldown-refresh/mix-pulldown-refresh';
 	import mixLoadMore from '@/components/mix-load-more/mix-load-more';
 	
+	let $this;
 	let windowWidth = 0, scrollTimer = false, tabBar;
 	export default {
 		components: {
@@ -52,52 +56,47 @@
 				tabCurrentIndex: 0, //当前选项卡索引
 				scrollLeft: 0, //顶部选项卡左滑距离
 				enableScroll: true,
-				tabBars: []
+				tabBars: [],
+				pageSize:10
 			}
 		},
 		async onLoad() {
 			// 获取屏幕宽度
 			windowWidth = uni.getSystemInfoSync().windowWidth;
+			$this =this;
 			this.loadTabbars();
+			
 		},
 		methods: {
 			//加载tabbar,顶部导航栏
 			loadTabbars(){
-				//加载文章类型
-				uni.request({
-					url: this.reqAddress+'/wzlx/getPageList',
-					method:"POST",
-					header: {
-						'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ3ZWIiLCJpc3MiOiJ5c2FwaSIsImV4cCI6MTYwODA4MDkyMywiaWF0IjoxNjA3ODI4OTIzLCJqdGkiOiI5ZTNlOWQ0OTMyNzM0NmM2OTk0ZjI2YTA4ZjBiZWVjNyIsInVzZXJuYW1lIjoiby03LUk1TnBRUHJULUhqNmN4UXdMLVFxS2U5ZyJ9.sMzFrKb9NuQYs-LJCB8sW0P1D4GLKGXV48ZNH-GMot0'
-					},
-					data:{
-						"current": 1,
-						"size": 1000,
-						"orders": [
-						  {
-						    "asc": false,
-						    "column":"xspx"
-						  }
-						]
-					},
-					success: (res) => {
-						var data = res.data;
-						if(data.code==200 && data.data!=null){
-							this.tabBars = data.data.records;
-							this.tabBars.forEach(item =>{
-								item.list = [];
-								item.loadMoreStatus = 0;  //加载更多 0加载前，1加载中，2没有更多了
-								item.refreshing = 0;
-								item.current = 1;
-								item.size = data.total;		
-							});
-							this.loadDataList('add');					
-						}
-					},
-					fail:(res)=>{
-						
+				let url = $this.reqAddress+'/wzlx/getPageList';
+				var data = {
+					"current": 1,
+					"size": 1000,
+					"orders": [
+					  {
+						"asc": false,
+						"column":"xspx"
+					  }
+					]
+				};
+				$this.$api.post(url,data).then((res)=>{
+					let data = res.data;
+					if(data.code==200 && data.data!=null){
+						this.tabBars = data.data.records;
+						this.tabBars.forEach(item =>{
+							item.list = [];
+							item.loadMoreStatus = 0;  //加载更多 0加载前，1加载中，2没有更多了
+							item.refreshing = 0;
+							item.current = 1;
+							item.size = $this.pageSize;		
+						});
+						this.loadDataList('add');					
 					}
-				});
+				}).catch((err)=>{
+					console.log('request fail', err);
+				})
 			},
 			//加载数据
 			loadDataList(type){
@@ -120,64 +119,58 @@
 					tabItem.current = 1;
 				}
 				setTimeout(()=>{
-					let domainName = this.domainName;
 					//加载文章列表信息
-					uni.request({
-						url: this.reqAddress+'/wzbaseinfo/getPageList',
-						method:"POST",
-						header: {
-							'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ3ZWIiLCJpc3MiOiJ5c2FwaSIsImV4cCI6MTYwODA4MDkyMywiaWF0IjoxNjA3ODI4OTIzLCJqdGkiOiI5ZTNlOWQ0OTMyNzM0NmM2OTk0ZjI2YTA4ZjBiZWVjNyIsInVzZXJuYW1lIjoiby03LUk1TnBRUHJULUhqNmN4UXdMLVFxS2U5ZyJ9.sMzFrKb9NuQYs-LJCB8sW0P1D4GLKGXV48ZNH-GMot0'
-						},
-						data:{
-						  "current": tabItem.current,
-						  "keyword": "",
-						  "orders": [
-						    {
-						      "asc": false,
-						      "column":"xssx"
-						    }
-						  ],
-						  "size": tabItem.size,
-						  "wzlx":tabItem.id
-						},
-						success: (res) => {
-							//var data = JSON.parse(decodeURIComponent(res.data));
-							var data = res.data;		
-							console.log(data);
-							if(data.code==200 && data.data!=null){
-								tabItem.current++;
-								if(type === 'refresh'){
-									tabItem.list = []; //刷新前清空数组
-								}
-								let result = data.data.records;
-								result.forEach(function(item, index) {
-									if(item.wzfm){
-										item.wzfm=item.wzfm.replace(/&quot;/g,"\"");
-										let imageObj = JSON.parse(item.wzfm);
-										if(imageObj.length>0){
-											item.wzfm = domainName+imageObj[0].url;	
-										}
-									}							
-								});
-								tabItem.list = tabItem.list.concat(result);
-								//tabItem.list.concat(data.data.records);
-								//下拉刷新 关闭刷新动画
-								if(type === 'refresh'){
-									this.$refs.mixPulldownRefresh && this.$refs.mixPulldownRefresh.endPulldownRefresh();
-									// #ifdef APP-PLUS
-									tabItem.refreshing = false;
-									// #endif
-									tabItem.loadMoreStatus = 0;
-								}
-								//上滑加载 处理状态
-								if(type === 'add'){
-									tabItem.loadMoreStatus = tabItem.list.length == data.data.total ? 2: 0;
-								}
-								//注意*** 不自动刷新--需要强制刷新
-								this.$forceUpdate();
-							}
+					let url = $this.reqAddress+'/wzbaseinfo/getPageList';
+					let domainName = this.domainName;
+					var data={
+					  "current": tabItem.current,
+					  "keyword": "",
+					  "orders": [
+						{
+						  "asc": false,
+						  "column":"xssx"
 						}
-					});
+					  ],
+					  "size": tabItem.size,
+					  "wzlx":tabItem.id
+					};
+					$this.$api.post(url,data).then((res)=>{
+						var data = res.data;
+						if(data.code==200 && data.data!=null){
+							tabItem.current++;
+							if(type === 'refresh'){
+								tabItem.list = []; //刷新前清空数组
+							}
+							let result = data.data.records;
+							result.forEach(function(item, index) {
+								if(item.wzfm){
+									item.wzfm=item.wzfm.replace(/&quot;/g,"\"");
+									let imageObj = JSON.parse(item.wzfm);
+									if(imageObj.length>0){
+										item.wzfm = domainName+imageObj[0].url;	
+									}
+								}							
+							});
+							tabItem.list = tabItem.list.concat(result);
+							//tabItem.list.concat(data.data.records);
+							//下拉刷新 关闭刷新动画
+							if(type === 'refresh'){
+								this.$refs.mixPulldownRefresh && this.$refs.mixPulldownRefresh.endPulldownRefresh();
+								// #ifdef APP-PLUS
+								tabItem.refreshing = false;
+								// #endif
+								tabItem.loadMoreStatus = 0;
+							}
+							//上滑加载 处理状态
+							if(type === 'add'){
+								tabItem.loadMoreStatus = tabItem.list.length == data.data.total ? 2: 0;
+							}
+							//注意*** 不自动刷新--需要强制刷新
+							this.$forceUpdate();
+						}
+					}).catch((err)=>{
+						console.log('request fail', err);
+					})
 				},500);
 			},
 			//详情页面

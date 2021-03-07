@@ -1,7 +1,7 @@
 
 .item{
 	width:92%;
-	margin-top: 24upx;
+	margin-top: 22upx;
 	border-bottom-width: 1px;
 	border-color: #eee;
 	background-color: #FFFFFF;
@@ -9,8 +9,8 @@
 }
 
 .news-item{
-	height: 220upx;
-	flex-direction: row;
+	/* height: 220upx; */
+	flex-direction: column;
 	padding: 24upx 30upx;
 }
 .online-item{
@@ -20,39 +20,39 @@
 }
 
 .item-right{
-	padding-left: 20upx;
+	flex-direction: row;
 	overflow: hidden;
+	margin-top: 14upx;
 }
 .item-title{
 	font-size: 30upx;
 	color: #303133;
 	overflow: hidden;
-	height: 84upx;
-	/* 
-	height: 40upx;
-	display: block;
-	text-overflow: ellipsis;
-	white-space: nowrap; */
+	height: 44upx;
 	display: -webkit-box;
 	-webkit-box-orient: vertical; 
-	-webkit-line-clamp: 2; 
+	-webkit-line-clamp: 1; 
 }
 .item-body{
-	font-size: 26upx;
-	height: 106upx;
-	margin-top: 20upx;
+	font-size: 28upx;
+	/* height: 106upx; */
 	overflow: hidden;
 	display: -webkit-box;  
 	-webkit-box-orient: vertical; 
 	-webkit-line-clamp: 3; 
 	color: #aaa;
+	padding-right: 24upx;
 }
 
 .img-list{
 	flex-shrink: 0;
 	background-color: #fff;
-	width: 320upx;
-	height: 220upx;
+	width: 180upx;
+	height: 108upx;
+	border: 2upx solid #0000000;
+	-moz-border-radius: 12upx;
+	-webkit-border-radius: 12upx;
+	border-radius:12upx;
 }
 
 

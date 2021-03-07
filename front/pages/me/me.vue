@@ -59,11 +59,17 @@
 						imageSrc: "../../static/icon/settings/doctor.png",
 						linkUrl: "./doctor/doctor"
 					},
-					{
+					/* {
 						id: 3,
 						title: "个人设置",
 						imageSrc: "../../static/icon/settings/settings.png",
 						linkUrl: "./setting/setting"
+					}, */
+					{
+						id: 3,
+						title: "我的收藏",
+						imageSrc: "../../static/icon/settings/attention.png",
+						linkUrl: "./collecting/collecting"
 					},
 					{
 						id: 4,
@@ -228,6 +234,15 @@
 				});
 			},
 			itemClick(e) {
+				if(this.user.id==null || this.user.id=="" ){
+					uni.showToast({
+						title: '请先登录',
+						duration: 2000,
+						icon: 'none'
+					});
+					return;
+				};
+				
 				let id = e.currentTarget.id.toString().substr(3);
 				uni.showToast({
 					title: this.setting[id].title,
