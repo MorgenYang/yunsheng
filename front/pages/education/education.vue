@@ -23,12 +23,18 @@
 							<!--  -->
 							<view class="item-title">{{item.wzbt}}</view>
 							<view class="item-right">
-								<view class="item-body">{{item.wzjj}}</view>
-								<image class="img-list" v-if="item.wzfm!=null && item.wzfm!=''" 
+								<view class="item-content">
+									<view class="item-author">{{'作者：'+item.wzzz}}</view>
+									<view class="item-body">{{item.wzjj}}</view>
+									<view class="item-other">{{item.sfpl+'赞同 · '+item.plsl+'评论'}}</view>
+									
+								</view>
+								<image class="img-list" v-if="item.wzfm!=null && item.wzfm!=''"
 									mode="aspectFill" :src="item.wzfm">
 								</image>
+								
 							</view>
-													</view>						
+						</view>						
 						<mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
 					</scroll-view> 
 					

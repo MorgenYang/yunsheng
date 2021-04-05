@@ -18,7 +18,7 @@
 					<view class="uni-margin-wrap">
 						<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
 							<swiper-item v-for="(item, index) in picList" :key="index">
-								<image class="swiper-item" mode="scaleToFill" :src="item.url"></image>
+								<image class="swiper-item" mode="scaleToFill" :src="item.url" @tap="itemDetail(item)"></image>
 							</swiper-item>	
 						</swiper>
 					</view>
@@ -37,7 +37,7 @@
 									<view class="item-title">{{itemMenu.cpinfo.cpmc}}</view>
 									<view class="item-tip item-level">
 										<view class="star-title">推荐指数:</view>
-										<image v-for="(level, index3) in itemMenu.tjcp" :key="index3" 
+										<image v-for="(level, index3) in itemMenu.tjxj" :key="index3" 
 											src="../../static/icon/img/star.png" class="star-img">
 										</image>
 									</view>
@@ -103,7 +103,7 @@
 								 </block>
 								 </view>
 							</scroll-view>
-							<button hover-class='none' class="custom-btn" @tap="customization(week)">深入订制</button>
+							<!-- <button hover-class='none' class="custom-btn" @tap="customization(week)">深入订制</button> -->
 						</swiper-item>
 					</swiper>			
 				</view>		
@@ -141,11 +141,7 @@
 				TabCur:0,
 				weekScrollLeft:weekScrollLeft_default,
 				placeholderImage:'/static/icon/img/image-error.png',//占位图
-				picList:[
-					{"id":1,"title":"aaa","url":"http://dpic.tiankong.com/sn/pi/QJ8841940448.jpg"},
-					{"id":2,"title":"bbb","url":"https://thumbs.dreamstime.com/b/%E5%9C%A8%E9%87%8E%E9%A4%90%E6%A1%8C%E4%B8%8A%E7%9A%84%E7%83%A4-%E9%A3%9F%E8%86%B3%E9%A3%9F-55789502.jpg"},
-					{"id":3,"title":"bbb","url":"https://thumbs.dreamstime.com/b/%E8%8F%A9%E8%90%A8%E7%A2%97%EF%BC%8C%E5%81%A5%E5%BA%B7%E5%92%8C%E5%B9%B3%E8%A1%A1%E7%9A%84-%E9%A3%9F-%E4%B9%89%E8%80%85%E8%86%B3%E9%A3%9F-87269881.jpg"},
-				],
+				picList:[],
 				todayRecommendList:[],
 				weekList:[
 					{"id":1,"chinaName":"周一","englishName":"Monday",class:"w1"},
@@ -206,9 +202,10 @@
 				this.todayRecommendList[index1].tjcp[index2].image = this.placeholderImage;
 			},
 			itemDetail(itemMenu){
-				//console.log(itemMenu);
+				console.log("============");
+				console.log(itemMenu);
 				uni.navigateTo({
-					url: './foodDetails?name='+itemMenu.name
+					url: './foodDetails?id='+itemMenu.id
 				});
 			},
 			customization(week){
@@ -278,6 +275,10 @@
 								let imageObj = JSON.parse(item.cpfm);
 								if(imageObj.length>0){
 									item.image = domainName+imageObj[0].url;	
+									let imgBean = {id:item.id,url:item.image}
+									if($this.picList.length<3){
+										$this.picList.push(imgBean);
+									}
 								}
 							}							
 						});
@@ -308,7 +309,7 @@
 									childItem.cpinfo.cpfm=childItem.cpinfo.cpfm.replace(/&quot;/g,"\"");
 									let imageObj = JSON.parse(childItem.cpinfo.cpfm);
 									if(imageObj.length>0){
-										childItem.cpinfo.image = domainName+imageObj[0].url;	
+										childItem.cpinfo.image = domainName+imageObj[0].url;
 									}
 								}
 							});								

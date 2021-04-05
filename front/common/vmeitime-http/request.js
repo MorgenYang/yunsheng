@@ -85,18 +85,24 @@ export default {
 						response = newResponse
 					}
 				}
+		
 				// 统一的响应日志记录
 				//_reslog(response)
 				if (statusCode === 200) { //成功
 				//异常信息提示
 					resolve(response);
 				} else {
-					//异常信息提示
-					uni.showToast({
-					    title: response.data.msg,
-					    duration: 2000,
-						icon:"none"
-					});
+					if(options.url.endsWith("/tjDz/check") ||
+						options.url.indexOf("/tjYhslxx/info")>-1){
+						
+					}else{
+						//异常信息提示
+						uni.showToast({
+						    title: response.data.msg,
+						    duration: 2000,
+							icon:"none"
+						});
+					}
 					reject(response)
 				}
 			}

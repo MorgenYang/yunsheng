@@ -22,13 +22,15 @@
 .item-right{
 	flex-direction: row;
 	overflow: hidden;
-	margin-top: 14upx;
+	margin-top: 0upx;
 }
 .item-title{
-	font-size: 30upx;
+	font-size: 32upx;
 	color: #303133;
+	/* color: #000000; */
+ 	font-weight:bold;
 	overflow: hidden;
-	height: 44upx;
+	/* height: 44upx; */
 	display: -webkit-box;
 	-webkit-box-orient: vertical; 
 	-webkit-line-clamp: 1; 
@@ -39,8 +41,8 @@
 	overflow: hidden;
 	display: -webkit-box;  
 	-webkit-box-orient: vertical; 
-	-webkit-line-clamp: 3; 
-	color: #aaa;
+	-webkit-line-clamp: 2; 
+	color: #4F4F4F;
 	padding-right: 24upx;
 }
 
@@ -48,11 +50,12 @@
 	flex-shrink: 0;
 	background-color: #fff;
 	width: 180upx;
-	height: 108upx;
+	height: 120upx;
 	border: 2upx solid #0000000;
 	-moz-border-radius: 12upx;
 	-webkit-border-radius: 12upx;
 	border-radius:12upx;
+	margin-top: 20upx;
 }
 
 
@@ -63,4 +66,22 @@
 }
 .setting-click{
 	background-color:#F5F5F5;
+}
+.item-content{
+	display: flex;
+	flex-direction: column;
+	
+}
+.item-author{
+	color: #616161;
+	display: -webkit-box;
+	-webkit-box-orient: vertical; 
+	-webkit-line-clamp: 1; 
+	padding-bottom: 6upx;
+	font-size: 26upx;
+}
+.item-other{
+	color: #969696;
+	padding-top: 10upx;
+	font-size: 28upx;
 }

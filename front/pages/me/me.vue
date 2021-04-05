@@ -67,24 +67,30 @@
 					}, */
 					{
 						id: 3,
+						title: "深入定制",
+						imageSrc: "../../static/icon/settings/settings.png",
+						linkUrl: "/pages/meals/customization/customization"
+					},
+					{
+						id: 4,
 						title: "我的收藏",
 						imageSrc: "../../static/icon/settings/attention.png",
 						linkUrl: "./collecting/collecting"
 					},
 					{
-						id: 4,
+						id: 5,
 						title: "意见反馈",
 						imageSrc: "../../static/icon/settings/feedback.png",
 						linkUrl: "./feedback/feedback"
 					},
 					{
-						id: 5,
+						id: 6,
 						title: "关于我们",
 						imageSrc: "../../static/icon/settings/us.png",
 						linkUrl: "./about/about"
 					},
 					{
-						id: 6,
+						id: 7,
 						title: "联系我们",
 						imageSrc: "../../static/icon/settings/connection.png",
 						linkUrl: "./contact/contact"
@@ -234,6 +240,8 @@
 				});
 			},
 			itemClick(e) {
+				//console.log(this.user.id);
+				//this.user.id = 1340247104929828865;
 				if(this.user.id==null || this.user.id=="" ){
 					uni.showToast({
 						title: '请先登录',
