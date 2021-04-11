@@ -139,8 +139,19 @@
 					}
 				}); */
 			},
+			checkUser(){
+				if(this.user.id==null || this.user.id=="" ){
+					uni.showToast({
+						title: '请先登录',
+						duration: 2000,
+						icon: 'none'
+					});
+					return;
+				};
+			},
 			//添加点赞
 			addDianzan(){
+				$this.checkUser();
 				let url = $this.reqAddress+'/tjDz/addorremove';
 				var data ={"dzdxid":$this.wzid,"userid":$this.user.id,"dzlx":0};
 				$this.$api.post(url,data).then((res)=>{
@@ -159,6 +170,7 @@
 			},
 			//取消点赞
 			cancelDianzan(){
+				$this.checkUser();
 				let url = $this.reqAddress+'/tjDz/addorremove';
 				var data ={"dzdxid":$this.wzid,"userid":$this.user.id,"dzlx":0};
 				$this.$api.post(url,data).then((res)=>{
@@ -177,8 +189,11 @@
 			},
 			//检查是否点赞过
 			checkDianzan(wzid,userId){
+				if(this.user.id==null || this.user.id=="" ){
+					return;
+				};
 				let url = $this.reqAddress+'/tjDz/check';
-				var data ={"dzdxid":wzid,"dzlx":0,"userid":'1340247104929828865'};
+				var data ={"dzdxid":wzid,"dzlx":0,"userid":$this.user.id};
 				$this.$api.post(url,data).then((res)=>{
 					if(res.data.code==200){
 						$this.isDianzan = true;
@@ -189,6 +204,7 @@
 			},
 			//添加收藏
 			addCollect(){
+				$this.checkUser();	
 				let url = $this.reqAddress+'/tjWzsc/addorremove';
 				var data ={"szwzid":$this.wzid,"userid":$this.user.id};
 				$this.$api.post(url,data).then((res)=>{
@@ -207,6 +223,7 @@
 			},
 			//取消收藏
 			cancelCollect(){
+				$this.checkUser();
 				let url = $this.reqAddress+'/tjWzsc/addorremove';
 				var data ={"szwzid":$this.wzid,"userid":$this.user.id};
 				$this.$api.post(url,data).then((res)=>{
@@ -225,6 +242,9 @@
 			},
 			//检查是否收藏过
 			checkCollect(wzId,userId){
+				if(this.user.id==null || this.user.id=="" ){
+					return;
+				};	
 				let url = $this.reqAddress+'/tjWzsc/check';
 				var data ={"szwzid":wzId,"userid":userId};
 				$this.$api.post(url,data).then((res)=>{
@@ -568,11 +588,11 @@
 		font-size: 36rpx;
 		color: #999;
 		margin-top:26upx ;
-		padding-left: 10upx;
+		padding-left: 16upx;
 		padding-right: 10upx;
 	}
 	.dianzan-icon{
-		margin-top:30upx ;
+		margin-top:26upx ;
 	}
 
 	button::after{
@@ -591,5 +611,9 @@
 		background-size:40upx 40upx;
 		background-repeat:no-repeat;
 		background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABoUlEQVRYR+2WsU7DMBCGz44q9QUYKAzdeAzSh6A7EhMsVKouykSZInvpBCsjEnkIykOAxNaFIsQLVIoio5OcynHTxHE7oWSK4tzdd7/vTsdgj0dK+QIAp5zzq+l0+uHjivkYkY0OfqHt3znnYx8ILwAreJGDF0RrACN4CgCFAsV7a4hWAGZwRBxLKRWlj4jMOGsF4QxgB9d1sAGw6sIZwgmgKngVgA9EI4AQYsYYuwOAlGQ3u8a8Aus7tSfVxwIRR3Wd1giQJEnIOQ+jKJrZjnYB0H9CiFvG2A8iPu8FUGdcB+A6X0oKJEkyDIKA5B7aDpRSb7YKuwD0tZ1XQCzzPL+P43hZnJUApJRfADCooldKPUZRdONSA0KIB8bY9Q4VVoh4sgVAdx0EwSsVDlHaxv1+/3MymXy7AMzn8+P1en1m+9Dqhnmej+I4XtD5RgEToKlyC8dta0BKSQl2AJ0CnQIHVeBJ7wOXLqP34G3oEtQaXIedAx1Ap0CnwP9SgLaYLMtWbbPy+b/X6w2K7aq0E+pdjvb5Ix/HDja/SqnU3C3/AGNUsjCFEZJuAAAAAElFTkSuQmCC')
+	}
+	.bing-progress{
+		justify-content: center;
+		align-content: center;
 	}
 </style>
