@@ -26,7 +26,7 @@
 								<view class="item-content">
 									<view class="item-author">{{'作者：'+item.wzzz}}</view>
 									<view class="item-body">{{item.wzjj}}</view>
-									<view class="item-other">{{item.sfpl+'赞同 · '+item.plsl+'评论'}}</view>
+									<view class="item-other">{{item.dzsl+'赞同 · '+item.plsl+'评论'}}</view>
 									
 								</view>
 								<image class="img-list" v-if="item.wzfm!=null && item.wzfm!=''"
