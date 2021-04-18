@@ -176,6 +176,9 @@
 			} 
 		},
 		onLoad() {
+			
+		},
+		onShow() {
 			// 获取屏幕宽度
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 			$this = this;

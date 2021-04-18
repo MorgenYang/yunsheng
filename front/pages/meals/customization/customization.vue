@@ -169,7 +169,6 @@
 						</ld-select>
 					</view>
 					
-					
 					<view class="row-item">
 						<view class="d-item">回避食物：</view>
 						<ld-select :list="hbswList"
@@ -184,54 +183,51 @@
 					<button class="btn" @click="next1()">下一步</button>
 				</view>
 	            <view class="s-item" v-show="current === 1">
-	               <view class="row-item">
+	               <view class="row-item row-item-left">
 	               	<view class="d-item">是否喝豆浆：</view>
-	               	<ld-select :list="sfhdjList"
-	               		label-key="label" value-key="value"
-	               		placeholder="请选择"
-	               		clearable
-	               		v-model="sfhdjValue"
-	               		@change="selectChange201">
-	               	</ld-select>
+					  <radio-group @change="radioChange1" class="radio-class">
+						<view><radio :checked="sfhdjValue=='1'" value="1"/></view>
+						<view class="radio-text">否</view>
+						<view class="radio-space"><radio :checked="sfhdjValue=='0'" value="0"/></view>
+						<view class="radio-text">是</view>
+					  </radio-group>
 	               </view>
-				   <view class="row-item">
+				   <view class="row-item row-item-left">
 				   	<view class="d-item">是否喝脱脂乳：</view>
-				   	<ld-select :list="sfhtzrList"
-				   		label-key="label" value-key="value"
-				   		placeholder="请选择"
-				   		clearable
-				   		v-model="sfhtzrValue"
-				   		@change="selectChange202">
-				   	</ld-select>
+						<radio-group @change="radioChange2" class="radio-class">
+							<view><radio :checked="sfhtzrValue=='1'" value="1"/></view>
+							<view class="radio-text">否</view>
+							<view class="radio-space"><radio :checked="sfhtzrValue=='0'" value="0"/></view>
+							<view class="radio-text">是</view>
+						</radio-group>
 				   </view>
-				   <view class="row-item">
+				   <view class="row-item row-item-left">
 				   	<view class="d-item">是否喝半脱脂：</view>
-				   	<ld-select :list="sfhbtzList"
-				   		label-key="label" value-key="value"
-				   		placeholder="请选择"
-				   		clearable
-				   		v-model="sfhbtzValue"
-				   		@change="selectChange203">
-				   	</ld-select>
+						<radio-group @change="radioChange3" class="radio-class">
+							<view><radio :checked="sfhbtzValue=='1'" value="1"/></view>
+							<view class="radio-text">否</view>
+							<view class="radio-space"><radio :checked="sfhbtzValue=='0'" value="0"/></view>
+							<view class="radio-text">是</view>
+						</radio-group>
 				   </view>
-				   <view class="row-item">
+				   <view class="row-item row-item-left">
 				   	<view class="d-item">是否喝全脂乳：</view>
-				   	<ld-select :list="sfhqzrList"
-				   		label-key="label" value-key="value"
-				   		placeholder="请选择"
-				   		clearable
-				   		v-model="sfhqzrValue"
-				   		@change="selectChange204">
+						<radio-group @change="radioChange4" class="radio-class">
+							<view><radio :checked="sfhqzrValue=='1'" value="1"/></view>
+							<view class="radio-text">否</view>
+							<view class="radio-space"><radio :checked="sfhqzrValue=='0'" value="0"/></view>
+							<view class="radio-text">是</view>
+						</radio-group>
 				   	</ld-select>
 				   </view>
-				   <view class="row-item">
+				   <view class="row-item row-item-left">
 				   	<view class="d-item">是否吃干酪：</view>
-				   	<ld-select :list="sfcglList"
-				   		label-key="label" value-key="value"
-				   		placeholder="请选择"
-				   		clearable
-				   		v-model="sfcglValue"
-				   		@change="selectChange205">
+						<radio-group @change="radioChange5" class="radio-class">
+							<view><radio :checked="sfcglValue=='1'" value="1"/></view>
+							<view class="radio-text">否</view>
+							<view class="radio-space"><radio :checked="sfcglValue=='0'" value="0"/></view>
+							<view class="radio-text">是</view>
+						</radio-group>
 				   	</ld-select>
 				   </view>
 				   <button class="btn" @click="next2()">下一步</button>
@@ -273,8 +269,8 @@
 					<button class="btn" @click="next3()">下一步</button>
 				</view>
 				<view class="s-item" v-show="current === 3">
-				   <view class="medical">
-						<checkbox-group>
+				  <!-- <view class="medical"> -->
+						<!-- <checkbox-group>
 						   <label class="uni-list-cell uni-list-cell-pd" v-for="(item,index) in items" 
 						      @tap="change(index)" :key="index+'aaa'">
 							   <view>
@@ -282,8 +278,17 @@
 							   </view>
 							   <view>{{item.name}}</view>
 						   </label>
-					   </checkbox-group>
-				   </view>
+					   </checkbox-group> -->
+					    <view class="row-item row-item-left" v-for="(item,index) in items">
+						   <view class="d-item">{{'是否有'+item.name}}：</view>
+						   <radio-group @change="radioChange(index,$event)" class="radio-class">
+								<view><radio :checked="item.value=='1'" value="1"/></view>
+								<view class="radio-text">否</view>
+								<view class="radio-space"><radio :checked="item.value=='0'" value="0"/></view>
+								<view class="radio-text">是</view>
+						   </radio-group>
+					   </view>
+				  <!-- </view> -->
 				   <button class="btn" @click="next4()">下一步</button>
 				</view>
 				<view class="s-item" v-show="current === 4">
@@ -312,10 +317,12 @@
 						</view>
 						<view class="bp">
 							<view  class="hint">范围：0-100(默认值18)</view>
-							<bing-progress class="progress m-space" :max="100" infoAlign="left" :value="ageDefaultValue"
+							<slider class="progress m-space"  @change="ageChange" activeColor="#00FCFE" show-value
+								block-color="#ffffff" block-size="28" :value="ageDefaultValue"/>
+							<!-- <bing-progress class="progress m-space" :max="100" infoAlign="left" :value="ageDefaultValue"
 								 activeColor="#00FCFE" noActiveColor="#ffffff" barBorderRadius="4px" strokeWidth="24"
 								  handleColor="#0000FF"  handleHeight="30" handleWidth="30" 
-								  :step="1" :continuous="false" @change="ageChange"></bing-progress>	
+								  :step="1" :continuous="false" @change="ageChange"></bing-progress>	 -->
 						</view>
 					</view>
 				</uni-popup>
@@ -327,11 +334,13 @@
 							<view class="action text-green" @tap="heightConfirmClick">确定</view>
 						</view>
 						<view class="bp">
-							<view class="hint">范围：30-220(默认值150)</view>			
-							<bing-progress class="progress m-space" :min="30" :max="220" infoAlign="left" :value="heightDefaultValue"
+							<view class="hint">范围：30-220(默认值150)</view>		
+							<slider class="progress m-space" @change="heightChange" min="30" max="220" activeColor="#00FCFE"
+								 show-value block-color="#ffffff" block-size="28" :value="heightDefaultValue"/>	
+							<!-- <bing-progress class="progress m-space" :min="30" :max="220" infoAlign="left" :value="heightDefaultValue"
 								 activeColor="#00FCFE" noActiveColor="#ffffff" barBorderRadius="4px" subActiveColor="#ffffff"
 								  handleColor="#0000FF"  handleHeight="30" handleWidth="30" strokeWidth="24"
-								  :step="1" :continuous="false" @change="heightChange"></bing-progress>	
+								  :step="1" :continuous="false" @change="heightChange"></bing-progress>	 -->
 						</view>
 					</view>
 				</uni-popup>
@@ -344,10 +353,12 @@
 						</view>
 						<view class="bp">
 							<view class="hint">范围：0-200(默认值50)</view>
-							<bing-progress class="progress m-space" :min="0" :max="200" infoAlign="left" :value="weightDefaultValue"
+							<slider class="progress m-space" @change="weightChange" min="0" max="200" activeColor="#00FCFE"
+								 show-value block-color="#ffffff" block-size="28" :value="weightDefaultValue"/>	
+							<!-- <bing-progress class="progress m-space" :min="0" :max="200" infoAlign="left" :value="weightDefaultValue"
 								 activeColor="#00FCFE" noActiveColor="#ffffff" barBorderRadius="4px" subActiveColor="#ffffff"
 								  handleColor="#0000FF"  handleHeight="30" handleWidth="30" strokeWidth="24"
-								  :step="1" :continuous="false" @change="weightChange"></bing-progress>		
+								  :step="1" :continuous="false" @change="weightChange"></bing-progress>	 -->	
 						</view>
 					</view>
 				</uni-popup>
@@ -360,10 +371,12 @@
 						</view>
 						<view class="bp">
 							<view class="hint">范围：18.5-24.9(默认值22)</view>
-							<bing-progress class="progress m-space" :min="18.5" :max="24.9" infoAlign="left" :value="yaoweiDefaultValue"
+							<slider class="progress m-space" @change="yaoweiChange" min="18.5" max="24.9" activeColor="#00FCFE"
+								 show-value block-color="#ffffff" block-size="28" step="0.1" :value="yaoweiDefaultValue"/>	
+							<!-- <bing-progress class="progress m-space" :min="18.5" :max="24.9" infoAlign="left" :value="yaoweiDefaultValue"
 								 activeColor="#00FCFE" noActiveColor="#ffffff" barBorderRadius="4px" subActiveColor="#ffffff"
 								  handleColor="#0000FF"  handleHeight="30" handleWidth="30" strokeWidth="24"
-								  :step="0.1" :continuous="false" @change="yaoweiChange"></bing-progress>	
+								  :step="0.1" :continuous="false" @change="yaoweiChange"></bing-progress> -->	
 						</view>
 					</view>
 				</uni-popup>
@@ -375,11 +388,13 @@
 							<view class="action text-green" @tap="yunqiConfirmClick">确定</view>
 						</view>
 						<view class="bp">
-							<view class="hint">范围：1-10(默认值1)</view>
-							<bing-progress class="progress m-space" :min="1" :max="10" infoAlign="left" :value="yunqiDefaultValue"
+							<view class="hint">范围：0-10(默认值1)</view>
+							<slider class="progress m-space" @change="yunqiChange" min="0" max="10" activeColor="#00FCFE"
+								 show-value block-color="#ffffff" block-size="28" step="1" :value="yunqiDefaultValue"/>	
+							<!-- <bing-progress class="progress m-space" :min="1" :max="10" infoAlign="left" :value="yunqiDefaultValue"
 								 activeColor="#00FCFE" noActiveColor="#ffffff" barBorderRadius="4px" subActiveColor="#ffffff"
 								  handleColor="#0000FF"  handleHeight="30" handleWidth="30" strokeWidth="24"
-								  :step="1" :continuous="false" @change="yunqiChange"></bing-progress>
+								  :step="1" :continuous="false" @change="yunqiChange"></bing-progress> -->
 						</view>
 					</view>
 				</uni-popup>
@@ -391,11 +406,13 @@
 							<view class="action text-green" @tap="buruConfirmClick">确定</view>
 						</view>
 						<view class="bp">
-							<view class="hint">范围：1-15(默认值1)</view>
-							<bing-progress class="progress m-space" :min="1" :max="15" infoAlign="left" :value="buruDefaultValue"
+							<view class="hint">范围：0-15(默认值1)</view>
+							<slider class="progress m-space" @change="buruChange" min="0" max="15" activeColor="#00FCFE"
+								 show-value block-color="#ffffff" block-size="28" step="1" :value="buruDefaultValue"/>	
+							<!-- <bing-progress class="progress m-space" :min="1" :max="15" infoAlign="left" :value="buruDefaultValue"
 								 activeColor="#00FCFE" noActiveColor="#ffffff" barBorderRadius="4px"  subActiveColor="#ffffff"
 								  handleColor="#0000FF"  handleHeight="30" handleWidth="30" strokeWidth="24"
-								  :step="1" :continuous="false" @change="buruChange"></bing-progress>	
+								  :step="1" :continuous="false" @change="buruChange"></bing-progress>	 -->
 						</view>
 					</view>
 				</uni-popup>
@@ -452,17 +469,11 @@
 				sszlsList:[],
 				hbswValue:[],
 				hbswList:[],
-				
 				sfhdjValue:"",
-				sfhdjList:[],
 				sfhtzrValue:"",
-				sfhtzrList:[],
 				sfhbtzValue:"",
-				sfhbtzList:[],
 				sfhqzrValue:"",
-				sfhqzrList:[],
 				sfcglValue:"",
-				sfcglList:[],
 				genderValue:1,
 				genderList:[{"value":0,"label":"男"},{"value":1,"label":"女"}],
 				ageDefaultValue:"",
@@ -479,8 +490,8 @@
 				buruDefaultValue:"",
 				pH:0, //窗口高度
 				navHeight:0, //元素的所需高度
-				items: [{value:0,name:'糖尿病'},{value:0,name:'高血压'},{value:0,name:'冠心病'},
-				{value:0,name:'肥胖病'},{value:0,name:'痛风'},{value:0,name:'癌症'}],
+				items: [{value:0,name:'糖尿病',index:'1'},{value:0,name:'高血压',index:'2'},{value:0,name:'冠心病',index:'3'},
+				{value:0,name:'肥胖病',index:'4'},{value:0,name:'痛风',index:'5'},{value:0,name:'癌症',index:'6'}],
 				mcydsj:null,
 				mzydcs:null,
 				pjmrbs:null
@@ -589,10 +600,8 @@
 				}
 				this.$refs.popupburu.close();
 			},
-			
-			
 			yunqiChange(e){
-				this.yunqiDefaultValue =e.value;
+				this.yunqiDefaultValue =e.detail.value;
 			},
 			selectYunqi(){
 				if(this.yunqiDefaultValue==""){
@@ -601,7 +610,7 @@
 				this.$refs.popupYunqi.open();
 			},
 			buruChange(e){
-				this.buruDefaultValue =e.value;
+				this.buruDefaultValue =e.detail.value;
 			},
 			selectburu(){
 				if(this.buruDefaultValue==""){
@@ -610,7 +619,7 @@
 				this.$refs.popupburu.open();
 			},
 			yaoweiChange(e){
-				this.yaoweiDefaultValue =e.value;
+				this.yaoweiDefaultValue =e.detail.value;
 			},
 			selectYaowei(){
 				if(this.yaoweiDefaultValue==""){
@@ -619,7 +628,7 @@
 				this.$refs.popupYaowei.open();
 			},
 			weightChange(e){
-				this.weightDefaultValue =e.value;
+				this.weightDefaultValue =e.detail.value;
 			},
 			selectWeight(){
 				if(this.weightDefaultValue==""){
@@ -628,7 +637,7 @@
 				this.$refs.popupWeight.open();
 			},
 			heightChange(e){
-				this.heightDefaultValue =e.value;
+				this.heightDefaultValue =e.detail.value;
 			},
 			selectHeight(){
 				if(this.heightDefaultValue==""){
@@ -637,13 +646,31 @@
 				this.$refs.popupHeight.open();
 			},
 			ageChange(e){
-				this.ageDefaultValue =e.value;
+				this.ageDefaultValue =e.detail.value;
 			},
 			selectAge(){
 				if(this.ageDefaultValue==""){
 					this.ageDefaultValue =18;
 				}
 				this.$refs.popupAge.open();
+			},
+			radioChange1: function(evt) {
+				this.sfhdjValue = evt.target.value
+			},
+			radioChange2: function(evt) {
+				this.sfhtzrValue = evt.target.value
+			},
+			radioChange3: function(evt) {
+				this.sfhbtzValue = evt.target.value
+			},
+			radioChange4: function(evt) {
+				this.sfhqzrValue = evt.target.value
+			},
+			radioChange5: function(evt) {
+				this.sfcglValue = evt.target.value
+			},
+			radioChange: function(index,evt) {
+				this.items[index].value = evt.target.value;
 			},
 			clickTitle(index){
 				if($this.current != index ){
@@ -653,7 +680,8 @@
 						$this.loadCustomizationData();
 					}else if(index==1 && $this.isLoadData[1]==0){
 						//加载饮食习惯数据--在读取用户个人饮食习惯信息
-						$this.loadYinShiXiGuan();
+						//$this.loadYinShiXiGuan();
+						$this.loadYinShiXiGuanForUserData();
 					}else if(index==2 && $this.isLoadData[2]==0){
 						//读取用户个人生理信息
 						$this.loadShengLiForUserData();
@@ -695,7 +723,8 @@
 					let data = res.data;
 					if(data.code==200){
 						$this.current=1;
-						$this.loadYinShiXiGuan();
+						//$this.loadYinShiXiGuan();
+						$this.loadYinShiXiGuanForUserData();
 					}
 				}).catch((err)=>{
 					console.log('request fail', err);
@@ -861,21 +890,6 @@
 			selectSszlsChange(val){
 				this.sszlsValue = val;
 			},
-			selectChange201(val){
-				this.sfhdjValue = val
-			},
-			selectChange202(val){
-				this.sfhtzrValue = val
-			},
-			selectChange203(val){
-				this.sfhbtzValue = val
-			},
-			selectChange204(val){
-				this.sfhqzrValue = val
-			},
-			selectChange205(val){
-				this.sfcglValue = val
-			},
 			individualization:function(e){
 				uni.navigateTo({
 					url: "/pages/meals/individualization/individualization"
@@ -939,7 +953,7 @@
 				 })
 			 },
 			 //饮食习惯
-			 loadYinShiXiGuan(){
+			/* loadYinShiXiGuan(){
 				 uni.showLoading({ title:"加载中..."});
 				 let url = $this.reqAddress+'/tjSrdz/getItems/0';
 				 $this.$api.post(url).then((res)=>{
@@ -954,8 +968,8 @@
 				 	console.log('request fail', err);
 					setTimeout(function(){uni.hideLoading();},100);
 				 })
-			 },
-			 processYinShiXiGuanData(data){
+			 }, */
+			 /* processYinShiXiGuanData(data){
 				 data.forEach(function(item, index){
 					 let obj = item.propsitem;
 					 for(let key in obj){
@@ -972,7 +986,7 @@
 						 }
 					 }
 				 })
-			 },
+			 }, */
 			 loadCustomizationForUserData(){ 
 				 //获取用户深入定制数据
 				 let url = $this.reqAddress+'/tjSrdz/info/'+$this.user.id+'/1';
@@ -1029,6 +1043,7 @@
 				$this.$api.get(url).then((res)=>{
 					let data = res.data;
 					if(data.code==200 && data.data!=null){
+						$this.isLoadData[1]=1;
 						data.data.forEach(function(item, index){
 							if(item.selectedval!=null){
 								if(item.props =="sfhdj"){
@@ -1131,6 +1146,14 @@
 	.choose-view{
 		color:#007AFF;
 	}
+	.radio-class{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	.radio-space{
+		margin-left: 60upx;
+	}
 	.main{
 		width: 413upx;
 	}
@@ -1157,6 +1180,14 @@
 		height: 90upx;
 		align-items: center;
 		justify-content: center;
+	}
+	.row-item-left{
+		justify-content: left;
+		margin-left: 40upx;
+		
+	}
+	.radio-text{
+		padding-left: 10upx;
 	}
 	.d-item{
 		/* width: 290upx; */
@@ -1230,7 +1261,7 @@
 	}
 	.m-space{
 		margin-left: 56upx;
-		margin-top: 30upx;
+		margin-top: 50upx;
 	}
 	.medical > view{
 		padding-left: 50upx;
