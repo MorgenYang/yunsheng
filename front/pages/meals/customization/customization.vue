@@ -3,16 +3,24 @@
 	       <view class="top-view">
 			   <view :class="current===0?'p-view choose-view':'p-view'" @tap="clickTitle(0)">深入定制</view>
 			   <image src="../../../static/icon/settings/arrows-right-setting.png"></image>
-			   <view :class="current===1?'p-view choose-view':'p-view'" @tap="clickTitle(1)">饮食习惯</view>
+			   <view :class="current===1?'p-view choose-view':'p-view'" @tap="clickTitle(1)">生理信息</view>
 			   <image src="../../../static/icon/settings/arrows-right-setting.png"></image>
-			   <view :class="current===2?'p-view choose-view':'p-view'" @tap="clickTitle(2)">生理信息</view>
+			   <view :class="current===2?'p-view choose-view':'p-view'" @tap="clickTitle(2)">医疗相关</view>
 			   <image src="../../../static/icon/settings/arrows-right-setting.png"></image>
-			   <view :class="current===3?'p-view choose-view':'p-view'" @tap="clickTitle(3)">医疗相关</view>
-			   <image src="../../../static/icon/settings/arrows-right-setting.png"></image>
-			   <view :class="current===4?'p-view choose-view':'p-view'" @tap="clickTitle(4)">体力活动</view>
+			   <view :class="current===3?'p-view choose-view':'p-view'" @tap="clickTitle(3)">体力活动</view>
 		   </view>
 	        <scroll-view class="content" scroll-y="true" :style="{height:navHeight+'px'}">
 	            <view class="s-item" v-show="current === 0">
+					<view class="row-item">
+						<view class="d-item">每日主食种类：</view>
+						<ld-select :list="spdzdList"
+							label-key="label" value-key="value"
+							placeholder="请选择"
+							clearable
+							v-model="spdzdValue"
+							@change="selectSpdzdChange">
+						</ld-select>
+					</view>
 					<view class="row-item">
 						<view class="d-item">每日餐次：</view>
 						<ld-select :list="mrccList"
@@ -20,219 +28,13 @@
 							placeholder="请选择"
 							clearable
 							v-model="mrccValue"
-							@change="selectChange1">
-						</ld-select>
-					</view>
-					<view class="row-item">
-						<view class="d-item">每日主食种类：</view>
-						<ld-select :list="mrzszlsList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="mrzszlsValue"
-							@change="selectChange2">
-						</ld-select>
-					</view>
-					<view class="row-item">
-						<view class="d-item">早餐主食种类：</view>
-						<ld-select :list="zczszlsList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="zczszlsValue"
-							@change="selectChange3">
-						</ld-select>
-					</view>
-					<view class="row-item">
-						<view class="d-item">早餐蔬菜种类：</view>
-						<ld-select :list="zcsczlsList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="zcsczlsValue"
-							@change="selectChange4">
-						</ld-select>
-					</view>
-					<view class="row-item">
-						<view class="d-item">午餐主食种类：</view>
-						<ld-select :list="wczszlsList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="wczszlsValue"
-							@change="selectChange5">
-						</ld-select>
-					</view>
-					<view class="row-item">
-						<view class="d-item">午餐菜品种类：</view>
-						<ld-select :list="wccpzlsList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="wccpzlsValue"
-							@change="selectChange6">
-						</ld-select>
-					</view>
-					<view class="row-item">
-						<view class="d-item">晚餐菜品种类：</view>
-						<ld-select :list="wanccpzlsList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="wanccpzlsValue"
-							@change="selectChange7">
-						</ld-select>
-					</view>
-					<view class="row-item">
-						<view class="d-item">每日最低蔬菜种类：</view>
-						<ld-select :list="mrzdsczlList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="mrzdsczlValue"
-							@change="selectMrzdsczChange">
+							@change="selectMrccChange">
 						</ld-select>
 					</view>
 					
-					<view class="row-item">
-						<view class="d-item">谷薯类种类：</view>
-						<ld-select :list="gslzlsList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="gslzlsValue"
-							@change="selectGslzlsChange">
-						</ld-select>
-					</view>
-					<view class="row-item">
-						<view class="d-item">动物性食物种类：</view>
-						<ld-select :list="dwxswzlsList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="dwxswzlsValue"
-							@change="selectDwxswzlsChange">
-						</ld-select>
-					</view>
-					<view class="row-item">
-						<view class="d-item">蔬菜种类：</view>
-						<ld-select :list="sczlzlsList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="sczlzlsValue"
-							@change="selectSczlzlsChange">
-						</ld-select>
-					</view>
-					
-					
-					<view class="row-item">
-						<view class="d-item">每日水果种类：</view>
-						<ld-select :list="mrsgzlsList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="mrsgzlsValue"
-							@change="selectMrsgzlsChange">
-						</ld-select>
-					</view>
-					
-					
-					<view class="row-item">
-						<view class="d-item">豆制品种类：</view>
-						<ld-select :list="dzpzlsList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="dzpzlsValue"
-							@change="selectDzpzlsChange">
-						</ld-select>
-					</view>
-					<view class="row-item">
-						<view class="d-item">炸品种类：</view>
-						<ld-select :list="zpzlsList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="zpzlsValue"
-							@change="selectZpzlsChange">
-						</ld-select>
-					</view>
-					<view class="row-item">
-						<view class="d-item">素食种类：</view>
-						<ld-select :list="sszlsList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							clearable
-							v-model="sszlsValue"
-							@change="selectSszlsChange">
-						</ld-select>
-					</view>
-					
-					<view class="row-item">
-						<view class="d-item">回避食物：</view>
-						<ld-select :list="hbswList"
-							label-key="label" value-key="value"
-							placeholder="请选择"
-							:multiple="true"
-							clearable
-							v-model="hbswValue"
-							@change="selectChange10">
-						</ld-select>
-					</view>
 					<button class="btn" @click="next1()">下一步</button>
 				</view>
 	            <view class="s-item" v-show="current === 1">
-	               <view class="row-item row-item-left">
-	               	<view class="d-item">是否喝豆浆：</view>
-					  <radio-group @change="radioChange1" class="radio-class">
-						<view><radio :checked="sfhdjValue=='1'" value="1"/></view>
-						<view class="radio-text">否</view>
-						<view class="radio-space"><radio :checked="sfhdjValue=='0'" value="0"/></view>
-						<view class="radio-text">是</view>
-					  </radio-group>
-	               </view>
-				   <view class="row-item row-item-left">
-				   	<view class="d-item">是否喝脱脂乳：</view>
-						<radio-group @change="radioChange2" class="radio-class">
-							<view><radio :checked="sfhtzrValue=='1'" value="1"/></view>
-							<view class="radio-text">否</view>
-							<view class="radio-space"><radio :checked="sfhtzrValue=='0'" value="0"/></view>
-							<view class="radio-text">是</view>
-						</radio-group>
-				   </view>
-				   <view class="row-item row-item-left">
-				   	<view class="d-item">是否喝半脱脂：</view>
-						<radio-group @change="radioChange3" class="radio-class">
-							<view><radio :checked="sfhbtzValue=='1'" value="1"/></view>
-							<view class="radio-text">否</view>
-							<view class="radio-space"><radio :checked="sfhbtzValue=='0'" value="0"/></view>
-							<view class="radio-text">是</view>
-						</radio-group>
-				   </view>
-				   <view class="row-item row-item-left">
-				   	<view class="d-item">是否喝全脂乳：</view>
-						<radio-group @change="radioChange4" class="radio-class">
-							<view><radio :checked="sfhqzrValue=='1'" value="1"/></view>
-							<view class="radio-text">否</view>
-							<view class="radio-space"><radio :checked="sfhqzrValue=='0'" value="0"/></view>
-							<view class="radio-text">是</view>
-						</radio-group>
-				   	</ld-select>
-				   </view>
-				   <view class="row-item row-item-left">
-				   	<view class="d-item">是否吃干酪：</view>
-						<radio-group @change="radioChange5" class="radio-class">
-							<view><radio :checked="sfcglValue=='1'" value="1"/></view>
-							<view class="radio-text">否</view>
-							<view class="radio-space"><radio :checked="sfcglValue=='0'" value="0"/></view>
-							<view class="radio-text">是</view>
-						</radio-group>
-				   	</ld-select>
-				   </view>
-				   <button class="btn" @click="next2()">下一步</button>
-	            </view>
-	            <view class="s-item" v-show="current === 2">
 	                <view class="row-item">
 	                	<view class="d-item">性别：</view>
 	                	<ld-select :list="genderList"
@@ -266,9 +68,9 @@
 						<view class="d-item">哺乳(月)：</view>
 						<view @tap="selectburu" class="input-border input-h">{{buruValue}}</view>
 					</view>
-					<button class="btn" @click="next3()">下一步</button>
+					<button class="btn" @click="next2()">下一步</button>
 				</view>
-				<view class="s-item" v-show="current === 3">
+				<view class="s-item" v-show="current === 2">
 				  <!-- <view class="medical"> -->
 						<!-- <checkbox-group>
 						   <label class="uni-list-cell uni-list-cell-pd" v-for="(item,index) in items" 
@@ -289,9 +91,9 @@
 						   </radio-group>
 					   </view>
 				  <!-- </view> -->
-				   <button class="btn" @click="next4()">下一步</button>
+				   <button class="btn" @click="next3()">下一步</button>
 				</view>
-				<view class="s-item" v-show="current === 4">
+				<view class="s-item" v-show="current === 3">
 				   <view class="row-item">
 				   	 <view class="d-item">平均每日步数(步):</view>
 				   	 <input class="input-border" type="number" v-model="pjmrbs" maxlength="5" />
@@ -306,7 +108,7 @@
 				   	 <input class="input-border" type="number" v-model="mcydsj" maxlength="5"/>
 				   </view>
 			  
-				   <button class="btn" @click="next5()">完成</button>
+				   <button class="btn" @click="next4()">完成</button>
 				</view>
 				<uni-popup ref="popupAge" type="bottom" :animation="isShowAnimation" :maskClick="outerClose">
 					<view style="background-color:#F5F5F5;height: 360upx;">
@@ -318,11 +120,7 @@
 						<view class="bp">
 							<view  class="hint">范围：0-100(默认值18)</view>
 							<slider class="progress m-space"  @change="ageChange" activeColor="#00FCFE" show-value
-								block-color="#ffffff" block-size="28" :value="ageDefaultValue"/>
-							<!-- <bing-progress class="progress m-space" :max="100" infoAlign="left" :value="ageDefaultValue"
-								 activeColor="#00FCFE" noActiveColor="#ffffff" barBorderRadius="4px" strokeWidth="24"
-								  handleColor="#0000FF"  handleHeight="30" handleWidth="30" 
-								  :step="1" :continuous="false" @change="ageChange"></bing-progress>	 -->
+								block-color="#ffffff" block-size="28" :value="ageDefaultValue"/>			
 						</view>
 					</view>
 				</uni-popup>
@@ -336,11 +134,7 @@
 						<view class="bp">
 							<view class="hint">范围：30-220(默认值150)</view>		
 							<slider class="progress m-space" @change="heightChange" min="30" max="220" activeColor="#00FCFE"
-								 show-value block-color="#ffffff" block-size="28" :value="heightDefaultValue"/>	
-							<!-- <bing-progress class="progress m-space" :min="30" :max="220" infoAlign="left" :value="heightDefaultValue"
-								 activeColor="#00FCFE" noActiveColor="#ffffff" barBorderRadius="4px" subActiveColor="#ffffff"
-								  handleColor="#0000FF"  handleHeight="30" handleWidth="30" strokeWidth="24"
-								  :step="1" :continuous="false" @change="heightChange"></bing-progress>	 -->
+								 show-value block-color="#ffffff" block-size="28" :value="heightDefaultValue"/>					
 						</view>
 					</view>
 				</uni-popup>
@@ -354,11 +148,7 @@
 						<view class="bp">
 							<view class="hint">范围：0-200(默认值50)</view>
 							<slider class="progress m-space" @change="weightChange" min="0" max="200" activeColor="#00FCFE"
-								 show-value block-color="#ffffff" block-size="28" :value="weightDefaultValue"/>	
-							<!-- <bing-progress class="progress m-space" :min="0" :max="200" infoAlign="left" :value="weightDefaultValue"
-								 activeColor="#00FCFE" noActiveColor="#ffffff" barBorderRadius="4px" subActiveColor="#ffffff"
-								  handleColor="#0000FF"  handleHeight="30" handleWidth="30" strokeWidth="24"
-								  :step="1" :continuous="false" @change="weightChange"></bing-progress>	 -->	
+								 show-value block-color="#ffffff" block-size="28" :value="weightDefaultValue"/>						
 						</view>
 					</view>
 				</uni-popup>
@@ -372,11 +162,7 @@
 						<view class="bp">
 							<view class="hint">范围：18.5-24.9(默认值22)</view>
 							<slider class="progress m-space" @change="yaoweiChange" min="18.5" max="24.9" activeColor="#00FCFE"
-								 show-value block-color="#ffffff" block-size="28" step="0.1" :value="yaoweiDefaultValue"/>	
-							<!-- <bing-progress class="progress m-space" :min="18.5" :max="24.9" infoAlign="left" :value="yaoweiDefaultValue"
-								 activeColor="#00FCFE" noActiveColor="#ffffff" barBorderRadius="4px" subActiveColor="#ffffff"
-								  handleColor="#0000FF"  handleHeight="30" handleWidth="30" strokeWidth="24"
-								  :step="0.1" :continuous="false" @change="yaoweiChange"></bing-progress> -->	
+								 show-value block-color="#ffffff" block-size="28" step="0.1" :value="yaoweiDefaultValue"/>				
 						</view>
 					</view>
 				</uni-popup>
@@ -391,10 +177,6 @@
 							<view class="hint">范围：0-10(默认值1)</view>
 							<slider class="progress m-space" @change="yunqiChange" min="0" max="10" activeColor="#00FCFE"
 								 show-value block-color="#ffffff" block-size="28" step="1" :value="yunqiDefaultValue"/>	
-							<!-- <bing-progress class="progress m-space" :min="1" :max="10" infoAlign="left" :value="yunqiDefaultValue"
-								 activeColor="#00FCFE" noActiveColor="#ffffff" barBorderRadius="4px" subActiveColor="#ffffff"
-								  handleColor="#0000FF"  handleHeight="30" handleWidth="30" strokeWidth="24"
-								  :step="1" :continuous="false" @change="yunqiChange"></bing-progress> -->
 						</view>
 					</view>
 				</uni-popup>
@@ -409,10 +191,6 @@
 							<view class="hint">范围：0-15(默认值1)</view>
 							<slider class="progress m-space" @change="buruChange" min="0" max="15" activeColor="#00FCFE"
 								 show-value block-color="#ffffff" block-size="28" step="1" :value="buruDefaultValue"/>	
-							<!-- <bing-progress class="progress m-space" :min="1" :max="15" infoAlign="left" :value="buruDefaultValue"
-								 activeColor="#00FCFE" noActiveColor="#ffffff" barBorderRadius="4px"  subActiveColor="#ffffff"
-								  handleColor="#0000FF"  handleHeight="30" handleWidth="30" strokeWidth="24"
-								  :step="1" :continuous="false" @change="buruChange"></bing-progress>	 -->
 						</view>
 					</view>
 				</uni-popup>
@@ -435,45 +213,12 @@
 				user:{},
 				isShowAnimation:true,
 				outerClose:false,
-				isLoadData:[0,0,0,0,0],
+				isLoadData:[0,0,0,0],
 				current: 0,
 				mrccValue:"",
 				mrccList:[],
-				mrzszlsValue:"",
-				mrzszlsList:[],
-				zczszlsValue:"",
-				zczszlsList:[],
-				zcsczlsValue:"",
-				zcsczlsList:[],
-				wczszlsValue:"",
-				wczszlsList:[],
-				wccpzlsValue:"",
-				wccpzlsList:[],
-				wanccpzlsValue:"",
-				wanccpzlsList:[],
-				mrzdsczlValue:"",
-				mrzdsczlList:[],
-				mrsgzlsValue:"",
-				mrsgzlsList:[],
-				gslzlsValue:"",
-				gslzlsList:[],
-				dwxswzlsValue:"",
-				dwxswzlsList:[],
-				dzpzlsValue:"",
-				dzpzlsList:[],
-				zpzlsValue:"",
-				zpzlsList:[],
-				sczlzlsValue:'',
-				sczlzlsList:[],
-				sszlsValue:"",
-				sszlsList:[],
-				hbswValue:[],
-				hbswList:[],
-				sfhdjValue:"",
-				sfhtzrValue:"",
-				sfhbtzValue:"",
-				sfhqzrValue:"",
-				sfcglValue:"",
+				spdzdValue:"",
+				spdzdList:[],
 				genderValue:1,
 				genderList:[{"value":0,"label":"男"},{"value":1,"label":"女"}],
 				ageDefaultValue:"",
@@ -515,6 +260,7 @@
 			this.user = $this.getLoginUser();
 			$this.loadCustomizationData();
 		},
+	
 		methods: {
 			inInput1(e){
 				setTimeout(() => {  this.mcydsj = e.detail }, 0)
@@ -679,16 +425,12 @@
 						//加载深入定制数据--在读取用户个人深入定制信息
 						$this.loadCustomizationData();
 					}else if(index==1 && $this.isLoadData[1]==0){
-						//加载饮食习惯数据--在读取用户个人饮食习惯信息
-						//$this.loadYinShiXiGuan();
-						$this.loadYinShiXiGuanForUserData();
-					}else if(index==2 && $this.isLoadData[2]==0){
 						//读取用户个人生理信息
 						$this.loadShengLiForUserData();
-					}else if(index==3 && $this.isLoadData[3]==0){
+					}else if(index==2 && $this.isLoadData[2]==0){
 						//读取用户个人医疗相关
 						$this.loadYiLiaoUserData();
-					}else if(index==4 && $this.isLoadData[4]==0){
+					}else if(index==3 && $this.isLoadData[3]==0){
 						//读取用户个人体力活动
 						$this.loadTiLiHuoDongForUserData();
 					}
@@ -700,22 +442,8 @@
 				var formData = {
 					"userid":$this.user.id,
 					"typeid":1,
-					"mrcc":$this.mrccValue,
-					"mrzszls":$this.mrzszlsValue,
-					"zczszls":$this.zczszlsValue,
-					"zcsczls":$this.zcsczlsValue,
-					"wczszls":$this.wczszlsValue,
-					"wccpzls":$this.wccpzlsValue,
-					"wanccpzls":$this.wanccpzlsValue,
-					"mrzdsczl":$this.mrzdsczlValue,
-					"gslzls":$this.gslzlsValue,
-					"dwxswzls":$this.dwxswzlsValue,
-					"sczlzls":$this.sczlzlsValue,
-					"mrsgzls":$this.mrsgzlsValue,
-					"dzpzls":$this.dzpzlsValue,
-					"zpzls":$this.zpzlsValue,
-					"sszls":$this.sszlsValue,
-					"hbsw":$this.hbswValue.join(",")
+					"spdzd":$this.spdzdValue,
+					"mrcc":$this.mrccValue
 				};
 				let options ={};
 				options.header = {'Content-Type':'application/x-www-form-urlencoded'};
@@ -723,38 +451,13 @@
 					let data = res.data;
 					if(data.code==200){
 						$this.current=1;
-						//$this.loadYinShiXiGuan();
-						$this.loadYinShiXiGuanForUserData();
-					}
-				}).catch((err)=>{
-					console.log('request fail', err);
-				}) 
-			},
-			next2(){
-				//先保存当前数据,在跳转下一页
-				let url = $this.reqAddress+'/tjSrdz/add';
-				var formData = {
-					"userid":$this.user.id,
-					"typeid":0,
-					"sfhdj":$this.sfhdjValue,
-					"sfhtzr":$this.sfhtzrValue,
-					"sfhbtz":$this.sfhbtzValue,
-					"sfhqzr":$this.sfhqzrValue,
-					"sfcgl":$this.sfcglValue
-				};
-				let options ={};
-				options.header = {'Content-Type':'application/x-www-form-urlencoded'};
-				$this.$api.post(url,formData,options).then((res)=>{
-					let data = res.data;
-					if(data.code==200){
-						this.current=2;
 						$this.loadShengLiForUserData();
 					}
 				}).catch((err)=>{
 					console.log('request fail', err);
 				}) 
 			},
-			next3(){
+			next2(){
 				//先生理信息保存当前数据,在跳转下一页
 				let url = $this.reqAddress+'/tjYhslxx/addorupdate';
 				var formData = {
@@ -773,7 +476,7 @@
 				$this.$api.post(url,formData).then((res)=>{
 					let data = res.data;
 					if(data.code==200){
-						this.current=3;
+						this.current=2;
 						this.loadYiLiaoUserData();
 						
 					}
@@ -781,7 +484,7 @@
 					console.log('request fail', err);
 				}) 
 			},
-			next4(){
+			next3(){
 				//先保存医疗相关数据,在跳转下一页
 				let url = $this.reqAddress+'/tjYlxgsj/addorupdate';
 				var formData = {
@@ -799,14 +502,14 @@
 				$this.$api.post(url,formData).then((res)=>{
 					let data = res.data;
 					if(data.code==200){
-						this.current=4;
+						this.current=3;
 						$this.loadTiLiHuoDongForUserData();
 					}
 				}).catch((err)=>{
 					console.log('request fail', err);
 				}) 
 			},
-			next5(){
+			next4(){
 				//体力相关数据
 				let url = $this.reqAddress+'/tjTlhdsp/addorupdate';
 				var formData = {
@@ -842,54 +545,13 @@
 				console.log("gender:"+val);
 				this.genderValue = val;
 			},
-			selectChange1(val){
+			selectSpdzdChange(val){
+				this.spdzdValue = val
+			},
+			selectMrccChange(val){
 				this.mrccValue = val
 			},
-			selectChange2(val){
-				this.mrzszlsValue = val
-			},
-			selectChange3(val){
-				this.zczszlsValue = val
-			},
-			selectChange4(val){
-				this.zcsczlsValue = val
-			},
-			selectChange5(val){
-				this.wczszlsValue = val
-			},
-			selectChange6(val){
-				this.wccpzlsValue = val
-			},
-			selectChange7(val){
-				this.wanccpzlsValue = val
-			},
-			selectMrzdsczChange(val){
-				this.mrzdsczlValue = val
-			},
-			selectChange10(val){
-				this.hbswValue = val;
-			},
-			selectGslzlsChange(val){
-				this.gslzlsValue = val;
-			},
-			selectDwxswzlsChange(val){
-				this.dwxswzlsValue = val;
-			},
-			selectSczlzlsChange(val){
-				this.sczlzlsValue = val;
-			},
-			selectMrsgzlsChange(val){
-				this.mrsgzlsValue = val;
-			},
-			selectDzpzlsChange(val){
-				this.dzpzlsValue = val;
-			},
-			selectZpzlsChange(val){
-				this.zpzlsValue = val;
-			},
-			selectSszlsChange(val){
-				this.sszlsValue = val;
-			},
+			
 			individualization:function(e){
 				uni.navigateTo({
 					url: "/pages/meals/individualization/individualization"
@@ -918,75 +580,13 @@
 					 for(let key in obj){
 						 if(item.props=="mrcc"){
 						 	$this.mrccList.push({value:key,label:obj[key]});	
-						 }else if(item.props=="mrzszls"){
-							$this.mrzszlsList.push({value:key,label:obj[key]});
-						 }else if(item.props=="zczszls"){
-						 	$this.zczszlsList.push({value:key,label:obj[key]});
-						 }else if(item.props=="zcsczls"){
-						 	$this.zcsczlsList.push({value:key,label:obj[key]});
-						 }else if(item.props=="wczszls"){
-						 	$this.wczszlsList.push({value:key,label:obj[key]});
-						 }else if(item.props=="wccpzls"){
-						 	$this.wccpzlsList.push({value:key,label:obj[key]});
-						 }else if(item.props=="wanccpzls"){
-						 	$this.wanccpzlsList.push({value:key,label:obj[key]});
-						 }else if(item.props=="mrzdsczl"){
-						 	$this.mrzdsczlList.push({value:key,label:obj[key]});
-						 }else if(item.props=="mrsgzls"){
-						 	$this.mrsgzlsList.push({value:key,label:obj[key]});
-						 }else if(item.props=="gslzls"){
-							 $this.gslzlsList.push({value:key,label:obj[key]});
-						 }else if(item.props=="dwxswzls"){
-							 $this.dwxswzlsList.push({value:key,label:obj[key]});
-						 }else if(item.props=="sczlzls"){
-							 $this.sczlzlsList.push({value:key,label:obj[key]});
-						 }else if(item.props=="dzpzls"){
-							 $this.dzpzlsList.push({value:key,label:obj[key]});
-						 }else if(item.props=="zpzls"){
-							 $this.zpzlsList.push({value:key,label:obj[key]});
-						 }else if(item.props=="sszls"){
-							 $this.sszlsList.push({value:key,label:obj[key]});
-						 }else if(item.props=="hbsw"){
-							 $this.hbswList.push({value:key,label:obj[key]});
+						 }else if(item.props=="spdzd"){
+							$this.spdzdList.push({value:key,label:obj[key]});
 						 }
 					 }
 				 })
 			 },
-			 //饮食习惯
-			/* loadYinShiXiGuan(){
-				 uni.showLoading({ title:"加载中..."});
-				 let url = $this.reqAddress+'/tjSrdz/getItems/0';
-				 $this.$api.post(url).then((res)=>{
-				 	let data = res.data;
-				 	if(data.code==200 && data.data!=null){
-				 		$this.processYinShiXiGuanData(data.data);
-						$this.isLoadData[1]=1;
-						//加载个人饮食习惯数据
-						this.loadYinShiXiGuanForUserData();
-				 	}
-				 }).catch((err)=>{
-				 	console.log('request fail', err);
-					setTimeout(function(){uni.hideLoading();},100);
-				 })
-			 }, */
-			 /* processYinShiXiGuanData(data){
-				 data.forEach(function(item, index){
-					 let obj = item.propsitem;
-					 for(let key in obj){
-						 if(item.props=="sfhdj"){
-							$this.sfhdjList.push({value:key,label:obj[key]});					
-						 }else if(item.props=="sfhtzr"){
-							$this.sfhtzrList.push({value:key,label:obj[key]});
-						 }else if(item.props=="sfhbtz"){
-							$this.sfhbtzList.push({value:key,label:obj[key]});
-						 }else if(item.props=="sfhqzr"){
-							$this.sfhqzrList.push({value:key,label:obj[key]});
-						 }else if(item.props=="sfcgl"){
-							$this.sfcglList.push({value:key,label:obj[key]});
-						 }
-					 }
-				 })
-			 }, */
+			
 			 loadCustomizationForUserData(){ 
 				 //获取用户深入定制数据
 				 let url = $this.reqAddress+'/tjSrdz/info/'+$this.user.id+'/1';
@@ -997,36 +597,8 @@
 							if(item.selectedval!=null){
 								if(item.props =="mrcc"){
 									$this.mrccValue = item.selectedval+"";
-								}else if(item.props =="mrzszls"){
-									$this.mrzszlsValue = item.selectedval+"";
-								}else if(item.props =="zczszls"){
-									$this.zczszlsValue = item.selectedval+"";
-								}else if(item.props =="zcsczls"){
-									$this.zcsczlsValue = item.selectedval+"";
-								}else if(item.props =="wczszls"){
-									$this.wczszlsValue = item.selectedval+"";
-								}else if(item.props =="wccpzls"){
-									$this.wccpzlsValue = item.selectedval+"";
-								}else if(item.props =="wanccpzls"){
-									$this.wanccpzlsValue = item.selectedval+"";
-								}else if(item.props =="mrzdsczl"){
-									$this.mrzdsczlValue = item.selectedval+"";
-								}else if(item.props =="gslzls"){
-									$this.gslzlsValue = item.selectedval+"";
-								}else if(item.props =="dwxswzls"){
-									$this.dwxswzlsValue = item.selectedval+"";
-								}else if(item.props =="sczlzls"){
-									$this.sczlzlsValue = item.selectedval+"";
-								}else if(item.props =="mrsgzls"){
-									$this.mrsgzlsValue = item.selectedval+"";
-								}else if(item.props =="dzpzls"){
-									$this.dzpzlsValue = item.selectedval+"";
-								}else if(item.props =="zpzls"){
-									$this.zpzlsValue = item.selectedval+"";
-								}else if(item.props=="sszls"){
-									$this.sszlsValue = item.selectedval+"";
-								}else if(item.props =="hbsw" && item.selectedval!=''){
-									$this.hbswValue = item.selectedval.split(",");
+								}else if(item.props =="spdzd"){
+									$this.spdzdValue = item.selectedval+"";
 								}
 							}
 						})
@@ -1036,35 +608,6 @@
 					setTimeout(function(){uni.hideLoading();},100);
 					console.log('request fail', err);
 				 })
-			 },
-			 loadYinShiXiGuanForUserData(){
-				//加载个人饮食习惯数据
-				let url = $this.reqAddress+'/tjSrdz/info/'+$this.user.id+'/0';
-				$this.$api.get(url).then((res)=>{
-					let data = res.data;
-					if(data.code==200 && data.data!=null){
-						$this.isLoadData[1]=1;
-						data.data.forEach(function(item, index){
-							if(item.selectedval!=null){
-								if(item.props =="sfhdj"){
-									$this.sfhdjValue = item.selectedval+"";
-								}else if(item.props =="sfhtzr"){
-									$this.sfhtzrValue = item.selectedval+"";
-								}else if(item.props =="sfhbtz"){
-									$this.sfhbtzValue = item.selectedval+"";
-								}else if(item.props =="sfhqzr"){
-									$this.sfhqzrValue = item.selectedval+"";
-								}else if(item.props =="sfcgl"){
-									$this.sfcglValue = item.selectedval+"";
-								}
-							}
-						})
-					}
-					setTimeout(function(){uni.hideLoading();},100);
-				}).catch((err)=>{
-					console.log('request fail', err);
-					setTimeout(function(){uni.hideLoading();},100);
-				})
 			 },
 			 loadShengLiForUserData(){
 				 //读取用户个人生理信息

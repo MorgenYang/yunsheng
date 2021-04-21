@@ -61,8 +61,8 @@ export default {
 		//TODO 加密数据
 		
 		//TODO 数据签名
-		 
-		let _token = {'token': uni.getStorageSync("token") || ''};
+
+		let _token = {'token': uni.getStorageSync("token") || ''};	
 		options.header = Object.assign({}, options.header, _token);
 		/*_sign = {'sign': sign(JSON.stringify(options.data))}
 		options.header = Object.assign({}, options.header, _token,_sign) 
@@ -91,7 +91,11 @@ export default {
 				if (statusCode === 200) { //成功
 				//异常信息提示
 					resolve(response);
-				} else {
+				} else if(statusCode === 401) {
+					//token失效，重新登录
+					login(options.baseUrl,options);
+					
+				}else{
 					if(options.url.endsWith("/tjDz/check") ||
 						options.url.indexOf("/tjYhslxx/info")>-1){
 						
@@ -177,6 +181,47 @@ function _reqlog(req) {
 		}
 	}
 	//TODO 调接口异步写入日志数据库
+}
+
+function login(baseUrl,options){
+	uni.showToast({
+	    title: "用户登录失效,重连中。。。",
+	    duration: 2000,
+		icon:"none"
+	});
+	uni.login({
+		provider: 'weixin',
+		success: function(loginRes) {
+			uni.request({
+				url:  'https://www.healthycloudsci.com/ysapi/wechatlogin',
+				method: "POST",
+				data: {
+					"code": loginRes.code
+				},
+				success: (res) => {
+					if (res.data.code == 200 && res.data.data) {
+						//$this.request(options,1)
+						/* let url ="/"+ options.$this.$mp.page.route;
+						uni.redirectTo({url:url}); */ 
+						uni.switchTab({
+							url: '/pages/me/me'
+						}); 
+						uni.setStorageSync('token', res.data.data.token);
+						uni.setStorageSync('nickName', res.data.loginClientUserVo.nickname);
+						uni.setStorageSync('avatarUrl', res.data.loginClientUserVo.avatarUrl);
+						uni.setStorageSync('openid', res.data.loginClientUserVo.openid);
+						uni.setStorageSync('phone', res.data.loginClientUserVo.phone);
+						uni.setStorageSync('gender', res.data.loginClientUserVo.gender);
+						uni.setStorageSync('id', res.data.loginClientUserVo.id);
+						uni.setStorageSync('username', res.data.loginClientUserVo.username);
+					} else {
+						
+					}
+				}
+			});
+		}
+	});
+
 }
 
 /**
