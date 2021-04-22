@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import App from './App'
 
+//请求地址配置
+import config from '@/common/vmeitime-http/config.js'
+Vue.prototype.domainName = config.req_domain;
+Vue.prototype.reqAddress = config.req_address;
+
 Vue.config.productionTip = false;
-Vue.prototype.domainName = 'https://www.healthycloudsci.com';
-Vue.prototype.reqAddress = Vue.prototype.domainName+'/ysapi';
 Vue.prototype.openid = '';
 
 import api from '@/common/vmeitime-http/request.js'

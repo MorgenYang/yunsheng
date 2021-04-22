@@ -30,6 +30,8 @@ http.delete('user/1').then((res)=>{
 
 */
 
+import urlConfig from '@/common/vmeitime-http/config.js'
+
 export default {
 	config: {
 		baseUrl: "",
@@ -193,7 +195,7 @@ function login(baseUrl,options){
 		provider: 'weixin',
 		success: function(loginRes) {
 			uni.request({
-				url:  'https://www.healthycloudsci.com/ysapi/wechatlogin',
+				url:  urlConfig.req_address+'/wechatlogin',
 				method: "POST",
 				data: {
 					"code": loginRes.code
@@ -207,13 +209,13 @@ function login(baseUrl,options){
 							url: '/pages/me/me'
 						}); 
 						uni.setStorageSync('token', res.data.data.token);
-						uni.setStorageSync('nickName', res.data.loginClientUserVo.nickname);
-						uni.setStorageSync('avatarUrl', res.data.loginClientUserVo.avatarUrl);
-						uni.setStorageSync('openid', res.data.loginClientUserVo.openid);
-						uni.setStorageSync('phone', res.data.loginClientUserVo.phone);
-						uni.setStorageSync('gender', res.data.loginClientUserVo.gender);
-						uni.setStorageSync('id', res.data.loginClientUserVo.id);
-						uni.setStorageSync('username', res.data.loginClientUserVo.username);
+						uni.setStorageSync('nickName', res.data.data.loginClientUserVo.nickname);
+						uni.setStorageSync('avatarUrl', res.data.data.loginClientUserVo.avatarurl);
+						uni.setStorageSync('openid', res.data.data.loginClientUserVo.openid);
+						uni.setStorageSync('phone', res.data.data.loginClientUserVo.phone);
+						uni.setStorageSync('gender', res.data.data.loginClientUserVo.gender);
+						uni.setStorageSync('id', res.data.data.loginClientUserVo.id);
+						uni.setStorageSync('username', res.data.data.loginClientUserVo.username);
 					} else {
 						
 					}
