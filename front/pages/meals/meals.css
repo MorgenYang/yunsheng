@@ -18,57 +18,12 @@
 .item{
 	width:100%;
 	margin-top: 20upx;
-	/* margin-bottom: 20upx; */
 	border-bottom-width: 1px;
 	border-color: #eee;
 	background-color: #FFFFFF;
 	display: flex;
 }
 
-.news-item{
-	/* height: 282upx; */
-	flex-direction: row;
-	/* margin-bottom: 20upx; */
-}
-.item-right{
-	padding-left: 40upx;
-	overflow: hidden;
-}
-.item-title{
-	font-size: 36upx;
-	color: #197EC6;
-	display: block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-.item-level{
-	flex-direction: row;
-	margin-top: 10upx;
-}
-.item-tip{
-	font-size: 26upx;
-	color: #197EC6;
-}
-.star-title{
-	padding-right: 10upx;
-}
-.item-function{
-	margin-top: 4upx;
-	flex-direction: row;
-}
-.function-context{
-	overflow: hidden;
-	word-break: break-all;  /* break-all(允许在单词内换行。) */
-	text-overflow: ellipsis;  /* 超出部分省略号 */
-	display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
-	-webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
-	-webkit-line-clamp: 3; /** 显示的行数 **/
-}
-.function-context-text{
-	color:#858585;
-	padding-left: 8upx;
-}
 .star-img{
 	padding-top: 3upx;
 	width:30upx;
@@ -91,10 +46,6 @@
 	height: 190upx;
 }
 
-/* .uni-scroll-view{
-	text-align: center;
-}
- */
 .type-head{
 	display: flex;
 	flex-direction: row;
@@ -108,7 +59,12 @@
 	margin-top: 6upx;
 	margin-right: 10upx;
 }
-
+.date-sel{
+	display: flex;
+	flex-direction: row;
+	border-bottom: 0.5px solid #fff;
+	margin-bottom: 20upx;
+}
 .food-head{
 	margin-top: 16upx;
 	height: 240upx;
@@ -119,18 +75,24 @@
 	flex-direction: row;
 	
 }
+.drawer-item{
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 10upx;
+}
 .date-size{
-	width: 160upx;
-	height: 160upx;
+	width: 240upx;
 	margin-left: 10upx;
 	border-radius:10upx;
-	margin-right: 6upx;
+	margin-top: 10upx;
+}
+.date-icon{
 	margin-top: 40upx;
+	padding-left: 10upx;
 }
 
 .w-enlish{
 	font-size: 26upx;
-	padding-top: 10upx;
 }
 .w1{
 	background: #82C6F7;
@@ -161,37 +123,34 @@
 	color: #9400D3;	
 }
 .w-left{
-	margin-left: 40upx;
+	margin-left: 10upx;
 }
 .w-right{
-	margin-right: 40upx;
+	/* margin-right: 10upx; */
 }
-.nav {
-	white-space: nowrap;
-}
-.nav .cu-item {
-	display: inline-block;
+uni-drawer > cu-card{
+	flex-direction: row;
 }
 .date-col{
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	justify-content: center;
 	align-items: center;
 	margin-top: 26upx;
-	
+	margin-bottom: 26upx;		
 }
 .pointer{
-	width:40upx;
-	height:40upx;
-	margin-left: 70upx;
+	width:30upx;
+	height:30upx;
+	/* margin-left: 114upx; */
 }
 .pointer-hiden{
 	visibility:hidden;
 }
 .pointer-one{
-	width:40upx;
-	height:40upx;
-	margin-left: 70upx;
+	width:30upx;
+	height:30upx;
+	/* margin-left: 114upx; */
 }
 .week-inline-img{
 	width: 100%;
@@ -270,12 +229,6 @@
 	border: #007AFF solid 1upx;
 	line-height: 60upx;
 	/* padding-top: 8upx; */
-}
-.del{
-	width: 50upx;
-	height: 50upx;
-	margin-top: 30upx;
-	padding: 12upx;
 }
 /*item的点击样式*/
 .setting-click{

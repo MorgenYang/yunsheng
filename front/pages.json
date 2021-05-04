@@ -1,16 +1,16 @@
 {
 	"pages": [
-		/* {
+		 {
 			"path": "pages/home/home",
 			"style": {
 				"titleNView" : false,
-				"navigationBarBackgroundColor": "#1F7DD6"
+				//"navigationBarBackgroundColor": "#1F7DD6"
 				//"navigationBarTitleText": "首页",
-				//"navigationBarBackgroundColor": "#3AA9D1"
+				"navigationBarBackgroundColor": "#3AA9D1"
 				// "enablePullDownRefresh" : true
 				     
 			}
-		}, */
+		},
 		{
 			"path": "pages/education/education",
 			"style": {
@@ -238,18 +238,28 @@
             }
             
         }
+        ,{
+            "path" : "pages/meals/todayRecommend/todayRecommend",
+            "style" :                                                                                    
+            {
+              "navigationBarTitleText": "今日推荐",
+              "navigationBarBackgroundColor": "#3AA9D1",
+              "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"tabBar": {
 		"color": "#bfbfbf",
 		"selectedColor": "#3AA9D1",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
-		"list": [/* {
+		"list": [{
 				"pagePath": "pages/home/home",
 				"text": "首页",
 				"iconPath": "static/icon/tabbar/tabbar/home.png",
 				"selectedIconPath": "static/icon/tabbar/tabbar-sel/home-sel.png"
-			}, */
+			},
 			{
 				"pagePath": "pages/education/education",
 				"text": "健康教育",

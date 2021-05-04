@@ -6,7 +6,7 @@
 			</swiper-item>
 		</swiper>
 		<view class="home-menu m30">
-			<view class="item">
+			<view class="item" @tap="todayRecommend()">
 				<image src="../../static/icon/img/tuijian.png"></image>
 				<text>今日推荐</text>
 			</view>
@@ -27,7 +27,7 @@
 						<view class="main-title">会议报道</view>
 						<view class="sub-title">最新行业咨询</view>
 					</view>
-					<image src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1320246657,167452742&fm=15&gp=0.jpg"></image>
+					<!-- <image src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1320246657,167452742&fm=15&gp=0.jpg"></image> -->
 				</view>
 				<view class="m-right30 service-item-card">
 					<view class="title">
@@ -38,34 +38,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="m30">
-			<view class="service">热门服务</view>
-			<view class="service-item">
-				<view class="m-right30"></view>
-				<view class=""></view>
-			</view>
-		</view>
-		<view class="m30">
-			<view class="service">热门服务</view>
-			<view class="service-item">
-				<view class="m-right30"></view>
-				<view class=""></view>
-			</view>
-		</view>
-		<view class="m30">
-			<view class="service">热门服务</view>
-			<view class="service-item">
-				<view class="m-right30"></view>
-				<view class=""></view>
-			</view>
-		</view>
-		<view class="m30">
-			<view class="service">热门服务</view>
-			<view class="service-item">
-				<view class="m-right30"></view>
-				<view class=""></view>
-			</view>
-		</view>
+		
 	</view>
 </template>
 
@@ -82,15 +55,20 @@
 				interval: 2000,
 				duration: 500,
 				picList:[
-					{"id":1,"title":"bbb","url":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605026332795&di=c39534cb05564e07361c0df771711d96&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinakd10115%2F96%2Fw595h301%2F20200323%2F3f93-ireifzi0175643.png"},
-					{"id":2,"title":"aaa","url":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605026281585&di=c333baa37b69ad4259dadfa7c567882e&imgtype=0&src=http%3A%2F%2Fwww.lilosky.com%2Fuploads%2Fallimg%2F200302%2F1-200302103430N8.jpg"},
-					{"id":3,"title":"bbb","url":"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1605026400445&di=29170f929750a5d2ce7006115496b2c2&imgtype=0&src=http%3A%2F%2Fpic23.nipic.com%2F20120814%2F10618619_161417472000_2.jpg"},
+					{"id":1,"title":"bbb","url":"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic19.nipic.com%2F20120225%2F2489200_110712203129_2.jpg&refer=http%3A%2F%2Fpic19.nipic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622035681&t=79a0c4c8cb2d371dba9fabdbdb9d15f2"},
+					{"id":2,"title":"aaa","url":"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg000.hc360.cn%2Fy5%2FM05%2F29%2FB9%2FwKhQUVXURPKEcDiDAAAAADmjueY110.jpg&refer=http%3A%2F%2Fimg000.hc360.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622036024&t=03d57aea72a5845681c8a51957558474"},
+					{"id":3,"title":"bbb","url":"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fspider.ws.126.net%2F995fa76117487b49e6590059aa91365a.jpeg&refer=http%3A%2F%2Fspider.ws.126.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1622035755&t=639d9aa135795d4fc77a1973b90208ae"},
 				],
 			}
 		},
 		onLoad() {
 		},
 		methods: {
+			todayRecommend(){
+				uni.navigateTo({
+					url: '../meals/todayRecommend/todayRecommend'
+				});
+			}
 		}
 	}
 </script>
