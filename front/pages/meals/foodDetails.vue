@@ -51,48 +51,67 @@
 		},
 		onLoad(param) {
 			$this =this;
-			this.loadDetail(param.id);
+			this.loadDetail(param);
 		},
 		methods: {
-			loadDetail(pId){
+			loadDetail(param){
+				let type = param.type;
+				if(type==1){
+					$this.loadTodayTuiJian(param.id)
+				}else if(type==2){
+					$this.index = 0;
+					//$this.detailBean = JSON.parse(decodeURIComponent(param.data));
+					let data = JSON.parse(decodeURIComponent(param.data));
+					$this.handleDetailData(data);
+				}
+			},
+			loadTodayTuiJian(pId){
 				let url = $this.reqAddress+'/tjSsgl/info/'+pId;
-				let domainName = $this.domainName;
 				$this.$api.get(url).then((res)=>{
 					let data = res.data;
 					if(data.code==200 && data.data!=null){
 						$this.index = 0;
-						$this.detailBean  = data.data;
-						if(data.data.cpfm){
-							let imageObj = JSON.parse(data.data.cpfm.replace(/&quot;/g,"\""));
-							if(imageObj.length>0){
-								$this.imgUrl = domainName+imageObj[0].url;
-							}else{
-								$this.imgUrl = "../../static/icon/img/image-error.png";
-							}
-						}
-						if(data.data.cpinfo && data.data.cpinfo.cpfm){
-							let imgArr = JSON.parse(data.data.cpinfo.cpfm.replace(/&quot;/g,"\""));
-							if(imgArr.length>0){
-								imgArr.forEach(function(item, index) {
-									let img = domainName+item.url;
-									let imgBean = {url:img}
-									$this.imgList.push(imgBean);
-								});
-							}else{
-								let imgBean = {url:"../../static/icon/img/image-error.png"}
-								$this.imgList.push(imgBean);
-							} 
-						}	
-						if(data.data.cpinfo && data.data.cpinfo.cpcl==null){
-							data.data.cpinfo.cpcl ="暂无";
-						}
-						if(data.data.cpinfo && data.data.cpinfo.cpzf==null){
-							data.data.cpinfo.cpzf ="暂无";
-						}
+						//$this.detailBean  = data.data;
+						$this.handleDetailData(data.data);
 					}
 				}).catch((err)=>{
 					console.log('request fail', err);
 				})
+			},
+			handleDetailData(data){
+				let domainName = $this.domainName;
+				if(data.cpfm){
+					let imageObj = JSON.parse(data.cpfm.replace(/&quot;/g,"\""));
+					if(imageObj.length>0){
+						$this.imgUrl = domainName+imageObj[0].url;
+					}else{
+						$this.imgUrl = "../../static/icon/img/image-error.png";
+					}
+				}else{
+					$this.imgUrl = "../../static/icon/img/image-error.png";
+				}
+				if(data.cpinfo && data.cpinfo.cpfm){
+					let imgArr = JSON.parse(data.cpinfo.cpfm.replace(/&quot;/g,"\""));
+					if(imgArr.length>0){
+						imgArr.forEach(function(item, index) {
+							let img = domainName+item.url;
+							let imgBean = {url:img}
+							$this.imgList.push(imgBean);
+						});
+					}else{
+						let imgBean = {url:"../../static/icon/img/image-error.png"}
+						$this.imgList.push(imgBean);
+					} 
+				}else{
+					$this.imgUrl = "../../static/icon/img/image-error.png";
+				}
+				if(data.cpinfo && data.cpinfo.cpcl==null){
+					data.cpinfo.cpcl ="暂无";
+				}
+				if(data.cpinfo && data.cpinfo.cpzf==null){
+					data.cpinfo.cpzf ="暂无";
+				}
+				$this.detailBean  = data;
 			},
 			selectedBanner(item, index) {
 				

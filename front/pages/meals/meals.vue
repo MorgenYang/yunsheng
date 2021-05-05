@@ -3,9 +3,9 @@
 		<view class="week-scroll-box" >
 			<view class="date-sel" >
 				<view style="line-height:70upx;text-align: center;padding-left:30upx;">当前日期：{{weekDay}}</view>	
-				<view style="width: 200upx;margin-left: 20upx;margin-top: 10upx;margin-bottom: 10upx;">
+				<!-- <view style="width: 200upx;margin-left: 20upx;margin-top: 10upx;margin-bottom: 10upx;">
 					<button size="mini"  @click="showDrawer" type="primary" style="background-color: #3AA9D1;">选择日期</button>
-				</view>
+				</view> -->
 			</view>
 			
 			<uni-drawer ref="showLeft" mode="left" :mask-click="true" width="160">
@@ -38,7 +38,7 @@
 							</view>
 							<block v-for="(item,itemIndex) in food.dzcs">
 								<!-- <uni-card class="card-item" isShadow="true" > -->
-								<view class="cu-card " v-if="item.cpinfo!=null"  :data-item="item.cpinfo.id"  @click="itemDetail">
+								<view class="cu-card " v-if="item.cpinfo!=null"  :data-item="item"  @click="itemDetail">
 									<view class="cu-item shadow">
 										<view class="item-bottom card">
 											<image class="card-left-img" :src="item.cpinfo.image"></image>
@@ -62,6 +62,12 @@
 				</swiper-item>
 			</swiper>
 		</view>
+		<movable-area class="movableArea">
+			<movable-view class="movableView" direction="all" x="600rpx" y="800rpx">
+				<image src="../../static/icon/img/date-icon.png" mode="widthFix" @click="showDrawer"></image>
+			</movable-view>
+		</movable-area>
+		
 	</view>
 </template>
 
@@ -112,41 +118,50 @@
 		computed: {
 			
 		},
-		onLoad() {
-			
-		},
-		onShow() {
+		onLoad(params) {
 			// 获取屏幕宽度
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 			$this = this;
-			let weekToday = this.weekList[week-1].chinaName1;
-			this.weekDay = weekToday;
-			this.weekList[week-1].chinaName='今天';
-			this.weekCurrent = week-1;
-			//this.weekScrollLeft = (week-1-1) *80;
-			
-			var timesStamp = nowDate.getTime();
-			var currenDay = nowDate.getDay();
-			this.weekList.forEach(function(item, index) {
-				let date = new Date(timesStamp + 24 * 60 * 60 * 1000 * (index - (currenDay + 6) % 7));
-				let y = date.getFullYear();
-				let MM = date.getMonth() + 1;
-				MM = MM < 10 ? ('0' + MM) : MM;//月补0
-				let d = date.getDate();
-				d = d < 10 ? ('0' + d) : d;//天补0
-				let h = date.getHours();
-				h = h < 10 ? ('0' + h) : h;//小时补0
-				let m = date.getMinutes();
-				m = m < 10 ? ('0' + m) : m;//分钟补0
-				let s = date.getSeconds();
-				s = s < 10 ? ('0' + s) : s;//秒补0
-				item.date = y + '-' + MM + '-' + d;
-			});
-			
-			let date = nowDate.getFullYear()+"-"+(nowDate.getMonth()+1)+'-'+nowDate.getDate();
-			this.loadCustomizationData(date);
+			$this.loadFirstData();
+		},
+		onShow() {
+			const reloadMeals = uni.getStorageSync('reloadMeals');
+			if (reloadMeals) {
+				this.weeksFoodList=[{"recommendList":[]},{"recommendList":[]},{"recommendList":[]},
+				{"recommendList":[]},{"recommendList":[]},{"recommendList":[]},{"recommendList":[]} ]
+				uni.removeStorageSync('reloadMeals');
+				$this.loadFirstData();
+			}
 		},
 		methods: {
+			loadFirstData(){
+				let weekToday = this.weekList[week-1].chinaName1;
+				this.weekDay = weekToday;
+				this.weekList[week-1].chinaName='今天';
+				this.weekCurrent = week-1;
+				//this.weekScrollLeft = (week-1-1) *80;
+				
+				var timesStamp = nowDate.getTime();
+				var currenDay = nowDate.getDay();
+				this.weekList.forEach(function(item, index) {
+					let date = new Date(timesStamp + 24 * 60 * 60 * 1000 * (index - (currenDay + 6) % 7));
+					let y = date.getFullYear();
+					let MM = date.getMonth() + 1;
+					MM = MM < 10 ? ('0' + MM) : MM;//月补0
+					let d = date.getDate();
+					d = d < 10 ? ('0' + d) : d;//天补0
+					let h = date.getHours();
+					h = h < 10 ? ('0' + h) : h;//小时补0
+					let m = date.getMinutes();
+					m = m < 10 ? ('0' + m) : m;//分钟补0
+					let s = date.getSeconds();
+					s = s < 10 ? ('0' + s) : s;//秒补0
+					item.date = y + '-' + MM + '-' + d;
+				});
+				
+				let date = nowDate.getFullYear()+"-"+(nowDate.getMonth()+1)+'-'+nowDate.getDate();
+				this.loadCustomizationData(date);
+			},
 			showDrawer() {
 				this.$refs.showLeft.open();
 			},
@@ -164,12 +179,11 @@
 			},
 			itemDetail(e){
 				uni.navigateTo({
-					url: './foodDetails?id='+e.currentTarget.dataset.item
+					url: './foodDetails?type=2&data='+encodeURIComponent(JSON.stringify(e.currentTarget.dataset.item))
 				});
 			},
 		
 			weekSelect(e) {
-				
 				this.$refs.showLeft.close();
 				this.weekCurrent = e.currentTarget.dataset.index;
 				/* if(this.weekCurrent>0){
@@ -180,12 +194,14 @@
 			},
 			//加载
 			loadCustomizationData(dayDate){
+				debugger
+				this.weekDay = this.weekList[$this.weekCurrent].chinaName1;
 				//清空历史数据
 				/* this.weeksFoodList=[{"recommendList":[]},{"recommendList":[]},{"recommendList":[]},
 				{"recommendList":[]},{"recommendList":[]},{"recommendList":[]},{"recommendList":[]}]; */
 				if($this.weeksFoodList[$this.weekCurrent].recommendList.length>0){
-					//return;
-					$this.weeksFoodList[$this.weekCurrent].recommendList=[];
+					return;
+					//$this.weeksFoodList[$this.weekCurrent].recommendList=[];
 				}
 				uni.showLoading({ title:"加载中..."});
 				let url = $this.reqAddress+'/tjDzcs/getPageList?dzrq='+dayDate;
@@ -194,7 +210,7 @@
 					let data = res.data;
 					if(data.code==200 && data.data!=null){
 						var result = data.data;
-						this.weekDay = this.weekList[$this.weekCurrent].chinaName1;
+					
 						result.forEach(function(item, index1) {
 							item.dzcs.forEach(function(childItem, index2) {
 								if(childItem!=null && childItem.cpinfo!=null){
@@ -327,6 +343,25 @@ view{
 	flex-direction: column;
 	margin: 20upx 20upx;
 }	
+
+.movableArea {
+	position: fixed;
+	top: 70upx;
+	left: 32upx;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;//设置area元素不可点击，则事件便会下移至页面下层元素
+	.movableView {
+		pointer-events: auto;//可以点击
+		width: 80rpx;
+		height: 70rpx;
+
+		image {
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
 @import url("./meals.css");
 </style>
 

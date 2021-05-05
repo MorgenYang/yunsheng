@@ -451,6 +451,7 @@
 					let data = res.data;
 					if(data.code==200){
 						$this.current=1;
+						uni.setStorageSync('reloadMeals', '1');
 						$this.loadShengLiForUserData();
 					}
 				}).catch((err)=>{
@@ -477,8 +478,8 @@
 					let data = res.data;
 					if(data.code==200){
 						this.current=2;
+						uni.setStorageSync('reloadMeals', '1');
 						this.loadYiLiaoUserData();
-						
 					}
 				}).catch((err)=>{
 					console.log('request fail', err);
@@ -503,6 +504,7 @@
 					let data = res.data;
 					if(data.code==200){
 						this.current=3;
+						uni.setStorageSync('reloadMeals', '1');
 						$this.loadTiLiHuoDongForUserData();
 					}
 				}).catch((err)=>{
@@ -529,7 +531,9 @@
 						    duration: 2000,
 							icon:"none"
 						});
-						setTimeout(function(){uni.navigateBack();},200);
+						//setTimeout(function(){uni.navigateBack();},200);
+						uni.setStorageSync('reloadMeals', '1');
+						setTimeout(function(){uni.switchTab({url: '/pages/meals/meals'})},200);										
 					}
 				}).catch((err)=>{
 					console.log('request fail', err);

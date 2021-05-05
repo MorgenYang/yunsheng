@@ -81,7 +81,7 @@
 			},
 			itemDetail(itemMenu){
 				uni.navigateTo({
-					url: '../foodDetails?id='+itemMenu.id
+					url: '../foodDetails?type=1&id='+itemMenu.id
 				});
 			},
 			loadTodayRecommend(){
