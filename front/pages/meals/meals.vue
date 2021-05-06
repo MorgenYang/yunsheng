@@ -51,6 +51,8 @@
 													src="../../static/icon/img/star.png" class="star-img">
 												</image>
 											</view>
+											<button size="mini" @click.stop="updateMenu()">更换</button>
+										
 											<!-- <image src="../../static/icon/img/del-btn.png" class="del" @tap="delItem(weekIndex,foodIndex,itemIndex)"></image> -->
 										</view>
 									</view> 
@@ -67,7 +69,9 @@
 				<image src="../../static/icon/img/date-icon.png" mode="widthFix" @click="showDrawer"></image>
 			</movable-view>
 		</movable-area>
-		
+		<!-- <picker @change="bindPickerChange" :value="index" :range="array">
+			<view class="uni-input">{{array[index]}}</view>
+		</picker> -->
 	</view>
 </template>
 
@@ -85,7 +89,7 @@
 			
 		},
 		data() {
-			return {
+			return {			
 				scrollLeft:0, //顶部选项卡左滑距离
 				enableScroll: true,
 				weekCurrent:weekIndex,
@@ -134,6 +138,13 @@
 			}
 		},
 		methods: {
+			updateMenu(){
+				uni.showToast({
+				    title: "1111",
+				    duration: 2000,
+					icon:"none"
+				});
+			},
 			loadFirstData(){
 				let weekToday = this.weekList[week-1].chinaName1;
 				this.weekDay = weekToday;
@@ -194,7 +205,6 @@
 			},
 			//加载
 			loadCustomizationData(dayDate){
-				debugger
 				this.weekDay = this.weekList[$this.weekCurrent].chinaName1;
 				//清空历史数据
 				/* this.weeksFoodList=[{"recommendList":[]},{"recommendList":[]},{"recommendList":[]},
@@ -343,6 +353,12 @@ view{
 	flex-direction: column;
 	margin: 20upx 20upx;
 }	
+.item-bottom  button {
+	padding: 0 18rpx 0 18rpx;
+	height: 60rpx;
+	margin-top: 5%;
+	margin-right: 10upx;
+}
 
 .movableArea {
 	position: fixed;
