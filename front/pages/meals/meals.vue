@@ -46,13 +46,12 @@
 												 <text class="card-title">{{item.cpinfo.cpmc}}</text>
 												 <text class="card-des">{{item.cpinfo.jj}}</text>
 											</view>
-											<view class="item-bottom card-center">
+											<!-- <view class="item-bottom card-center">
 												<image v-for="(level,levelIndex) in item.star"
 													src="../../static/icon/img/star.png" class="star-img">
 												</image>
-											</view>
-											<button size="mini" @click.stop="updateMenu()">更换</button>
-										
+											</view> -->
+										    <button size="mini" :data-item="item" @click.stop="updateMenu">更换</button>
 											<!-- <image src="../../static/icon/img/del-btn.png" class="del" @tap="delItem(weekIndex,foodIndex,itemIndex)"></image> -->
 										</view>
 									</view> 
@@ -69,9 +68,25 @@
 				<image src="../../static/icon/img/date-icon.png" mode="widthFix" @click="showDrawer"></image>
 			</movable-view>
 		</movable-area>
-		<!-- <picker @change="bindPickerChange" :value="index" :range="array">
-			<view class="uni-input">{{array[index]}}</view>
-		</picker> -->
+		<uni-popup ref="popup" type="bottom" :animation="isShowAnimation" :mask-click="false">
+			<view style="background-color:#F5F5F5;">
+				<view class="select-bar bg-white">
+					<view class="action text-blue" @tap="changeCancelClick">取消</view>
+					<view class="action text-green" @tap="changeConfirmClick">确定</view>
+				</view>
+				<view class="select-content">
+					<view class="select-item" v-for="(item,index) in changeList" :key="index"@click="select(item)">
+						<view style="display: flex;flex-direction: row;background-color: #FFFFFF;">
+							<view class="title">{{item.cpmc}}</view>
+							<view style="width: 10%;" v-if="item.isSelect==1">
+								<image style="width: 50upx; height: 50upx;padding-top: 16upx;" 
+										src="../../static/icon/img/select-icon.png"></text>
+							</view>
+						</view>						
+					</view>
+				</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -95,6 +110,9 @@
 				weekCurrent:weekIndex,
 				placeholderImage:'/static/icon/img/image-error.png',//占位图
 				picList:[],
+				user:{},
+				changeList:[],
+				selectBean:{},
 				weekDay:'',
 				todayRecommendList:[],
 				weekList:[
@@ -126,6 +144,7 @@
 			// 获取屏幕宽度
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 			$this = this;
+			this.user = $this.getLoginUser();
 			$this.loadFirstData();
 		},
 		onShow() {
@@ -138,12 +157,37 @@
 			}
 		},
 		methods: {
-			updateMenu(){
-				uni.showToast({
-				    title: "1111",
-				    duration: 2000,
-					icon:"none"
-				});
+			updateMenu(e){
+				$this.changeList=[];
+				//console.log(e.currentTarget.dataset.item);
+				let cplx = e.currentTarget.dataset.item.cpinfo.cplx;
+				if(cplx=="" || cplx==null || cplx==undefined){
+					uni.showToast({
+					    title: "菜品类型为空",
+					    duration: 2000,
+						icon:"none"
+					});
+					return;
+				}
+				uni.showLoading({ title:"加载中..."});
+				$this.selectBean.detailid  = e.currentTarget.dataset.item.id;
+				$this.selectBean.id  = e.currentTarget.dataset.item.mainId;
+				let url = $this.reqAddress+'/tjDzcs/changeList?cplx='+cplx;
+				$this.$api.post(url).then((res)=>{
+					let data = res.data;
+					if(data.code==200 && data.data!=null){
+						this.$refs.popup.open('boottom');
+						var result = data.data;
+						result.forEach(function(item, index) {
+							item.isSelect = 0;
+						})
+						$this.changeList = result;
+					}
+					setTimeout(function(){uni.hideLoading();},100);
+				}).catch((err)=>{
+					console.log('request fail', err);
+					setTimeout(function(){uni.hideLoading();},100);
+				})
 			},
 			loadFirstData(){
 				let weekToday = this.weekList[week-1].chinaName1;
@@ -171,7 +215,7 @@
 				});
 				
 				let date = nowDate.getFullYear()+"-"+(nowDate.getMonth()+1)+'-'+nowDate.getDate();
-				this.loadCustomizationData(date);
+				this.loadCustomizationData(date,1);
 			},
 			showDrawer() {
 				this.$refs.showLeft.open();
@@ -182,7 +226,7 @@
 			ontabchange(e) {
 				let index = e.target.current || e.detail.current;
 				this.weekCurrent = index;
-				this.loadCustomizationData(this.weekList[this.weekCurrent].date);
+				this.loadCustomizationData(this.weekList[this.weekCurrent].date,1);
 			},
 			onImageError(index1,index2){
 				console.log("图片显示失败,显示占位图");
@@ -193,7 +237,6 @@
 					url: './foodDetails?type=2&data='+encodeURIComponent(JSON.stringify(e.currentTarget.dataset.item))
 				});
 			},
-		
 			weekSelect(e) {
 				this.$refs.showLeft.close();
 				this.weekCurrent = e.currentTarget.dataset.index;
@@ -201,18 +244,22 @@
 					this.weekScrollLeft = (e.currentTarget.dataset.index-1) *80;
 				} */
 				//console.log(this.weekList[this.weekCurrent].date);
-				this.loadCustomizationData(this.weekList[this.weekCurrent].date);
+				this.loadCustomizationData(this.weekList[this.weekCurrent].date,1);
 			},
 			//加载
-			loadCustomizationData(dayDate){
+			loadCustomizationData(dayDate,refresh){
 				this.weekDay = this.weekList[$this.weekCurrent].chinaName1;
 				//清空历史数据
 				/* this.weeksFoodList=[{"recommendList":[]},{"recommendList":[]},{"recommendList":[]},
 				{"recommendList":[]},{"recommendList":[]},{"recommendList":[]},{"recommendList":[]}]; */
-				if($this.weeksFoodList[$this.weekCurrent].recommendList.length>0){
-					return;
-					//$this.weeksFoodList[$this.weekCurrent].recommendList=[];
+				if(refresh!=0){
+					if($this.weeksFoodList[$this.weekCurrent].recommendList.length>0){
+						return;	
+					}
+				}else{
+					$this.weeksFoodList[$this.weekCurrent].recommendList=[];
 				}
+				
 				uni.showLoading({ title:"加载中..."});
 				let url = $this.reqAddress+'/tjDzcs/getPageList?dzrq='+dayDate;
 				let domainName = $this.domainName;
@@ -220,26 +267,7 @@
 					let data = res.data;
 					if(data.code==200 && data.data!=null){
 						var result = data.data;
-					
-						result.forEach(function(item, index1) {
-							item.dzcs.forEach(function(childItem, index2) {
-								if(childItem!=null && childItem.cpinfo!=null){
-									if(childItem.cpinfo.cpfm!=null){
-										childItem.cpinfo.cpfm=childItem.cpinfo.cpfm.replace(/&quot;/g,"\"");
-										let imageObj = JSON.parse(childItem.cpinfo.cpfm);
-										if(imageObj.length>0){
-											childItem.cpinfo.image = domainName+imageObj[0].url;
-										}else{
-											childItem.cpinfo.image = "../../static/icon/img/image-error.png";
-										}
-									}
-									if(childItem.cpinfo.jj==null){
-										childItem.cpinfo.jj="暂无";
-									}
-								}
-							});								
-						});
-						$this.weeksFoodList[$this.weekCurrent].recommendList= result;
+						$this.handleData(result);
 					}
 					setTimeout(function(){uni.hideLoading();},100);
 				}).catch((err)=>{
@@ -247,12 +275,85 @@
 					setTimeout(function(){uni.hideLoading();},100);
 				})
 			},
+			handleData(result){
+				let domainName = $this.domainName;
+				result.forEach(function(item, index1) {
+					item.dzcs.forEach(function(childItem, index2) {
+						if(childItem!=null && childItem.cpinfo!=null){
+							if(childItem.cpinfo.cpfm!=null){
+								childItem.cpinfo.cpfm=childItem.cpinfo.cpfm.replace(/&quot;/g,"\"");
+								let imageObj = JSON.parse(childItem.cpinfo.cpfm);
+								if(imageObj.length>0){
+									childItem.cpinfo.image = domainName+imageObj[0].url;
+								}else{
+									childItem.cpinfo.image = "../../static/icon/img/image-error.png";
+								}
+							}
+							if(childItem.cpinfo.jj==null){
+								childItem.cpinfo.jj="暂无";
+							}
+						}
+					});								
+				});
+				$this.weeksFoodList[$this.weekCurrent].recommendList= result;
+			},
 			//设置scroll-view是否允许滚动，在小程序里下拉刷新时避免列表可以滑动
 			setEnableScroll(enable){
 				if(this.enableScroll !== enable){
 					this.enableScroll = enable;
 				}
 			},
+			select(item){ // 点击选项
+				$this.selectBean.cpid  = item.id;
+				$this.changeList.forEach(function(row,index){
+					if(row.id == item.id){
+						row.isSelect = 1;
+					}else{
+						row.isSelect = 0;
+					}
+				})
+			},
+			changeCancelClick(){
+				$this.selectBean = {};
+				this.$refs.popup.close();
+			},
+			changeConfirmClick(){
+				if(!$this.selectBean.hasOwnProperty("cpid")){
+					uni.showToast({
+					    title: "更换菜品为空",
+					    duration: 2000,
+						icon:"none"
+					});
+					return;
+				}
+				if($this.user.id==null || $this.user.id=="" ){
+					uni.showToast({
+						title: '请先登录',
+						duration: 2000,
+						icon: 'none'
+					});
+					return;
+				};
+				$this.selectBean.userid =  $this.user.id;
+				let url = $this.reqAddress+'/tjDzcs/savechange';
+				let paramData = { "cpid":$this.selectBean.cpid,"detailid":$this.selectBean.detailid,
+					"id":$this.selectBean.id,"userid":$this.selectBean.userid};
+				//console.log(paramData)
+				$this.$api.post(url,paramData).then((res)=>{
+					let data = res.data;
+					if(data.code==200 && data.data!=null){
+						$this.selectBean = {};
+						this.$refs.popup.close();
+						$this.loadCustomizationData($this.weekList[$this.weekCurrent].date,0);
+						//$this.weeksFoodList[$this.weekCurrent].recommendList=[];
+						//$this.handleData(data.data);
+					}
+					setTimeout(function(){uni.hideLoading();},100);
+				}).catch((err)=>{
+					console.log('request fail', err);
+					setTimeout(function(){uni.hideLoading();},100);
+				})
+			}
 		}
 	}
 </script>
@@ -356,10 +457,35 @@ view{
 .item-bottom  button {
 	padding: 0 18rpx 0 18rpx;
 	height: 60rpx;
-	margin-top: 5%;
-	margin-right: 10upx;
+	margin-top: 7%;
+	margin-right: 24upx;
 }
-
+.select-bar {
+	font-size: 28rpx;
+	padding: 0 20rpx;
+	display: flex;
+	flex-direction:row;
+	position: relative;
+	align-items: center;
+	min-height: 80rpx;
+	justify-content: space-between;
+}
+.bg-white{
+	background-color: #FFFFFF;
+}
+.action {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	justify-content: center;
+	max-width: 100%;
+}
+.text-blue{
+	color: #0081ff;
+}
+.text-green{
+	color: #39b54a;
+}
 .movableArea {
 	position: fixed;
 	top: 70upx;
@@ -375,6 +501,28 @@ view{
 		image {
 			width: 100%;
 			height: 100%;
+		}
+	}
+}
+/* .select-content{
+	height: 100%;
+} */
+.select-content{
+	background-color: #FFFFFF;
+	max-height: 420upx;
+	min-height: 200upx;
+	overflow:auto;
+	margin-top: 16upx;
+	margin-bottom: 10upx;
+	.select-item{
+		background-color: #F1F1F1;
+		padding: 0rpx 0 2rpx 0;
+		display: flex;
+		.title{
+			flex: 1;
+			width:80%;
+			padding: 20rpx 0 20rpx 30upx;
+			background-color: white;
 		}
 	}
 }

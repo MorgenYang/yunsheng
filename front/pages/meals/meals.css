@@ -165,10 +165,11 @@ uni-drawer > cu-card{
 }
 .card-context{
 	margin-left: 30upx;
+	width: 350upx;
 }
 .card-left-img{
-	width: 130upx;
-	height:130upx;
+	width: 150upx;
+	height:150upx;
 	/* margin-left: 16upx; */
 	border-radius:120upx
 }
@@ -176,13 +177,11 @@ uni-drawer > cu-card{
 	padding-top: 10upx;
 	color: #2183CE;
 	font-size: 30upx;
-	width: 250upx;
 }
 .card-des{
 	padding-top: 14upx;
 	font-size: 26upx;
 	color: #B3B3B3;
-	width: 250upx;
 	overflow: hidden;
 	word-break: break-all;  /* break-all(允许在单词内换行。) */
 	text-overflow: ellipsis;  /* 超出部分省略号 */
