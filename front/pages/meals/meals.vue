@@ -1,14 +1,14 @@
 <template>
 	<view class="content">	
 		<view class="week-scroll-box" >
-			<view class="date-sel" >
-				<view style="line-height:70upx;text-align: center;padding-left:30upx;">当前日期：{{weekDay}}</view>	
+			<view class="date-sel nav-bar" >
+				<view style="height: 100%;text-align: center;padding-left:30upx;padding-top: 12upx;">当前日期：{{weekDay}}</view>	
 				<!-- <view style="width: 200upx;margin-left: 20upx;margin-top: 10upx;margin-bottom: 10upx;">
 					<button size="mini"  @click="showDrawer" type="primary" style="background-color: #3AA9D1;">选择日期</button>
 				</view> -->
 			</view>
 			
-			<uni-drawer ref="showLeft" mode="left" :mask-click="true" width="160">
+			<uni-drawer ref="showLeft" mode="left" :mask-click="true" :width="160">
 				<scroll-view style="height: 100%;" scroll-y="true" class="left-drawer">
 					<view class="drawer-item w-left w-right" v-for="(week, index) in weekList" :key="index" >
 						<view class="date-size" :class="week.class" :data-index="index" :data-id="week.id" @tap="weekSelect">
@@ -24,44 +24,47 @@
 				</scroll-view>
 			</uni-drawer>		
 
-			<!-- 内容部分 <view class="item-line">-->
-			<swiper :current="weekCurrent" style="flex:1;" @change="ontabchange">
-				<swiper-item v-for="(week,weekIndex) in weekList" :key="weekIndex">
-					<scroll-view scroll-y="true" style="height: 100%;">
-						<view class="food-bottom">
-						 <block v-for="(food,foodIndex) in (weeksFoodList[week.id-1]).recommendList" 
-								v-if="(weeksFoodList[week.id-1]).recommendList!=undefined"  :key="foodIndex">
-							<!-- <image mode="scaleToFill" class="week-inline-img" :src="food.image" :class="foodIndex>0?'week-inline-top':''"></image> -->
-							<view class="type-head" style="margin-bottom: 10upx;margin-top: 10upx;">
-								<image class="title-img" style="margin-left: 30upx;" src="../../static/icon/settings/icon.png"></image>
-								<view class="type-title">{{food.cslxdesc}} </view>
-							</view>
-							<block v-for="(item,itemIndex) in food.dzcs">
-								<!-- <uni-card class="card-item" isShadow="true" > -->
-								<view class="cu-card " v-if="item.cpinfo!=null"  :data-item="item"  @click="itemDetail">
-									<view class="cu-item shadow">
-										<view class="item-bottom card">
-											<image class="card-left-img" :src="item.cpinfo.image"></image>
-											<view class="card-context">
-												 <text class="card-title">{{item.cpinfo.cpmc}}</text>
-												 <text class="card-des">{{item.cpinfo.jj}}</text>
-											</view>
-											<!-- <view class="item-bottom card-center">
-												<image v-for="(level,levelIndex) in item.star"
-													src="../../static/icon/img/star.png" class="star-img">
-												</image>
-											</view> -->
-										    <button size="mini" :data-item="item" @click.stop="updateMenu">更换</button>
-											<!-- <image src="../../static/icon/img/del-btn.png" class="del" @tap="delItem(weekIndex,foodIndex,itemIndex)"></image> -->
-										</view>
-									</view> 
+			<!-- 下拉刷新组件 -->
+			<mix-pulldown-refresh ref="mixPulldownRefresh" class="panel-content" :top="90" @refresh="onPulldownReresh" @setEnableScroll="setEnableScroll">
+				<!-- 内容部分 <view class="item-line">-->
+				<swiper :current="weekCurrent" style="flex:1;" @change="ontabchange">
+					<swiper-item v-for="(week,weekIndex) in weekList" :key="weekIndex">
+						<scroll-view scroll-y="true" style="height: 100%;">
+							<view class="food-bottom">
+							 <block v-for="(food,foodIndex) in (weeksFoodList[week.id-1]).recommendList" 
+									v-if="(weeksFoodList[week.id-1]).recommendList!=undefined"  :key="foodIndex">
+								<!-- <image mode="scaleToFill" class="week-inline-img" :src="food.image" :class="foodIndex>0?'week-inline-top':''"></image> -->
+								<view class="type-head" style="margin-bottom: 10upx;margin-top: 10upx;">
+									<image class="title-img" style="margin-left: 30upx;" src="../../static/icon/settings/icon.png"></image>
+									<view class="type-title">{{food.cslxdesc}} </view>
 								</view>
-							</block>
-						 </block>
-						 </view>
-					</scroll-view>
-				</swiper-item>
-			</swiper>
+								<block v-for="(item,itemIndex) in food.dzcs">
+									<!-- <uni-card class="card-item" isShadow="true" > -->
+									<view class="cu-card " v-if="item.cpinfo!=null"  :data-item="item"  @click="itemDetail">
+										<view class="cu-item shadow">
+											<view class="item-bottom card">
+												<image class="card-left-img" :src="item.cpinfo.image"></image>
+												<view class="card-context">
+													 <text class="card-title">{{item.cpinfo.cpmc}}</text>
+													 <text class="card-des">{{item.cpinfo.jj}}</text>
+												</view>
+												<!-- <view class="item-bottom card-center">
+													<image v-for="(level,levelIndex) in item.star"
+														src="../../static/icon/img/star.png" class="star-img">
+													</image>
+												</view> -->
+												<button size="mini" :data-item="item" @click.stop="updateMenu">更换</button>
+												<!-- <image src="../../static/icon/img/del-btn.png" class="del" @tap="delItem(weekIndex,foodIndex,itemIndex)"></image> -->
+											</view>
+										</view> 
+									</view>
+								</block>
+							 </block>
+							 </view>
+						</scroll-view>
+					</swiper-item>
+				</swiper>
+			</mix-pulldown-refresh>
 		</view>
 		<movable-area class="movableArea">
 			<movable-view class="movableView" direction="all" x="600rpx" y="800rpx">
@@ -108,6 +111,7 @@
 				scrollLeft:0, //顶部选项卡左滑距离
 				enableScroll: true,
 				weekCurrent:weekIndex,
+				isShowAnimation:true,
 				placeholderImage:'/static/icon/img/image-error.png',//占位图
 				picList:[],
 				user:{},
@@ -125,13 +129,13 @@
 					{"id":7,"chinaName":"周日","chinaName1":"周日","englishName":"Sunday",class:"w7"},
 				],
 				weeksFoodList:[
-					{"recommendList":[]},
-					{"recommendList":[]},
-					{"recommendList":[]},
-					{"recommendList":[]},
-					{"recommendList":[]},
-					{"recommendList":[]},
-					{"recommendList":[]} 
+					{"recommendList":[],"refreshing":0},
+					{"recommendList":[],"refreshing":0},
+					{"recommendList":[],"refreshing":0},
+					{"recommendList":[],"refreshing":0},
+					{"recommendList":[],"refreshing":0},
+					{"recommendList":[],"refreshing":0},
+					{"recommendList":[],"refreshing":0} 
 				]
 				
 			}
@@ -188,6 +192,21 @@
 					console.log('request fail', err);
 					setTimeout(function(){uni.hideLoading();},100);
 				})
+			},
+			//下拉刷新
+			onPulldownReresh(){
+				let type = 'refresh';
+				// #ifdef APP-PLUS
+				if(type === 'refresh'){
+					this.weekList[this.weekCurrent].refreshing = true;
+				}
+				// #endif
+				if(type === 'refresh'){
+					this.weekList[this.weekCurrent].current = 1;
+				}
+				setTimeout(function(){
+					$this.loadCustomizationData($this.weekList[$this.weekCurrent].date,0,type);
+				},500);
 			},
 			loadFirstData(){
 				let weekToday = this.weekList[week-1].chinaName1;
@@ -246,8 +265,8 @@
 				//console.log(this.weekList[this.weekCurrent].date);
 				this.loadCustomizationData(this.weekList[this.weekCurrent].date,1);
 			},
-			//加载
-			loadCustomizationData(dayDate,refresh){
+		//加载
+			loadCustomizationData(dayDate,refresh,type){
 				this.weekDay = this.weekList[$this.weekCurrent].chinaName1;
 				//清空历史数据
 				/* this.weeksFoodList=[{"recommendList":[]},{"recommendList":[]},{"recommendList":[]},
@@ -259,8 +278,9 @@
 				}else{
 					$this.weeksFoodList[$this.weekCurrent].recommendList=[];
 				}
-				
-				uni.showLoading({ title:"加载中..."});
+				if(type!="refresh"){
+					uni.showLoading({ title:"加载中..."});
+				}
 				let url = $this.reqAddress+'/tjDzcs/getPageList?dzrq='+dayDate;
 				let domainName = $this.domainName;
 				$this.$api.post(url).then((res)=>{
@@ -268,12 +288,22 @@
 					if(data.code==200 && data.data!=null){
 						var result = data.data;
 						$this.handleData(result);
+						//下拉刷新 关闭刷新动画
+						if(type === 'refresh'){
+						
+							this.$refs.mixPulldownRefresh && this.$refs.mixPulldownRefresh.endPulldownRefresh();
+							// #ifdef APP-PLUS
+							this.weeksFoodList[this.weekCurrent].refreshing = false;
+							// #endif
+							this.weeksFoodList[this.weekCurrent].loadMoreStatus = 0;
+						}
 					}
 					setTimeout(function(){uni.hideLoading();},100);
 				}).catch((err)=>{
 					console.log('request fail', err);
 					setTimeout(function(){uni.hideLoading();},100);
 				})
+				
 			},
 			handleData(result){
 				let domainName = $this.domainName;
@@ -384,40 +414,11 @@ page, .content{
 .nav-bar{
 	position: relative;
 	z-index: 10;
-	height: 90upx;
+	height: 70upx;
 	text-align: center;
 	white-space: nowrap;
 	box-shadow: 0 2upx 8upx rgba(0,0,0,.06);
-	background-color: #fff;
-	.nav-item{
-		display: inline-block;
-		width: 150upx;
-		height: 90upx;
-		text-align: center;
-		line-height: 90upx;
-		padding-left: 100upx;
-		padding-right: 100upx;
-		font-size: 30upx;
-		color: #303133;
-		position: relative;
-		&:after{
-			content: '';
-			width: 0;
-			height: 0;
-			border-bottom: 4upx solid #007aff;
-			position: absolute;
-			left: 50%;
-			bottom: 0;
-			transform: translateX(-50%);
-			transition: .3s;
-		}
-	}
-	.current{
-		color: #007aff;
-		&:after{
-			width: 50%;
-		}
-	}
+	background-color: #D0EDFB;
 }
 
 .swiper-box{

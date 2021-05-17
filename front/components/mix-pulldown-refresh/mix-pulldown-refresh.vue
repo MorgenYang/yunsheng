@@ -167,7 +167,7 @@
 		align-items: center;
 		position: absolute;
 		left: 0;
-		top: 0;
+		top: -20upx;
 		transform: translateY(-100%);
 		display: flex;
 		justify-content: center;

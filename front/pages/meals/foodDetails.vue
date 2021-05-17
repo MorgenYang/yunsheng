@@ -62,7 +62,7 @@
 					$this.index = 0;
 					//$this.detailBean = JSON.parse(decodeURIComponent(param.data));
 					let data = JSON.parse(decodeURIComponent(param.data));
-					$this.handleDetailData(data);
+					$this.handleDetailData(data); 
 				}
 			},
 			loadTodayTuiJian(pId){
@@ -79,6 +79,9 @@
 				})
 			},
 			handleDetailData(data){
+				uni.setNavigationBarTitle({
+				　　title:data.cpinfo.cpmc
+				}) 
 				let domainName = $this.domainName;
 				if(data.cpfm){
 					let imageObj = JSON.parse(data.cpfm.replace(/&quot;/g,"\""));

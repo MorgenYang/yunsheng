@@ -65,11 +65,12 @@ export default {
 		//TODO 数据签名
 
 		let _token = {'token': uni.getStorageSync("token") || ''};	
-		if(options.url.indexOf("/tjDzcs/getPageList")>-1 || options.url.indexOf("/tjDzcs/changeList")){
+		options.header = Object.assign({}, options.header, _token);
+		/* if(options.url.indexOf("/tjDzcs/getPageList")>-1 || options.url.indexOf("/tjDzcs/changeList")){
 				options.header = Object.assign({}, options.header, "");
 		}else{
 				options.header = Object.assign({}, options.header, _token);
-		}
+		} */
 	
 		/*_sign = {'sign': sign(JSON.stringify(options.data))}
 		options.header = Object.assign({}, options.header, _token,_sign) 
