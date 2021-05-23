@@ -1,5 +1,29 @@
 <template>
 	<view>
+		<u-navbar :is-back="false" :is-fixed="true" :background="background" :z-index="100">
+			<view class="slot-wrap" v-if="useSlot">
+				<view class="search-wrap" v-if="search">
+					<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
+					<u-search v-model="keyword" :show-action="showAction" height="56" @search="searchFun" :action-style="{color: '#fff'}"></u-search>
+				</view>
+				<view class="navbar-right" v-if="rightSlot">
+					<view class="message-box right-item">
+						
+					</view>
+					<view class="dot-box right-item">
+						
+					</view>
+				</view>
+			</view>
+			<view class="navbar-right" slot="right" v-if="slotRight">
+				<view class="message-box right-item">
+					
+				</view>
+				<view class="dot-box right-item">
+					
+				</view>
+			</view>
+		</u-navbar>
 		<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
 			<swiper-item v-for="(item, index) in picList" :key="index">
 				<image class="swiper-item" mode="scaleToFill" :src="item.url"></image>
@@ -43,13 +67,31 @@
 </template>
 
 <script>
-
+	let $this;
+	
 	export default {
 		data() {
 			return {
-				user: {
-					
+				right: false,
+				showAction: false,
+				rightSlot: false,
+				useSlot: true,
+				background: {
+					/* 'background-image': 'linear-gradient(45deg, rgb(28, 187, 180), rgb(141, 198, 63))' */
+					'background-color':'#3AA9D1'
 				},
+				isBack: false,
+				search: true,
+				custom: false,
+				keyword: '',
+				// #ifdef MP
+				slotRight: false,
+				// #endif
+				// #ifndef MP
+				slotRight: true,
+				// #endif
+				keyword: '',
+				user: {},
 				indicatorDots: true,
 				autoplay: true,
 				interval: 2000,
@@ -62,12 +104,24 @@
 			}
 		},
 		onLoad() {
+			$this = this;
 		},
 		methods: {
 			todayRecommend(){
 				uni.navigateTo({
 					url: '../meals/todayRecommend/todayRecommend'
 				});
+			},
+			searchFun(){
+				let str =  $this.keyword.trim();
+				if(str==""){
+					uni.showToast({
+					    title: "请输入搜索内容",
+					    duration: 2000,
+						icon:"none"
+					});
+					return;
+				}
 			}
 		}
 	}
@@ -161,4 +215,30 @@
 	.sub-title{
 		font-size: 12px;
 	}
+	
+	
+	.navbar-right {
+		margin-right: 24rpx;
+		display: flex;
+	}
+	
+	.search-wrap {
+		margin: 0 20rpx;
+		flex: 1;
+	}
+	
+	.right-item {
+		margin: 0 0rpx;
+		position: relative;
+		color: #ffffff;
+		display: flex;
+	}
+	
+	.slot-wrap {
+		margin-left: 20upx;
+		display: flex;
+		align-items: center;
+		flex: 1;
+	}
+	
 </style>

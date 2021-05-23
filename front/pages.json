@@ -6,8 +6,9 @@
 				"titleNView" : false,
 				//"navigationBarBackgroundColor": "#1F7DD6"
 				//"navigationBarTitleText": "首页",
-				"navigationBarBackgroundColor": "#3AA9D1"
+				"navigationBarBackgroundColor": "#3AA9D1",
 				// "enablePullDownRefresh" : true
+				"navigationStyle":"custom"
 				     
 			}
 		},
