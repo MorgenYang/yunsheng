@@ -53,7 +53,7 @@
 														src="../../static/icon/img/star.png" class="star-img">
 													</image>
 												</view> -->
-												<button size="mini" :data-item="item" @click.stop="updateMenu">更换</button>
+												<button size="mini" :data-item="item" :data-food="food" @click.stop="updateMenu">更换</button>
 												<!-- <image src="../../static/icon/img/del-btn.png" class="del" @tap="delItem(weekIndex,foodIndex,itemIndex)"></image> -->
 											</view>
 										</view> 
@@ -175,7 +175,9 @@
 				}
 				uni.showLoading({ title:"加载中..."});
 				$this.selectBean.detailid  = e.currentTarget.dataset.item.id;
-				$this.selectBean.id  = e.currentTarget.dataset.item.mainId;
+				//$this.selectBean.id  = e.currentTarget.dataset.item.mainId;
+				
+				$this.selectBean.id  = e.currentTarget.dataset.food.id;
 				let url = $this.reqAddress+'/tjDzcs/changeList?cplx='+cplx;
 				$this.$api.post(url).then((res)=>{
 					let data = res.data;
@@ -366,9 +368,10 @@
 				};
 				$this.selectBean.userid =  $this.user.id;
 				let url = $this.reqAddress+'/tjDzcs/savechange';
+				/* let paramData = { "cpid":$this.selectBean.cpid,"detailid":$this.selectBean.detailid,
+					"id":$this.selectBean.id,"userid":$this.selectBean.userid}; */
 				let paramData = { "cpid":$this.selectBean.cpid,"detailid":$this.selectBean.detailid,
 					"id":$this.selectBean.id,"userid":$this.selectBean.userid};
-				//console.log(paramData)
 				$this.$api.post(url,paramData).then((res)=>{
 					let data = res.data;
 					if(data.code==200 && data.data!=null){

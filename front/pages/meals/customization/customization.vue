@@ -1,7 +1,7 @@
 <template>
 	<view>
 	       <view class="top-view">
-			   <view :class="current===0?'p-view choose-view':'p-view'" @tap="clickTitle(0)">深入定制</view>
+			   <view :class="current===0?'p-view choose-view':'p-view'" @tap="clickTitle(0)">习惯相关</view>
 			   <image src="../../../static/icon/settings/arrows-right-setting.png"></image>
 			   <view :class="current===1?'p-view choose-view':'p-view'" @tap="clickTitle(1)">生理信息</view>
 			   <image src="../../../static/icon/settings/arrows-right-setting.png"></image>

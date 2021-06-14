@@ -131,12 +131,18 @@
 									success: (res) => {
 										// console.log(res);
 										if (200 == res.data.code) {
-											var userClient = res.data.data.loginClientUserVo
+											var userClient = res.data.data.loginClientUserVo;
+											userClient.nickName = res.data.data.loginClientUserVo.nickname;
+											userClient.avatarUrl = res.data.data.loginClientUserVo.avatarurl;							
+											that.user.nickName = userClient.nickName;
+											that.user.avatarUrl = userClient.avatarUrl;
 											that.user.openid = userClient.openid;
 											that.user.id = userClient.id;
 											that.user.phone = userClient.phone;
 											that.user.gender = userClient.gender;
 											that.user.token = res.data.data.token;
+											uni.setStorageSync('nickName', that.user.nickName);
+											uni.setStorageSync('avatarUrl', that.user.avatarUrl);
 											uni.setStorageSync('openid', that.user.openid);
 											uni.setStorageSync('id', that.user.id);
 											uni.setStorageSync('phone', that.user.phone);
