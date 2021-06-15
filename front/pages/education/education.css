@@ -84,4 +84,26 @@
 	color: #969696;
 	padding-top: 10upx;
 	font-size: 28upx;
+	display: flex;
+	flex-direction: row;
+}
+
+.u-tag {
+	box-sizing: border-box;
+	align-items: center;
+	border-radius: 6upx;
+	/* #ifndef APP-NVUE */
+	display: inline-block;
+	/* #endif */
+	line-height: 1;
+}
+.u-size {
+	margin-left: 30upx;
+	font-size: 22upx;
+	padding: 6upx 22upx;
+	font-size: 24upx;
+	border-radius: 100upx;
+	background-color: #ecf5ff;
+	color: #2979ff;
+	border: 1px solid #a0cfff;
 }

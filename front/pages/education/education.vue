@@ -1,45 +1,31 @@
 <template>
 	<view class="content">
-		<!-- 顶部选项卡 -->
-		<scroll-view id="nav-bar" class="nav-bar" scroll-x scroll-with-animation :scroll-left="scrollLeft">
-			<view 
-				v-for="(item,index) in tabBars" :key="item.id"
-				class="nav-item"
-				:class="{current: index === tabCurrentIndex}"
-				:id="'tab'+index"
-				@click="changeTab(index)"
-			>{{item.wzlx}}</view>
-		</scroll-view>
-		
 		<!-- 下拉刷新组件 -->
-		<mix-pulldown-refresh ref="mixPulldownRefresh" class="panel-content" :top="90" @refresh="onPulldownReresh" @setEnableScroll="setEnableScroll">
-			<!-- 内容部分 -->
-			<swiper id="swiper" class="swiper-box" :duration="300" :current="tabCurrentIndex" @change="changeTab">
-				<swiper-item v-for="tabItem in tabBars" :key="tabItem.id">
-					<scroll-view class="panel-scroll-box" :scroll-y="enableScroll" @scrolltolower="loadMore">
-						<view v-for="(item, index) in tabItem.list" :key="index" class="item news-item"
-							@click="navToDetails(item)" hover-class="setting-click">						
-						<!-- 	<image class="img-list" mode="aspectFill" :src="item.image"></image> -->
-							<!--  -->
-							<view class="item-title">{{item.wzbt}}</view>
-							<view class="item-right">
-								<view class="item-content">
-									<view class="item-author">{{'作者：'+item.wzzz}}</view>
-									<view class="item-body">{{item.wzjj}}</view>
-									<view class="item-other">{{item.dzsl+'赞同 · '+item.plsl+'评论'}}</view>
-									
-								</view>
-								<image class="img-list" v-if="item.wzfm!=null && item.wzfm!=''"
-									mode="aspectFill" :src="item.wzfm">
-								</image>
-								
+		<mix-pulldown-refresh ref="mixPulldownRefresh" class="panel-content" :top="0" @refresh="onPulldownReresh" @setEnableScroll="setEnableScroll">
+			<scroll-view class="panel-scroll-box" :scroll-y="enableScroll" @scrolltolower="loadMore">
+				<view v-for="(item, index) in list" :key="index" class="item news-item"
+					@click="navToDetails(item)" hover-class="setting-click">						
+				<!-- 	<image class="img-list" mode="aspectFill" :src="item.image"></image> -->
+					<!--  -->
+					<view class="item-title">{{item.wzbt}}</view>
+					<view class="item-right">
+						<view class="item-content">
+							<view class="item-author">{{'作者：'+item.wzzz}}</view>
+							<view class="item-body">{{item.wzjj}}</view>
+							<view class="item-other">
+								<view>{{item.dzsl+'赞同 · '+item.plsl+'评论'}}</view>
+								<view class="u-tag u-size">{{item.wzlxdesc}}</view>
 							</view>
-						</view>						
-						<mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
-					</scroll-view> 
-					
-				</swiper-item>
-			</swiper>
+							
+						</view>
+						<image class="img-list" v-if="item.wzfm!=null && item.wzfm!=''"
+							mode="aspectFill" :src="item.wzfm">
+						</image>
+						
+					</view>
+				</view>						
+				<mix-load-more :status="loadMoreStatus"></mix-load-more>
+			</scroll-view> 
 		</mix-pulldown-refresh>
 	</view>
 </template>
@@ -59,77 +45,47 @@
 		},
 		data() {
 			return {
-				tabCurrentIndex: 0, //当前选项卡索引
 				scrollLeft: 0, //顶部选项卡左滑距离
 				enableScroll: true,
-				tabBars: [],
-				pageSize:10
+				loadMoreStatus:0,
+				refreshing:true,
+				current:1,
+				pageSize:10,
+				list:[]
 			}
 		},
 		async onLoad() {
 			// 获取屏幕宽度
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 			$this =this;
-			this.loadTabbars();
-			
+			this.loadDataList("add");
 		},
 		methods: {
-			//加载tabbar,顶部导航栏
-			loadTabbars(){
-				let url = $this.reqAddress+'/wzlx/getPageList';
-				var data = {
-					"current": 1,
-					"size": 1000,
-					"orders": [
-					  {
-						"asc": false,
-						"column":"xspx"
-					  }
-					]
-				};
-				$this.$api.post(url,data).then((res)=>{
-					let data = res.data;
-					if(data.code==200 && data.data!=null){
-						this.tabBars = data.data.records;
-						this.tabBars.forEach(item =>{
-							item.list = [];
-							item.loadMoreStatus = 0;  //加载更多 0加载前，1加载中，2没有更多了
-							item.refreshing = 0;
-							item.current = 1;
-							item.size = $this.pageSize;		
-						});
-						this.loadDataList('add');					
-					}
-				}).catch((err)=>{
-					console.log('request fail', err);
-				})
-			},
 			//加载数据
 			loadDataList(type){
-				let tabItem = this.tabBars[this.tabCurrentIndex];
 				//type add 加载更多 refresh下拉刷新
 				if(type === 'add'){
-					if(tabItem.loadMoreStatus === 2){
+					if($this.loadMoreStatus === 2){
 						return;
 					}
-					tabItem.loadMoreStatus = 1;
+					$this.loadMoreStatus = 1;
 					//注意*** 不自动刷新--需要强制刷新
 					this.$forceUpdate();
 				}
 				// #ifdef APP-PLUS
 				else if(type === 'refresh'){
-					tabItem.refreshing = true;
+					$this.refreshing = true;
 				}
 				// #endif
 				if(type === 'refresh'){
-					tabItem.current = 1;
+					$this.current = 1;
 				}
 				setTimeout(()=>{
 					//加载文章列表信息
 					let url = $this.reqAddress+'/wzbaseinfo/getPageList';
 					let domainName = this.domainName;
 					var data={
-					  "current": tabItem.current,
+					  "current": $this.current,
 					  "keyword": "",
 					  "orders": [
 						{
@@ -137,15 +93,14 @@
 						  "column":"xssx"
 						}
 					  ],
-					  "size": tabItem.size,
-					  "wzlx":tabItem.id
+					  "size": $this.pageSize,
 					};
 					$this.$api.post(url,data).then((res)=>{
 						var data = res.data;
 						if(data.code==200 && data.data!=null){
-							tabItem.current++;
+							$this.current++;
 							if(type === 'refresh'){
-								tabItem.list = []; //刷新前清空数组
+								$this.list = []; //刷新前清空数组
 							}
 							let result = data.data.records;
 							result.forEach(function(item, index) {
@@ -157,19 +112,19 @@
 									}
 								}							
 							});
-							tabItem.list = tabItem.list.concat(result);
+							$this.list = $this.list.concat(result);
 							//tabItem.list.concat(data.data.records);
 							//下拉刷新 关闭刷新动画
 							if(type === 'refresh'){
 								this.$refs.mixPulldownRefresh && this.$refs.mixPulldownRefresh.endPulldownRefresh();
 								// #ifdef APP-PLUS
-								tabItem.refreshing = false;
+								$this.refreshing = false;
 								// #endif
-								tabItem.loadMoreStatus = 0;
+								$this.loadMoreStatus = 0;
 							}
 							//上滑加载 处理状态
 							if(type === 'add'){
-								tabItem.loadMoreStatus = tabItem.list.length == data.data.total ? 2: 0;
+								$this.loadMoreStatus = $this.list.length == data.data.total ? 2: 0;
 							}
 							//注意*** 不自动刷新--需要强制刷新
 							this.$forceUpdate();
@@ -283,50 +238,6 @@ page, .content{
 	background-color: #F1F1F1;
 	height: 100%;
 	overflow: hidden;
-}
-
-/* 顶部tabbar */
-.nav-bar{
-	position: relative;
-	z-index: 10;
-	height: 90upx;
-	text-align: center;
-	white-space: nowrap;
-	box-shadow: 0 2upx 8upx rgba(0,0,0,.06);
-	background-color: #fff;
-	.nav-item{
-		display: inline-block;
-		/* width: 36upx; */
-		height: 90upx;
-		text-align: center;
-		line-height: 90upx;
-		padding-left: 30upx;
-		padding-right: 30upx;
-		font-size: 30upx;
-		color: #303133;
-		position: relative;
-		&:after{
-			content: '';
-			width: 0;
-			height: 0;
-			border-bottom: 4upx solid #007aff;
-			position: absolute;
-			left: 50%;
-			bottom: 0;
-			transform: translateX(-50%);
-			transition: .3s;
-		}
-	}
-	.current{
-		color: #007aff;
-		&:after{
-			width: 40%;
-		}
-	}
-}
-
-.swiper-box{
-	height: 100%;
 }
 
 .panel-scroll-box{
