@@ -122,6 +122,10 @@
 					});
 					return;
 				}
+				uni.navigateTo({
+					url: './article?key='+$this.keyword
+				});
+				$this.keyword="";
 			}
 		}
 	}

@@ -1,12 +1,39 @@
 <template>
-	<view class="content">
+	<view>
+		<u-navbar :is-back="true" :is-fixed="true" :background="background" :z-index="100">
+			<view class="u-back-wrap" v-if="isBack" @tap="goBack" style="margin-left: -30upx;">
+				<view class="u-icon-wrap">
+					<image style="width: 52upx;height: 52upx;" src="../../static/icon/img/back_icon.png"></image>
+				</view>
+			</view>
+			<view class="slot-wrap" v-if="useSlot">
+				<view class="search-wrap" v-if="search">
+					<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
+					<u-search v-model="keyword" :show-action="showAction" height="56" @search="searchFun" :action-style="{color: '#fff'}"></u-search>
+				</view>
+				<view class="navbar-right" v-if="rightSlot">
+					<view class="message-box right-item">
+						
+					</view>
+					<view class="dot-box right-item">
+						
+					</view>
+				</view>
+			</view>
+			<view class="navbar-right" slot="right" v-if="slotRight">
+				<view class="message-box right-item">
+					
+				</view>
+				<view class="dot-box right-item">
+					
+				</view>
+			</view>
+		</u-navbar>
 		<!-- 下拉刷新组件 -->
 		<mix-pulldown-refresh ref="mixPulldownRefresh" class="panel-content" :top="0" @refresh="onPulldownReresh" @setEnableScroll="setEnableScroll">
 			<scroll-view class="panel-scroll-box" :scroll-y="enableScroll" @scrolltolower="loadMore">
 				<view v-for="(item, index) in list" :key="index" class="item news-item"
 					@click="navToDetails(item)" hover-class="setting-click">						
-				<!-- 	<image class="img-list" mode="aspectFill" :src="item.image"></image> -->
-					<!--  -->
 					<view class="item-t">
 						<view class="item-title">{{item.wzbt}}</view>
 						<view class="u-tag u-size">{{item.wzlxdesc}}</view>
@@ -34,12 +61,11 @@
 
 
 <script>
-	import json from '@/json'
 	import mixPulldownRefresh from '@/components/mix-pulldown-refresh/mix-pulldown-refresh';
 	import mixLoadMore from '@/components/mix-load-more/mix-load-more';
 	
 	let $this;
-	let windowWidth = 0, scrollTimer = false, tabBar;
+	let windowWidth = 0;
 	export default {
 		components: {
 			mixPulldownRefresh,
@@ -47,6 +73,25 @@
 		},
 		data() {
 			return {
+				right: false,
+				showAction: false,
+				rightSlot: false,
+				useSlot: true,
+				background: {
+					/* 'background-image': 'linear-gradient(45deg, rgb(28, 187, 180), rgb(141, 198, 63))' */
+					'background-color':'#3AA9D1'
+				},
+				isBack: true,
+				search: true,
+				custom: false,
+				keyword: '',
+				// #ifdef MP
+				slotRight: false,
+				// #endif
+				// #ifndef MP
+				slotRight: true,
+				// #endif
+				keyword: '',
 				scrollLeft: 0, //顶部选项卡左滑距离
 				enableScroll: true,
 				loadMoreStatus:0,
@@ -56,13 +101,17 @@
 				list:[]
 			}
 		},
-		async onLoad() {
+		async onLoad(options) {
 			// 获取屏幕宽度
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 			$this =this;
+			$this.keyword =  options.key;
 			this.loadDataList("add");
 		},
 		methods: {
+			goBack(){
+				uni.navigateBack();
+			},
 			//加载数据
 			loadDataList(type){
 				//type add 加载更多 refresh下拉刷新
@@ -88,7 +137,7 @@
 					let domainName = $this.domainName;
 					var data={
 					  "current": $this.current,
-					  "keyword": "",
+					  "keyword": $this.keyword,
 					  "orders": [
 						{
 						  "asc": false,
@@ -164,16 +213,51 @@
 				if(this.enableScroll !== enable){
 					this.enableScroll = enable;
 				}
+			},
+			searchFun(){
+				let str =  $this.keyword.trim();
+				if(str==""){
+					uni.showToast({
+					    title: "请输入搜索内容",
+					    duration: 2000,
+						icon:"none"
+					});
+					return;
+				}
+				$this.onPulldownReresh();
 			}
 		}
 	}
 </script>
 
 <style lang='scss'>
-page, .content{
+ page, .content{
 	background-color: #F1F1F1;
-	height: 100%;
-	overflow: hidden;
+	/* height: 100%;
+	overflow: hidden; */
+}
+.navbar-right {
+	margin-right: 24rpx;
+	display: flex;
+}
+
+.search-wrap {
+/* 	margin: 0 20rpx; */
+	flex: 1;
+}
+
+.right-item {
+	margin: 0 0rpx;
+	position: relative;
+	color: #ffffff;
+	display: flex;
+}
+
+.slot-wrap {
+	display: flex;
+	flex: 1;
+	margin-left: 20upx;
+	margin-right: 20upx
 }
 
 .panel-scroll-box{
@@ -190,5 +274,5 @@ view{
 	flex-direction: column;
 }	
 	
-@import url("./education.css");
+ @import url("../education/education.css");
 </style>

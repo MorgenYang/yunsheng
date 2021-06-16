@@ -5,7 +5,6 @@
 	border-bottom-width: 1px;
 	border-color: #eee;
 	background-color: #FFFFFF;
-		display: flex;
 }
 
 .news-item{
@@ -24,16 +23,24 @@
 	overflow: hidden;
 	margin-top: 0upx;
 }
+.item-t{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	height: 44upx;
+}
 .item-title{
+	width: 70%;
 	font-size: 32upx;
 	color: #303133;
 	/* color: #000000; */
  	font-weight:bold;
 	overflow: hidden;
-	/* height: 44upx; */
 	display: -webkit-box;
 	-webkit-box-orient: vertical; 
 	-webkit-line-clamp: 1; 
+	margin-right:auto
+
 }
 .item-body{
 	font-size: 28upx;
@@ -70,6 +77,7 @@
 .item-content{
 	display: flex;
 	flex-direction: column;
+	margin-top: 6upx;
 	
 }
 .item-author{
@@ -84,8 +92,6 @@
 	color: #969696;
 	padding-top: 10upx;
 	font-size: 28upx;
-	display: flex;
-	flex-direction: row;
 }
 
 .u-tag {
@@ -98,7 +104,7 @@
 	line-height: 1;
 }
 .u-size {
-	margin-left: 30upx;
+	/* margin-left: 20upx; */
 	font-size: 22upx;
 	padding: 6upx 22upx;
 	font-size: 24upx;

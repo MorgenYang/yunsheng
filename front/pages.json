@@ -13,6 +13,14 @@
 			}
 		},
 		{
+			"path": "pages/home/article",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#3AA9D1",
+				"navigationStyle":"custom"
+			}
+		},
+		{
 			"path": "pages/education/education",
 			"style": {
 				"navigationBarTitleText": "健康教育",
