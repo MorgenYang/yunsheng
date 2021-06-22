@@ -152,6 +152,12 @@
 			$this.loadFirstData();
 		},
 		onShow() {
+			if(this.user.id==null || this.user.id=="" ){
+				uni.switchTab({  
+					url: '../me/me'  
+				});
+				return;
+			};
 			const reloadMeals = uni.getStorageSync('reloadMeals');
 			if (reloadMeals) {
 				this.weeksFoodList=[{"recommendList":[]},{"recommendList":[]},{"recommendList":[]},
@@ -159,6 +165,7 @@
 				uni.removeStorageSync('reloadMeals');
 				$this.loadFirstData();
 			}
+			
 		},
 		methods: {
 			updateMenu(e){

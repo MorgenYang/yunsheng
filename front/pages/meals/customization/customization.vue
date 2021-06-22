@@ -12,26 +12,95 @@
 	        <scroll-view class="content" scroll-y="true" :style="{height:navHeight+'px'}">
 	            <view class="s-item" v-show="current === 0">
 					<view class="row-item">
-						<view class="d-item">每日主食种类：</view>
-						<ld-select :list="spdzdList"
+						<view class="d-item">海鲜鱼类：</view>
+						<ld-select :list="hxylList" :multiple="true"
 							label-key="label" value-key="value"
 							placeholder="请选择"
 							clearable
-							v-model="spdzdValue"
-							@change="selectSpdzdChange">
+							v-model="hxylValue"
+							@change="selectHxylChange">
 						</ld-select>
 					</view>
 					<view class="row-item">
-						<view class="d-item">每日餐次：</view>
-						<ld-select :list="mrccList"
+						<view class="d-item">海鲜甲壳类：</view>
+						<ld-select :list="hxjqlList" :multiple="true"
 							label-key="label" value-key="value"
 							placeholder="请选择"
 							clearable
-							v-model="mrccValue"
-							@change="selectMrccChange">
+							v-model="hxjqlValue"
+							@change="selectHxjqlChange">
 						</ld-select>
 					</view>
-					
+					<view class="row-item">
+						<view class="d-item">蛋类：</view>
+						<ld-select :list="dlList" :multiple="true"
+							label-key="label" value-key="value"
+							placeholder="请选择"
+							clearable
+							v-model="dlValue"
+							@change="selectDlChange">
+						</ld-select>
+					</view>
+					<view class="row-item">
+						<view class="d-item">乳制品：</view>
+						<ld-select :list="rzpList" :multiple="true"
+							label-key="label" value-key="value"
+							placeholder="请选择"
+							clearable
+							v-model="rzpValue"
+							@change="selectRzpChange">
+						</ld-select>
+					</view>
+					<view class="row-item">
+						<view class="d-item">花生制品：</view>
+						<ld-select :list="hszpList" :multiple="true"
+							label-key="label" value-key="value"
+							placeholder="请选择"
+							clearable
+							v-model="hszpValue"
+							@change="selectHszpChange">
+						</ld-select>
+					</view>
+					<view class="row-item">
+						<view class="d-item">小麦：</view>
+						<ld-select :list="xmList" :multiple="true"
+							label-key="label" value-key="value"
+							placeholder="请选择"
+							clearable
+							v-model="xmValue"
+							@change="selectXmChange">
+						</ld-select>
+					</view>
+					<view class="row-item">
+						<view class="d-item">坚果：</view>
+						<ld-select :list="jgList" :multiple="true"
+							label-key="label" value-key="value"
+							placeholder="请选择"
+							clearable
+							v-model="jgValue"
+							@change="selectJgChange">
+						</ld-select>
+					</view>
+					<view class="row-item">
+						<view class="d-item">豆类：</view>
+						<ld-select :list="doulList" :multiple="true"
+							label-key="label" value-key="value"
+							placeholder="请选择"
+							clearable
+							v-model="doulValue"
+							@change="selectDoulChange">
+						</ld-select>
+					</view>
+					<view class="row-item">
+						<view class="d-item">乳糖不耐受：</view>
+						<ld-select :list="rtbnsList" :multiple="true"
+							label-key="label" value-key="value"
+							placeholder="请选择"
+							clearable
+							v-model="rtbnsValue"
+							@change="selectRtbnsChange">
+						</ld-select>
+					</view>
 					<button class="btn" @click="next1()">下一步</button>
 				</view>
 	            <view class="s-item" v-show="current === 1">
@@ -215,10 +284,24 @@
 				outerClose:false,
 				isLoadData:[0,0,0,0],
 				current: 0,
-				mrccValue:"",
-				mrccList:[],
-				spdzdValue:"",
-				spdzdList:[],
+				hxylValue:[],
+				hxylList:[],
+				hxjqlValue:"",
+				hxjqlList:[],
+				dlValue:[],
+				dlList:[],
+				rzpValue:[],
+				rzpList:[],
+				hszpValue:[],
+				hszpList:[],
+				xmValue:[],
+				xmList:[],
+				jgValue:[],
+				jgList:[],
+				doulValue:[],
+				doulList:[],
+				rtbnsValue:[],
+				rtbnsList:[],
 				genderValue:1,
 				genderList:[{"value":0,"label":"男"},{"value":1,"label":"女"}],
 				ageDefaultValue:"",
@@ -439,11 +522,29 @@
 			next1(){
 				//先保存当前数据,在跳转下一页
 				let url = $this.reqAddress+'/tjSrdz/add';
-				var formData = {
+		
+				let hxylV = $this.hxylValue.length==0?"":$this.hxylValue.join(",");
+			 	let hxjqlV = $this.hxjqlValue.length==0?"":$this.hxjqlValue.join(",");
+				let dlV = $this.dlValue.length==0?"":$this.dlValue.join(",");
+				let rzpV = $this.rzpValue.length==0?"":$this.rzpValue.join(",");
+				let hszpV = $this.hszpValue.length==0?"":$this.hszpValue.join(",");
+				let xmV = $this.xmValue.length==0?"":$this.xmValue.join(",");
+				let jgV = $this.jgValue.length==0?"":$this.jgValue.join(",");
+				let doulV = $this.doulValue.length==0?"":$this.doulValue.join(",");
+				let rtbnsV = $this.rtbnsValue.length==0?"":$this.rtbnsValue.join(","); 
+				
+				let formData = {
 					"userid":$this.user.id,
-					"typeid":1,
-					"spdzd":$this.spdzdValue,
-					"mrcc":$this.mrccValue
+					"hxyl":hxylV,
+					"hxjql":hxjqlV,
+					"dl":dlV,
+					"rzp":rzpV,
+					"hszp":hszpV,
+					"xm":xmV,
+					"jg":jgV,
+					"doul":doulV,
+					"rtbns":rtbnsV
+					
 				};
 				let options ={};
 				options.header = {'Content-Type':'application/x-www-form-urlencoded'};
@@ -549,11 +650,32 @@
 				console.log("gender:"+val);
 				this.genderValue = val;
 			},
-			selectSpdzdChange(val){
-				this.spdzdValue = val
+			selectHxylChange(val){
+				this.hxylValue = val
 			},
-			selectMrccChange(val){
-				this.mrccValue = val
+			selectHxjqlChange(val){
+				this.hxjqlValue = val
+			},
+			selectDlChange(val){
+				this.dlValue = val
+			},
+			selectRzpChange(val){
+				this.rzpValue = val
+			},
+			selectHszpChange(val){
+				this.hszpValue = val
+			},
+			selectXmChange(val){
+				this.xmValue = val
+			},
+			selectJgChange(val){
+				this.jgValue = val
+			},
+			selectDoulChange(val){
+				this.doulValue = val
+			},
+			selectRtbnsChange(val){
+				this.rtbnsValue = val
 			},
 			
 			individualization:function(e){
@@ -564,7 +686,7 @@
 			//深入定制
 			loadCustomizationData(){
 				uni.showLoading({ title:"加载中..."});
-				let url = $this.reqAddress+'/tjSrdz/getItems/1';
+				let url = $this.reqAddress+'/tjSrdz/getItems';
 				$this.$api.post(url).then((res)=>{
 					let data = res.data;
 					if(data.code==200 && data.data!=null){
@@ -582,10 +704,26 @@
 				 data.forEach(function(item, index){
 					 let obj = item.propsitem;
 					 for(let key in obj){
-						 if(item.props=="mrcc"){
-						 	$this.mrccList.push({value:key,label:obj[key]});	
-						 }else if(item.props=="spdzd"){
-							$this.spdzdList.push({value:key,label:obj[key]});
+						 let itemValue = obj[key].selectedval;
+						 let itemKey = obj[key].propsdesc;
+						 if(item.props =="hxyl"){
+							$this.hxylList.push({value:itemValue,label:itemKey});
+						 }else if(item.props =="hxjql"){
+							$this.hxjqlList.push({value:itemValue,label:itemKey}); 
+						 }else if(item.props =="dl"){
+							$this.dlList.push({value:itemValue,label:itemKey}); 
+						 }else if(item.props =="rzp"){
+							$this.rzpList.push({value:itemValue,label:itemKey}); 
+						 }else if(item.props =="hszp"){
+							$this.hszpList.push({value:itemValue,label:itemKey}); 
+						 }else if(item.props =="xm"){
+							$this.xmList.push({value:itemValue,label:itemKey}); 
+						 }else if(item.props =="jg"){
+							$this.jgList.push({value:itemValue,label:itemKey}); 
+						 }else if(item.props =="doul"){
+							$this.doulList.push({value:itemValue,label:itemKey}); 
+						 }else if(item.props =="rtbns"){
+							$this.rtbnsList.push({value:itemValue,label:itemKey});
 						 }
 					 }
 				 })
@@ -593,16 +731,30 @@
 			
 			 loadCustomizationForUserData(){ 
 				 //获取用户深入定制数据
-				 let url = $this.reqAddress+'/tjSrdz/info/'+$this.user.id+'/1';
+				 let url = $this.reqAddress+'/tjSrdz/info';
 				 $this.$api.get(url).then((res)=>{
 					let data = res.data;
 					if(data.code==200 && data.data!=null){
 						data.data.forEach(function(item, index){
 							if(item.selectedval!=null){
-								if(item.props =="mrcc"){
-									$this.mrccValue = item.selectedval+"";
-								}else if(item.props =="spdzd"){
-									$this.spdzdValue = item.selectedval+"";
+								if(item.props =="hxyl"){
+									$this.hxylValue = item.selitem.selectedval.split(",");
+								}else if(item.props =="hxjql" && item.selectedval!=''){
+									$this.hxjqlValue = item.selectedval.split(",");"";
+								}else if(item.props =="dl" && item.selectedval!=''){
+									$this.dlValue = item.selectedval.split(",");
+								}else if(item.props =="rzp" && item.selectedval!=''){
+									$this.rzpValue = item.selectedval.split(",");
+								}else if(item.props =="hszp" && item.selectedval!=''){
+									$this.hszpValue = item.selectedval.split(",");
+								}else if(item.props =="xm" && item.selectedval!=''){
+									$this.xmValue = item.selectedval.split(",");
+								}else if(item.props =="jg" && item.selectedval!=''){
+									$this.jgValue = iitem.selectedval.split(",");
+								}else if(item.props =="doul" && item.selectedval!=''){
+									$this.doulValue = item.selectedval.split(",");
+								}else if(item.props =="rtbns" && item.selectedval!=''){
+									$this.rtbnsValue = item.selectedval.split(",");
 								}
 							}
 						})
