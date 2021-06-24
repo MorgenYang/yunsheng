@@ -286,7 +286,7 @@
 				current: 0,
 				hxylValue:[],
 				hxylList:[],
-				hxjqlValue:"",
+				hxjqlValue:[],
 				hxjqlList:[],
 				dlValue:[],
 				dlList:[],
@@ -534,7 +534,7 @@
 				let rtbnsV = $this.rtbnsValue.length==0?"":$this.rtbnsValue.join(","); 
 				
 				let formData = {
-					"userid":$this.user.id,
+					//"userid":$this.user.id,
 					"hxyl":hxylV,
 					"hxjql":hxjqlV,
 					"dl":dlV,
@@ -704,7 +704,7 @@
 				 data.forEach(function(item, index){
 					 let obj = item.propsitem;
 					 for(let key in obj){
-						 let itemValue = obj[key].selectedval;
+						 let itemValue = obj[key].selectedval+"";
 						 let itemKey = obj[key].propsdesc;
 						 if(item.props =="hxyl"){
 							$this.hxylList.push({value:itemValue,label:itemKey});
@@ -735,25 +735,25 @@
 				 $this.$api.get(url).then((res)=>{
 					let data = res.data;
 					if(data.code==200 && data.data!=null){
-						data.data.forEach(function(item, index){
+						data.data.forEach(function(item,index){
 							if(item.selectedval!=null){
-								if(item.props =="hxyl"){
-									$this.hxylValue = item.selitem.selectedval.split(",");
-								}else if(item.props =="hxjql" && item.selectedval!=''){
+								if(item.props =="hxyl" && item.selectedval!=""){
+									$this.hxylValue = item.selectedval.split(",");
+								}else if(item.props =="hxjql" && item.selectedval!=""){
 									$this.hxjqlValue = item.selectedval.split(",");"";
-								}else if(item.props =="dl" && item.selectedval!=''){
+								}else if(item.props =="dl" && item.selectedval!=""){
 									$this.dlValue = item.selectedval.split(",");
-								}else if(item.props =="rzp" && item.selectedval!=''){
+								}else if(item.props =="rzp" && item.selectedval!=""){
 									$this.rzpValue = item.selectedval.split(",");
-								}else if(item.props =="hszp" && item.selectedval!=''){
+								}else if(item.props =="hszp" && item.selectedval!=""){
 									$this.hszpValue = item.selectedval.split(",");
-								}else if(item.props =="xm" && item.selectedval!=''){
+								}else if(item.props =="xm" && item.selectedval!=""){
 									$this.xmValue = item.selectedval.split(",");
-								}else if(item.props =="jg" && item.selectedval!=''){
-									$this.jgValue = iitem.selectedval.split(",");
-								}else if(item.props =="doul" && item.selectedval!=''){
+								}else if(item.props =="jg" && item.selectedval!=""){
+									$this.jgValue = item.selectedval.split(",");
+								}else if(item.props =="doul" && item.selectedval!=""){
 									$this.doulValue = item.selectedval.split(",");
-								}else if(item.props =="rtbns" && item.selectedval!=''){
+								}else if(item.props =="rtbns" && item.selectedval!=""){
 									$this.rtbnsValue = item.selectedval.split(",");
 								}
 							}

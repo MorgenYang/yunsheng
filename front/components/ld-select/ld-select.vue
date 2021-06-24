@@ -108,7 +108,7 @@
 						val.forEach(item=>{
 							let choose = this.list.find(temp => {
 								let val_val = this.getValueKeyValue(temp)
-								return item === val_val
+								return item == val_val
 							})
 							chooseAttr.push(choose)
 						})
@@ -117,7 +117,7 @@
 					} else {
 						let choose = this.list.find(temp => {
 							let val_val = this.getValueKeyValue(temp)
-							return val === val_val
+							return val == val_val
 						})
 						return this.getLabelKeyValue(choose)
 					}
@@ -147,7 +147,7 @@
 				if(Array.isArray(this.value)){
 					return this.value.indexOf(val)!=-1
 				} else {
-					return this.value === val
+					return this.value == val
 				}
 			},
 			getLabelKeyValue(item){ // 获取label
