@@ -4,7 +4,7 @@
 			<view class="slot-wrap" v-if="useSlot">
 				<view class="search-wrap" v-if="search">
 					<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
-					<u-search v-model="keyword" :show-action="showAction" height="56" @search="searchFun" :action-style="{color: '#fff'}"></u-search>
+					<u-search v-model="keyword" disabled="true" :show-action="showAction" height="56" @click="searchFun" :action-style="{color: '#fff'}"></u-search>
 				</view>
 				<view class="navbar-right" v-if="rightSlot">
 					<view class="message-box right-item">
@@ -113,7 +113,7 @@
 				});
 			},
 			searchFun(){
-				let str =  $this.keyword.trim();
+				/* let str =  $this.keyword.trim();
 				if(str==""){
 					uni.showToast({
 					    title: "请输入搜索内容",
@@ -121,11 +121,12 @@
 						icon:"none"
 					});
 					return;
-				}
+				} */
 				uni.navigateTo({
-					url: './article?key='+$this.keyword
+					//url: './article?key='+$this.keyword
+					url:'./article'
 				});
-				$this.keyword="";
+				//$this.keyword="";
 			}
 		}
 	}

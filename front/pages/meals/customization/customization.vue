@@ -11,6 +11,11 @@
 		   </view>
 	        <scroll-view class="content" scroll-y="true" :style="{height:navHeight+'px'}">
 	            <view class="s-item" v-show="current === 0">
+					<view class="tips">
+						<image style="width:30upx;height: 30upx;margin-top: 4upx;margin-right: 10upx;" src="../../../static/icon/img/alert.png"></image>
+						<view style="color: #ff9900;">提示:下面为过敏食物选项</view>
+					</view>
+				
 					<view class="row-item">
 						<view class="d-item">海鲜鱼类：</view>
 						<ld-select :list="hxylList" :multiple="true"
@@ -772,7 +777,7 @@
 				 $this.$api.get(url).then((res)=>{
 					let data = res.data;
 					if(data.code==200 && data.data!=null){
-					   $this.isLoadData[2]=1;
+					   $this.isLoadData[1]=1;
 					   $this.genderDefaultValue=$this.genderValue = data.data.xb!=null?data.data.xb:"";
 					   $this.ageDefaultValue=$this.ageValue = data.data.nl!=null?data.data.nl:"";
 					   $this.heightDefaultValue=$this.heightValue = data.data.sg!=null?data.data.sg:"";
@@ -794,7 +799,7 @@
 				 $this.$api.get(url).then((res)=>{
 					let data = res.data;
 					if(data.code==200 && data.data!=null){
-						$this.isLoadData[3]=1;
+						$this.isLoadData[2]=1;
 						$this.items[0].value = data.data.sftnb;
 						$this.items[1].value = data.data.sfgxy;
 						$this.items[2].value = data.data.sfgxb;
@@ -815,7 +820,7 @@
 				 $this.$api.get(url).then((res)=>{
 					let data = res.data;
 					if(data.code==200 && data.data!=null){
-						$this.isLoadData[4]=1;
+						$this.isLoadData[3]=1;
 						$this.pjmrbs = data.data.pjmrbs;
 						$this.mzydcs = data.data.mzydcs;
 						$this.mcydsj = data.data.mcydsj;
@@ -833,6 +838,13 @@
 
 <style>
 	@import url("../item.css");
+
+	.tips{
+		padding-bottom: 20upx;
+		margin-left: 30upx;
+		display: flex;
+		flex-direction: row;
+	}
 	.top-view{
 		height: 80upx;
 		background-color: #F5F5F5;

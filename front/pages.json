@@ -21,6 +21,13 @@
 			}
 		},
 		{
+			"path": "pages/home/historySearch",
+			"style": {
+				"navigationBarTitleText": "历史搜索记录",
+				"navigationBarBackgroundColor": "#3AA9D1"
+			}
+		},
+		{
 			"path": "pages/education/education",
 			"style": {
 				"navigationBarTitleText": "健康教育",

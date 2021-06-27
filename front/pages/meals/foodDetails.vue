@@ -15,9 +15,12 @@
 			<view class="mid">
 				<text class="t-center">《{{detailBean.cpinfo.cpmc}}》</text>
 				<view class="context">
-					<text class="t1">材料:</text>
+					<view class="t2 m10 row"><view>菜品材料：</view>{{detailBean.cpinfo.cpcl}}</view>
+					<view class="t2 m10 row"><view>主要调料：</view>{{detailBean.cpinfo.zydl}}</view>
+					<view class="t2 m10 row"><view>其它调料：</view>{{detailBean.cpinfo.qtyl}}</view>
+					<view class="t2 m10 row"><view>其它原料：</view>{{detailBean.cpinfo.qtdl}}</view>
 					<!-- <text class="t2 m10">猪肉，姜米，蒜米，酱油，精盐，豌豆尖（可选），醋，泡辣椒，鲜汤，白糖，水豆粉，黑木耳，（可选）玉兰片，（可选）莴笋丝，胡萝卜丝，竹笋丝，蚝油(可选)，干辣椒，（可选）土豆丝，豆瓣酱</text> -->
-					<text class="t2 m10">{{detailBean.cpinfo.cpcl}}</text>
+					
 					<text class="t1 m30">做法:</text>
 					<text class="t2 m10">{{detailBean.cpinfo.cpzf}}</text>
 					<!-- <text class="t2 m10">1.里脊肉洗净切成长条，加入料酒、鸡蛋清、水淀粉、盐搅拌均匀，腌制20分钟。冬笋、木耳切丝。</text>
@@ -111,6 +114,15 @@
 				if(data.cpinfo && data.cpinfo.cpcl==null){
 					data.cpinfo.cpcl ="暂无";
 				}
+				if(data.cpinfo && data.cpinfo.zydl==null){
+					data.cpinfo.zydl ="暂无";
+				}
+				if(data.cpinfo && data.cpinfo.qtyl==null){
+					data.cpinfo.qtyl ="暂无";
+				}
+				if(data.cpinfo && data.cpinfo.qtdl==null){
+					data.cpinfo.qtdl ="暂无";
+				}
 				if(data.cpinfo && data.cpinfo.cpzf==null){
 					data.cpinfo.cpzf ="暂无";
 				}
@@ -179,5 +191,9 @@
 	}
 	.m10{
 		margin-top: 10upx;
+	}
+	.row{
+		display: flex;
+		flex-direction: row;
 	}
 </style>

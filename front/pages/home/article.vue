@@ -22,11 +22,9 @@
 			</view>
 			<view class="navbar-right" slot="right" v-if="slotRight">
 				<view class="message-box right-item">
-					
+					<image @click="history" style="width: 40upx; height: 40upx;" src="../../static/icon/img/history_icon.png"></image>
 				</view>
-				<view class="dot-box right-item">
-					
-				</view>
+			
 			</view>
 		</u-navbar>
 		<!-- 下拉刷新组件 -->
@@ -73,7 +71,7 @@
 		},
 		data() {
 			return {
-				right: false,
+				right: true,
 				showAction: false,
 				rightSlot: false,
 				useSlot: true,
@@ -86,7 +84,7 @@
 				custom: false,
 				keyword: '',
 				// #ifdef MP
-				slotRight: false,
+				slotRight: true,
 				// #endif
 				// #ifndef MP
 				slotRight: true,
@@ -108,7 +106,21 @@
 			$this.keyword =  options.key;
 			this.loadDataList("add");
 		},
+		onShow() {
+			let loadHistory = uni.getStorageSync("loadHistory");
+			let loadHistoryContext = uni.getStorageSync("loadHistoryContext");
+			if(loadHistory=="1" && loadHistoryContext!=null && loadHistoryContext!=""&&loadHistoryContext!=undefined){
+				$this.keyword = loadHistoryContext;
+				this.loadDataList("refresh");
+			}
+			
+		},
 		methods: {
+			history(){
+				uni.navigateTo({
+					url:'./historySearch'
+				});
+			},
 			goBack(){
 				uni.navigateBack();
 			},
@@ -179,7 +191,31 @@
 							}
 							//注意*** 不自动刷新--需要强制刷新
 							$this.$forceUpdate();
+							
 						}
+						if($this.keyword!=null && $this.keyword!="" && $this.keyword!=undefined && $this.keyword.trim().length>0){
+							let searchContent = uni.getStorageSync("searchHistory");
+							let loadHistory = uni.getStorageSync("loadHistory");
+							if(searchContent!=null && searchContent!=undefined && searchContent!=""){
+								if(loadHistory!="1"){
+									let strArr = searchContent.split("###");
+									strArr.push($this.keyword);
+									let newArr = [];
+									if(strArr.length>10){
+										for(let i=1;i<strArr.length;i++){
+											newArr.push(strArr[i]);
+										} 
+									}else{
+										newArr =strArr;
+									}
+									uni.setStorageSync("searchHistory",newArr.join('###'));
+								}
+							}else{
+								uni.setStorageSync("searchHistory",$this.keyword);	
+							}
+						}
+						uni.setStorageSync("loadHistory","");
+						uni.setStorageSync("loadHistoryContext","");
 					}).catch((err)=>{
 						console.log('request fail', err);
 					})
@@ -215,8 +251,8 @@
 				}
 			},
 			searchFun(){
-				let str =  $this.keyword.trim();
-				if(str==""){
+				let str =  $this.keyword;
+				if(str=="" || str==undefined || str==null || str.trim().length==0){
 					uni.showToast({
 					    title: "请输入搜索内容",
 					    duration: 2000,
