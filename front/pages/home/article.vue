@@ -9,7 +9,7 @@
 			<view class="slot-wrap" v-if="useSlot">
 				<view class="search-wrap" v-if="search">
 					<!-- 如果使用u-search组件，必须要给v-model绑定一个变量 -->
-					<u-search v-model="keyword" :show-action="showAction" height="56" @search="searchFun" :action-style="{color: '#fff'}"></u-search>
+					<u-search placeholder="搜标题/标签/内容" v-model="keyword" :show-action="showAction" height="56" @search="searchFun" :action-style="{color: '#fff'}"></u-search>
 				</view>
 				<view class="navbar-right" v-if="rightSlot">
 					<view class="message-box right-item">
@@ -22,9 +22,7 @@
 			</view>
 			<view class="navbar-right" slot="right" v-if="slotRight">
 				<view class="message-box right-item">
-					<image @click="history" style="width: 40upx; height: 40upx;" src="../../static/icon/img/history_icon.png"></image>
 				</view>
-			
 			</view>
 		</u-navbar>
 		<!-- 下拉刷新组件 -->

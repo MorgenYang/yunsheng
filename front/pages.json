@@ -23,8 +23,9 @@
 		{
 			"path": "pages/home/historySearch",
 			"style": {
-				"navigationBarTitleText": "历史搜索记录",
-				"navigationBarBackgroundColor": "#3AA9D1"
+				"titleNView" : false,
+				"navigationBarBackgroundColor": "#3AA9D1",
+				"navigationStyle":"custom"
 			}
 		},
 		{
@@ -234,8 +235,7 @@
 				// },
 				"navigationBarBackgroundColor": "#3AA9D1"
 			}
-		}
-	    ,{
+		},{
             "path" : "pages/meals/customization/customization",
             "navigationBarTextStyle": "black",
             "style": {
@@ -243,18 +243,7 @@
 				"navigationBarBackgroundColor": "#3AA9D1"
 				// "enablePullDownRefresh" : true
 				}
-        }
-        ,{
-            "path" : "pages/meals/individualization/individualization",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "个性化定制",
-				"navigationBarBackgroundColor": "#3AA9D1",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
+        },{
             "path" : "pages/meals/todayRecommend/todayRecommend",
             "style" :                                                                                    
             {
@@ -262,7 +251,6 @@
               "navigationBarBackgroundColor": "#3AA9D1",
               "enablePullDownRefresh": false
             }
-            
         }
     ],
 	"tabBar": {
