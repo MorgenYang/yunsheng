@@ -42,7 +42,7 @@
 			return {
 				enableDel: true,
 				colorType: 'primary',
-				tagList: ['慢病','高血压','抗衰'],
+				tagList: [],
 				right: true,
 				showAction: false,
 				rightSlot: false,
@@ -72,7 +72,12 @@
 		},
 		async onLoad(options) {
 			$this =this;
-	
+		},
+		onShow() {
+			let loadHistory = uni.getStorageSync("searchHistory");
+			if(loadHistory!="" && loadHistory!=undefined && loadHistory!=null){
+				$this.tagList = loadHistory;
+			}
 		},
 		methods: {
 			clickTag: function(e){
@@ -81,12 +86,22 @@
 				});
 			},
 			delTag: function(e){
-				console.log(e)
+				let loadHistory = uni.getStorageSync("searchHistory");
+				if(loadHistory!="" && loadHistory!=undefined && loadHistory!=null){
+					let arr = [];
+					for(let i=0;i<loadHistory.length;i++){
+						if(e.currentTag != loadHistory[i]){
+							arr.push(loadHistory[i])
+						}
+					}
+					uni.setStorageSync("searchHistory",arr);
+				}
 			},
 			goBack(){
 				uni.navigateBack();
 			},
 			clearAll(){
+				uni.setStorageSync("searchHistory",null);
 				this.tagList =[];
 			},
 			goBack(){
@@ -105,6 +120,7 @@
 				uni.navigateTo({
 					url: './article?key='+$this.keyword
 				});
+				$this.keyword="";
 			}
 		}
 	}

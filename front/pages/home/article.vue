@@ -104,15 +104,6 @@
 			$this.keyword =  options.key;
 			this.loadDataList("add");
 		},
-		onShow() {
-			let loadHistory = uni.getStorageSync("loadHistory");
-			let loadHistoryContext = uni.getStorageSync("loadHistoryContext");
-			if(loadHistory=="1" && loadHistoryContext!=null && loadHistoryContext!=""&&loadHistoryContext!=undefined){
-				$this.keyword = loadHistoryContext;
-				this.loadDataList("refresh");
-			}
-			
-		},
 		methods: {
 			history(){
 				uni.navigateTo({
@@ -193,27 +184,31 @@
 						}
 						if($this.keyword!=null && $this.keyword!="" && $this.keyword!=undefined && $this.keyword.trim().length>0){
 							let searchContent = uni.getStorageSync("searchHistory");
-							let loadHistory = uni.getStorageSync("loadHistory");
 							if(searchContent!=null && searchContent!=undefined && searchContent!=""){
-								if(loadHistory!="1"){
-									let strArr = searchContent.split("###");
-									strArr.push($this.keyword);
-									let newArr = [];
-									if(strArr.length>10){
-										for(let i=1;i<strArr.length;i++){
-											newArr.push(strArr[i]);
-										} 
-									}else{
-										newArr =strArr;
+								let exists = false;
+								//存在重复的不在做添加
+								for(let i=0;i<searchContent.length;i++){
+									if($this.keyword == searchContent[i]){
+										exists = true;
+										break;
 									}
-									uni.setStorageSync("searchHistory",newArr.join('###'));
 								}
+								if(exists==false){
+									searchContent.push($this.keyword);
+								}
+								let newArr = [];
+								if(searchContent.length>20){
+									for(let i=0;i<searchContent.length;i++){
+										newArr.push(strArr[i]);
+									} 
+								}else{
+									newArr =searchContent;
+								}
+								uni.setStorageSync("searchHistory",newArr);
 							}else{
-								uni.setStorageSync("searchHistory",$this.keyword);	
+								uni.setStorageSync("searchHistory",new Array($this.keyword));	
 							}
 						}
-						uni.setStorageSync("loadHistory","");
-						uni.setStorageSync("loadHistoryContext","");
 					}).catch((err)=>{
 						console.log('request fail', err);
 					})
