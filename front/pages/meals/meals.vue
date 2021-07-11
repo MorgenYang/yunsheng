@@ -27,9 +27,9 @@
 			<!-- 下拉刷新组件 -->
 			<mix-pulldown-refresh ref="mixPulldownRefresh" class="panel-content" :top="90" @refresh="onPulldownReresh" @setEnableScroll="setEnableScroll">
 				<!-- 内容部分 <view class="item-line">-->
-				<swiper :current="weekCurrent" style="flex:1;" @change="ontabchange">
+				<swiper :current="weekCurrent" style="flex:1;" @change="ontabchange" :circular="true">
 					<swiper-item v-for="(week,weekIndex) in weekList" :key="weekIndex">
-						<scroll-view scroll-y="true" style="height: 100%;">
+						<view style="height: 100%;overflow: scroll;">
 							<view class="food-bottom">
 							 <block v-for="(food,foodIndex) in (weeksFoodList[week.id-1]).recommendList" 
 									v-if="(weeksFoodList[week.id-1]).recommendList!=undefined"  :key="foodIndex">
@@ -61,7 +61,7 @@
 								</block>
 							 </block>
 							 </view>
-						</scroll-view>
+						</view>
 					</swiper-item>
 				</swiper>
 			</mix-pulldown-refresh>
@@ -77,7 +77,7 @@
 					<view class="action text-blue" @tap="changeCancelClick">取消</view>
 					<view class="action text-green" @tap="changeConfirmClick">确定</view>
 				</view>
-				<view class="select-content">
+				<scroll-view scroll-y="true" class="select-content">
 					<view class="select-item" v-for="(item,index) in changeList" :key="index"@click="select(item)">
 						<view style="display: flex;flex-direction: row;background-color: #FFFFFF;">
 							<view class="title">{{item.cpmc}}</view>
@@ -87,7 +87,7 @@
 							</view>
 						</view>						
 					</view>
-				</view>
+				</scroll-view>
 			</view>
 		</uni-popup>
 	</view>
@@ -149,9 +149,16 @@
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 			$this = this;
 			this.user = $this.getLoginUser();
+			if(this.user.id==null || this.user.id=="" ){
+				uni.switchTab({  
+					url: '../me/me'  
+				});
+				return;
+			};
 			$this.loadFirstData();
 		},
 		onShow() {
+			this.user = $this.getLoginUser();
 			if(this.user.id==null || this.user.id=="" ){
 				uni.switchTab({  
 					url: '../me/me'  
@@ -261,8 +268,10 @@
 				this.todayRecommendList[index1].tjcp[index2].image = this.placeholderImage;
 			},
 			itemDetail(e){
-				uni.navigateTo({
-					url: './foodDetails?type=2&data='+encodeURIComponent(JSON.stringify(e.currentTarget.dataset.item))
+				console.log();
+			    uni.navigateTo({
+					//url: './foodDetails?type=2&data='+encodeURIComponent(JSON.stringify(e.currentTarget.dataset.item))
+					url: './foodDetails?type=2&id='+e.currentTarget.dataset.item.cpinfo.id
 				});
 			},
 			weekSelect(e) {
@@ -274,7 +283,7 @@
 				//console.log(this.weekList[this.weekCurrent].date);
 				this.loadCustomizationData(this.weekList[this.weekCurrent].date,1);
 			},
-		//加载
+			//加载
 			loadCustomizationData(dayDate,refresh,type){
 				this.weekDay = this.weekList[$this.weekCurrent].chinaName1;
 				//清空历史数据
@@ -344,6 +353,9 @@
 			},
 			select(item){ // 点击选项
 				$this.selectBean.cpid  = item.id;
+				$this.selectBean.jj  = item.jj;
+				$this.selectBean.cpfm  = item.cpfm;
+				$this.selectBean.cpmc  = item.cpmc;
 				$this.changeList.forEach(function(row,index){
 					if(row.id == item.id){
 						row.isSelect = 1;
@@ -382,11 +394,41 @@
 				$this.$api.post(url,paramData).then((res)=>{
 					let data = res.data;
 					if(data.code==200 && data.data!=null){
-						$this.selectBean = {};
+						/* $this.selectBean = {};
 						this.$refs.popup.close();
-						$this.loadCustomizationData($this.weekList[$this.weekCurrent].date,0);
+						$this.loadCustomizationData($this.weekList[$this.weekCurrent].date,0); */
 						//$this.weeksFoodList[$this.weekCurrent].recommendList=[];
 						//$this.handleData(data.data);
+						let domainName = $this.domainName;										
+						let result = $this.weeksFoodList[$this.weekCurrent].recommendList;
+						result.forEach(function(item, index1) {
+							if(item.id == $this.selectBean.id){
+								item.dzcs.forEach(function(childItem, index2) {
+									if(childItem!=null && childItem.cpinfo!=null){
+										if(childItem.id == $this.selectBean.detailid){
+											childItem.cpinfo.cpmc = $this.selectBean.cpmc;
+											childItem.cpinfo.id = $this.selectBean.cpid;
+											if(childItem.cpinfo.cpfm!=null){
+												childItem.cpinfo.cpfm=$this.selectBean.cpfm.replace(/&quot;/g,"\"");
+												let imageObj = JSON.parse(childItem.cpinfo.cpfm);
+												if(imageObj.length>0){
+													childItem.cpinfo.image = domainName+imageObj[0].url;
+												}else{
+													childItem.cpinfo.image = "../../static/icon/img/image-error.png";
+												}
+											}
+											childItem.cpinfo.jj = $this.selectBean.jj;
+											if(childItem.cpinfo.jj==null){
+												childItem.cpinfo.jj="暂无";
+											}
+										}
+									}
+								});	
+							}
+						});
+						$this.weeksFoodList[$this.weekCurrent].recommendList= result;
+						$this.selectBean = {};
+						this.$refs.popup.close();
 					}
 					setTimeout(function(){uni.hideLoading();},100);
 				}).catch((err)=>{

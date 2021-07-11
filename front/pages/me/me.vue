@@ -11,7 +11,8 @@
 			</view>
 		</view>
 		<view class="header-for-login" v-else>
-			<button class="header-for-login-btn" @getuserinfo="getUserInfo" open-type="getUserInfo">登录注册</button>
+			<button class="header-for-login-btn" @tap="getUserProfile" >登录注册</button>
+			<!-- <button class="header-for-login-btn" @getuserinfo="getUserInfo" open-type="getUserInfo">登录注册</button> -->
 		</view>
 
 		<!-- body -->
@@ -109,10 +110,11 @@
 			
 		},
 		methods: {
-			getUserInfo(e) {
+			getUserProfile(e) {
 				let that = this;
-				uni.getUserInfo({
+				uni.getUserProfile({
 					provider: 'weixin',
+					desc: '获取你的昵称、头像、地区及性别',
 					success: function(info) {
 						that.user.avatarUrl = info.userInfo.avatarUrl;
 						that.user.nickName = info.userInfo.nickName;
@@ -131,23 +133,8 @@
 									success: (res) => {
 										// console.log(res);
 										if (200 == res.data.code) {
-											var userClient = res.data.data.loginClientUserVo;
-											userClient.nickName = res.data.data.loginClientUserVo.nickname;
-											userClient.avatarUrl = res.data.data.loginClientUserVo.avatarurl;							
-											that.user.nickName = userClient.nickName;
-											that.user.avatarUrl = userClient.avatarUrl;
-											that.user.openid = userClient.openid;
-											that.user.id = userClient.id;
-											that.user.phone = userClient.phone;
-											that.user.gender = userClient.gender;
-											that.user.token = res.data.data.token;
-											uni.setStorageSync('nickName', that.user.nickName);
-											uni.setStorageSync('avatarUrl', that.user.avatarUrl);
-											uni.setStorageSync('openid', that.user.openid);
-											uni.setStorageSync('id', that.user.id);
-											uni.setStorageSync('phone', that.user.phone);
-											uni.setStorageSync('gender', that.user.gender);
-											uni.setStorageSync('token', res.data.data.token);
+											//var userClient = res.data.data.loginClientUserVo;
+											that.saveUserInfo(res);
 											uni.showToast({
 												title: '授权成功',
 												duration: 2000
@@ -173,7 +160,25 @@
 														success: (res) => {
 															if (200 == res.data.code) {
 																that.user.openid = res.data.data.openid;
-																uni.setStorageSync('openid', that.user.openid);
+																uni.setStorageSync('openid', that.user.openid); 
+																uni.login({
+																	provider: 'weixin',
+																	success: function(loginRes) {
+																		uni.request({
+																			url:  that.reqAddress+'/wechatlogin',
+																			method: "POST",
+																			data: {
+																				"code": loginRes.code
+																			},
+																			success: (res) => {
+																				if (res.data.code == 200 && res.data.data) {
+																					that.saveUserInfo(res);
+																				} 
+																			}
+																		});
+																	}
+																});
+																
 																uni.showToast({
 																	title: '注册成功，请绑定手机号',
 																	duration: 2000,
@@ -226,8 +231,9 @@
 							},
 							success: (res) => {
 								if (res.data.code == 200) {
-									that.user.phone = res.data.data.loginClientUserVo.phone;
-									uni.setStorageSync('phone', that.user.phone);
+								/* 	that.user.phone = res.data.data.loginClientUserVo.phone;
+									uni.setStorageSync('phone', that.user.phone); */
+									that.saveUserInfo(res);
 									uni.showToast({
 										title: '绑定成功',
 										duration: 2000,
@@ -268,8 +274,24 @@
 						url: this.setting[id].linkUrl
 					});
 				}
+			},
+			saveUserInfo(res){
+				let userClient = res.data.data.loginClientUserVo;						
+				this.user.nickName = userClient.nickname;
+				this.user.avatarUrl = userClient.avatarurl;
+				this.user.openid = userClient.openid;
+				this.user.id = userClient.id;
+				this.user.phone = userClient.phone;
+				this.user.gender = userClient.gender;
+				this.user.token = res.data.data.token;
+				uni.setStorageSync('nickName', this.user.nickName);
+				uni.setStorageSync('avatarUrl', this.user.avatarUrl);
+				uni.setStorageSync('openid', this.user.openid);
+				uni.setStorageSync('id', this.user.id);
+				uni.setStorageSync('phone', this.user.phone);
+				uni.setStorageSync('gender', this.user.gender);
+				uni.setStorageSync('token', res.data.data.token);
 			}
-
 		}
 	}
 </script>

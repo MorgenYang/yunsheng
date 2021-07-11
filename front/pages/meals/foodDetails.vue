@@ -13,16 +13,28 @@
 				</view>
 			</view>	
 			<view class="mid">
-				<text class="t-center">《{{detailBean.cpinfo.cpmc}}》</text>
+				<text class="t-center">《{{detailBean.cpmc}}》</text>
 				<view class="context">
-					<view class="t2 m10 row"><view>菜品材料：</view>{{detailBean.cpinfo.cpcl}}</view>
-					<view class="t2 m10 row"><view>主要调料：</view>{{detailBean.cpinfo.zydl}}</view>
-					<view class="t2 m10 row"><view>其它调料：</view>{{detailBean.cpinfo.qtyl}}</view>
-					<view class="t2 m10 row"><view>其它原料：</view>{{detailBean.cpinfo.qtdl}}</view>
+					<view class="t2 m10 row" v-if="isShowItem[0]==true">
+						<view class="t1 setting-w">菜品材料：</view>
+						<view>{{detailBean.cpcl}}</view>
+					</view>
+					<view class="t2 m10 row" v-if="isShowItem[1]==true">
+						<view class="t1 setting-w">主要调料：</view>
+						<view>{{detailBean.zydl}}</view>
+					</view>
+					<view class="t2 m10 row" v-if="isShowItem[2]==true">
+						<view class="t1 setting-w">其它调料：</view>
+						<view>{{detailBean.qtyl}}</view>
+					</view>
+					<view class="t2 m10 row" v-if="isShowItem[3]==true">
+						<view class="t1 setting-w">其它原料：</view>
+						<view>{{detailBean.qtdl}}</view>
+					</view>
 					<!-- <text class="t2 m10">猪肉，姜米，蒜米，酱油，精盐，豌豆尖（可选），醋，泡辣椒，鲜汤，白糖，水豆粉，黑木耳，（可选）玉兰片，（可选）莴笋丝，胡萝卜丝，竹笋丝，蚝油(可选)，干辣椒，（可选）土豆丝，豆瓣酱</text> -->
 					
 					<text class="t1 m30">做法:</text>
-					<text class="t2 m10">{{detailBean.cpinfo.cpzf}}</text>
+					<text class="t2 m10">{{detailBean.cpzf}}</text>
 					<!-- <text class="t2 m10">1.里脊肉洗净切成长条，加入料酒、鸡蛋清、水淀粉、盐搅拌均匀，腌制20分钟。冬笋、木耳切丝。</text>
 					<text class="t2">2.碗中放入酱油、白糖、醋、葱末、水淀粉调匀成鱼香汁备用。</text>
 					<text class="t2">3.锅中放油，油温五成热时放入肉丝，用铲子划散，肉丝变白后出锅备用。</text>
@@ -49,7 +61,8 @@
 				msg:"",
 				imgList: [],
 				imgUrl:"",
-				detailBean:{}
+				detailBean:{},
+				isShowItem:[false,false,false,false]
 			}
 		},
 		onLoad(param) {
@@ -59,23 +72,22 @@
 		methods: {
 			loadDetail(param){
 				let type = param.type;
-				if(type==1){
-					$this.loadTodayTuiJian(param.id)
-				}else if(type==2){
-					$this.index = 0;
-					//$this.detailBean = JSON.parse(decodeURIComponent(param.data));
-					let data = JSON.parse(decodeURIComponent(param.data));
-					$this.handleDetailData(data); 
+				let id = param.id;
+				$this.index = 0;
+				let url = $this.reqAddress+'/tjSsgl/info/'+id;
+				if(type==2){
+					url = $this.reqAddress+'/tjSsgl/cpinfo/'+id;
 				}
-			},
-			loadTodayTuiJian(pId){
-				let url = $this.reqAddress+'/tjSsgl/info/'+pId;
 				$this.$api.get(url).then((res)=>{
 					let data = res.data;
 					if(data.code==200 && data.data!=null){
 						$this.index = 0;
-						//$this.detailBean  = data.data;
-						$this.handleDetailData(data.data);
+						if(type==1){
+							$this.handleDetailData(data.data.cpinfo);
+						}else{
+							$this.handleDetailData(data.data);
+						}
+						
 					}
 				}).catch((err)=>{
 					console.log('request fail', err);
@@ -83,7 +95,7 @@
 			},
 			handleDetailData(data){
 				uni.setNavigationBarTitle({
-				　　title:data.cpinfo.cpmc
+				　　title:data.cpmc
 				}) 
 				let domainName = $this.domainName;
 				if(data.cpfm){
@@ -96,8 +108,8 @@
 				}else{
 					$this.imgUrl = "../../static/icon/img/image-error.png";
 				}
-				if(data.cpinfo && data.cpinfo.cpfm){
-					let imgArr = JSON.parse(data.cpinfo.cpfm.replace(/&quot;/g,"\""));
+				if(data && data.cpfm){
+					let imgArr = JSON.parse(data.cpfm.replace(/&quot;/g,"\""));
 					if(imgArr.length>0){
 						imgArr.forEach(function(item, index) {
 							let img = domainName+item.url;
@@ -111,20 +123,28 @@
 				}else{
 					$this.imgUrl = "../../static/icon/img/image-error.png";
 				}
-				if(data.cpinfo && data.cpinfo.cpcl==null){
-					data.cpinfo.cpcl ="暂无";
+				if(data && data.cpcl==null){
+					data.cpcl ="暂无";
+				}else{
+					$this.isShowItem[0]=true;
 				}
-				if(data.cpinfo && data.cpinfo.zydl==null){
-					data.cpinfo.zydl ="暂无";
+				if(data && data.zydl==null){
+					data.zydl ="暂无";
+				}else{
+					$this.isShowItem[1]=true;
 				}
-				if(data.cpinfo && data.cpinfo.qtyl==null){
-					data.cpinfo.qtyl ="暂无";
+				if(data && data.qtyl==null){
+					data.qtyl ="暂无";
+				}else{
+					$this.isShowItem[2]=true;
 				}
-				if(data.cpinfo && data.cpinfo.qtdl==null){
-					data.cpinfo.qtdl ="暂无";
+				if(data && data.qtdl==null){
+					data.qtdl ="暂无";
+				}else{
+					$this.isShowItem[3]=true;
 				}
-				if(data.cpinfo && data.cpinfo.cpzf==null){
-					data.cpinfo.cpzf ="暂无";
+				if(data && data.cpzf==null){
+					data.cpzf ="暂无";
 				}
 				$this.detailBean  = data;
 			},
@@ -138,6 +158,10 @@
 <style>
 	page{
 		background: #EFF8FF;
+	}
+	.setting-w{
+		/**设置为不压缩**/
+		flex-shrink: 0;
 	}
 	.bg{
 		height: 360upx;

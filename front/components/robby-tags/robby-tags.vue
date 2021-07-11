@@ -92,7 +92,7 @@
 	.tagItem{
 		padding: 10upx 20upx;
 		margin: 10upx;
-		/* border-radius: 40upx; */
+		border-radius: 40upx;
 		color: white;
 	}
 	.tagBgDefault{

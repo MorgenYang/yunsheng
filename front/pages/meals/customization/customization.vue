@@ -109,7 +109,7 @@
 					<button class="btn" @click="next1()">下一步</button>
 				</view>
 	            <view class="s-item" v-show="current === 1">
-	                <view class="row-item">
+	               <!-- <view class="row-item">
 	                	<view class="d-item">性别：</view>
 	                	<ld-select :list="genderList"
 	                		label-key="label" value-key="value"
@@ -117,7 +117,16 @@
 	                		v-model="genderValue"
 	                		@change="selectGenderChange">
 	                	</ld-select>
-	                </view>
+	                </view> -->
+					<view class="row-item row-item-left">
+					   <view class="d-item">性别：</view>
+					   <radio-group @change="selectGenderChange($event)" class="radio-class" style="margin-left: 10upx;">
+							<view><radio :checked="genderValue=='0'" value="0"/></view>
+							<view class="radio-text">男</view>
+							<view class="m30-left"><radio :checked="genderValue=='1'" value="1"/></view>
+							<view class="radio-text">女</view>
+					   </radio-group>
+					</view>
 					<view class="row-item">
 						<view class="d-item">年龄(岁)：</view>
 						<view @tap="selectAge" class="input-border input-h" disabled="true">{{ageValue}}</view>
@@ -134,11 +143,11 @@
 						<view class="d-item">腰围(尺)：</view>
 						<view @tap="selectYaowei" class="input-border input-h">{{yaoweiValue}}</view>
 					</view>
-					<view class="row-item">
+					<view class="row-item" v-if="genderValue==1">
 						<view class="d-item">孕期(月)：</view>
 						<view @tap="selectYunqi" class="input-border input-h">{{yunqiValue}}</view>
 					</view>
-					<view class="row-item">
+					<view class="row-item" v-if="genderValue==1">
 						<view class="d-item">哺乳(月)：</view>
 						<view @tap="selectburu" class="input-border input-h">{{buruValue}}</view>
 					</view>
@@ -307,7 +316,7 @@
 				doulList:[],
 				rtbnsValue:[],
 				rtbnsList:[],
-				genderValue:1,
+				genderValue:0,
 				genderList:[{"value":0,"label":"男"},{"value":1,"label":"女"}],
 				ageDefaultValue:"",
 				heightDefaultValue:"",
@@ -574,10 +583,16 @@
 				   "sg": $this.heightValue,
 				   "tz": $this.weightValue,
 				   "yw": $this.yaoweiValue,
-				   "yq": $this.yunqiValue,
-				   "br": $this.buruValue,
 				   //"id": $this.genderValue,
 				};
+				if($this.genderValue==1){
+					formData.yq = $this.yunqiValue;
+					formData.br = $this.buruValue;
+				}else{
+					formData.yq = 0;
+					formData.br = 0;
+				}
+				console.log(formData);
 				/* let options ={};
 				options.header = {'Content-Type':'application/x-www-form-urlencoded'}; */
 				$this.$api.post(url,formData).then((res)=>{
@@ -651,10 +666,13 @@
 			selectburuChange(val){
 				this.buruList = val;
 			},
-			selectGenderChange(val){
+			selectGenderChange(evt) {
+				this.genderValue = evt.target.value;
+			},
+			/* selectGenderChange(val){
 				console.log("gender:"+val);
 				this.genderValue = val;
-			},
+			}, */
 			selectHxylChange(val){
 				this.hxylValue = val
 			},
@@ -985,5 +1003,8 @@
 	}
 	.input-h{
 		width: 372upx;
+	}
+	.m30-left{
+		margin-left: 30upx;
 	}
 </style>
